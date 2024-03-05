@@ -1,4 +1,5 @@
 import { StrapiSvg } from "@interfaces/StrapiSvg";
+import { Strapi } from "@lib/Strapi";
 
 export class ContactLink {
   readonly username: string;
@@ -12,3 +13,13 @@ export class ContactLink {
     this.svg = new StrapiSvg(svg.data.attributes.url);
   }
 }
+
+export const fetchContactLinks = async () =>
+  (
+    await Strapi.fetchApi<ContactLink[]>({
+      endpoint: "contact-links",
+      wrappedByKey: "data",
+    })
+  ).map((rawCLink) => {
+    return new ContactLink(rawCLink);
+  });

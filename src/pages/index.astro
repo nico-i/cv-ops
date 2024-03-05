@@ -1,7 +1,9 @@
 ---
+import { fetchContactLinks } from "@interfaces/ContactLink";
 import { fetchSkills } from "@interfaces/Skill";
+
 const skills = await fetchSkills();
-console.log(skills);	
+const contactLinks = await fetchContactLinks();
 ---
 
 <html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">
@@ -13,5 +15,7 @@ console.log(skills);
 	</head>
 	<body>
 		{skills.map((skill) => <div>{skill['de']?.name}</div>)}
+		<br />
+		{contactLinks.map((contactLink) => <div>{contactLink.username}</div>)}
 	</body>
 </html>

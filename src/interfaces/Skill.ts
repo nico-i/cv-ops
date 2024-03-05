@@ -3,7 +3,7 @@ import { Strapi } from "@lib/Strapi";
 import type { Locale } from "@util/Locale";
 import { LocalizedCollection } from "@util/LocalizedCollection";
 
-export interface ISkill {
+export class Skill extends LocalizedCollection<{
   id: number;
   summary: string;
   locale: Locale;
@@ -12,9 +12,7 @@ export interface ISkill {
   priority?: number;
   url: string;
   svg?: StrapiSvg;
-}
-
-export class Skill extends LocalizedCollection<ISkill> {
+}> {
   constructor(strapiApiResData: any) {
     super((strapiApiResData: any) => {
       const { locale, name, priority, proficiency, summary, url, svg } =
