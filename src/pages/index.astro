@@ -1,0 +1,17 @@
+---
+import { fetchSkills } from "@interfaces/Skill";
+const skills = await fetchSkills();
+console.log(skills);	
+---
+
+<html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		{skills.map((skill) => <div>{skill['de']?.name}</div>)}
+	</body>
+</html>

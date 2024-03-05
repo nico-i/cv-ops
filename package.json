@@ -1,34 +1,21 @@
 {
   "name": "cv-ops",
-  "module": "index.ts",
-  "type": "commonjs",
-  "scripts": {
-    "dev": "npm-run-all -p dev:*",
-    "build": "run-s build:*",
-    "dev:11ty": "eleventy --serve",
-    "dev:css": "tailwindcss -i src/assets/css/style.css -o _site/assets/css/style.css --watch --postcss",
-    "build:11ty": "eleventy",
-    "build:css": "tailwindcss -i src/assets/css/style.css -o _site/assets/css/style.css --postcss"
-  },
-  "devDependencies": {
-    "@nico-i/eslint-config": "^1.0.0",
-    "@nico-i/prettier-config": "^1.0.0",
-    "@nico-i/ts-config": "^1.0.0",
-    "@types/bun": "latest",
-    "autoprefixer": "^10.4.18",
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
+  "version": "0.0.1",
   "dependencies": {
-    "@11ty/eleventy": "^2.0.1",
-    "@types/ejs": "^3.1.5",
-    "@types/react": "^18.2.61",
-    "ejs": "^3.1.9",
-    "npm-run-all2": "^5.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  }
+    "@astrojs/check": "^0.5.6",
+    "@astrojs/preact": "^3.1.1",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.4.11",
+    "preact": "^10.19.6",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module"
 }
