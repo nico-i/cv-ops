@@ -6,9 +6,11 @@
     "@astrojs/preact": "^3.1.1",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.4.11",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "preact": "^10.19.6",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "scripts": {
     "dev": "astro dev",
@@ -17,5 +19,12 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.11.25",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-operations": "^4.2.0"
+  }
 }

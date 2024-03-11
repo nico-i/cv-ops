@@ -5,7 +5,7 @@
     "jsxImportSource": "preact",
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/lib/*"],
+      "@infra/*": ["src/infra/*"],
       "@components/*": ["src/components/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@util/*": ["src/util/*"]

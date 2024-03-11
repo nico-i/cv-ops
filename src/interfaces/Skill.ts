@@ -1,9 +1,10 @@
 import { StrapiSvg } from "@interfaces/StrapiSvg";
-import { Strapi } from "@lib/Strapi";
 import type { Locale } from "@util/Locale";
-import { LocalizedCollection } from "@util/LocalizedCollection";
+import { LocalizedCollection } from "@util/StrapiCollection";
 
-export class Skill extends LocalizedCollection<{
+export class Skill extends LocalizedCollection {
+  readonly endpoint = "skills";
+
   id: number;
   summary: string;
   locale: Locale;
@@ -12,7 +13,7 @@ export class Skill extends LocalizedCollection<{
   priority?: number;
   url: string;
   svg?: StrapiSvg;
-}> {
+
   constructor(strapiApiResData: any) {
     super((strapiApiResData: any) => {
       const { locale, name, priority, proficiency, summary, url, svg } =
@@ -33,11 +34,3 @@ export class Skill extends LocalizedCollection<{
     }, strapiApiResData);
   }
 }
-
-export const fetchSkills = async () =>
-  (
-    await Strapi.fetchApi<Skill[]>({
-      endpoint: "skills",
-      wrappedByKey: "data",
-    })
-  ).map((rawSkill) => new Skill(rawSkill));
