@@ -1,11 +1,11 @@
-import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
+import type { RawStrapiCollection } from "@infra/Strapi";
 import { ProjectLink } from "@interfaces/ProjectLink";
-import { Skill } from "@interfaces/Skill";
+import { SkillFactory, type Skill } from "@interfaces/Skill";
 import { StrapiImage } from "@interfaces/StrapImage";
 import type { Locale } from "@util/Locale";
-import { LocalizedCollection } from "@util/StrapiCollection";
+import { LocalizedStrapiCollectionFactory } from "@util/StrapiCollectionFactory";
 
-export class Project extends LocalizedCollection {
+export interface Project {
   locale: Locale;
   headerImage: StrapiImage;
   seoImage: StrapiImage;
@@ -20,45 +20,11 @@ export class Project extends LocalizedCollection {
   summary: string;
   links: ProjectLink[];
   technologies: Skill[];
+}
 
-  constructor(strapiRes: StrapiRes) {
-    super(strapiRes);
-    const {
-      locale,
-      headerImage,
-      seoImage,
-      title,
-      slug,
-      seoTitle,
-      startDate,
-      endDate,
-      workHours,
-      projectUrl,
-      tldr,
-      summary,
-      links,
-      technologies,
-    } = this.fromRawCollection(strapiRes.data);
-
-    this.locale = locale;
-    this.headerImage = headerImage;
-    this.seoImage = seoImage;
-    this.title = title;
-    this.slug = slug;
-    this.seoTitle = seoTitle;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.workHours = workHours;
-    this.projectUrl = projectUrl;
-    this.tldr = tldr;
-    this.summary = summary;
-    this.links = links;
-    this.technologies = technologies;
-  }
-
-  override fromRawCollection(rawCollection: RawStrapiCollection): {
-    [key in keyof this]: this[key];
-  } {
+export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
+  readonly ENDPOINT = "projects";
+  parseFromRawCollection(rawCollection: RawStrapiCollection): Project {
     const {
       locale,
       header_image,
@@ -82,13 +48,13 @@ export class Project extends LocalizedCollection {
     const startDate = new Date(start);
     const endDate = new Date(end);
 
-    const linksArray = links.data.map((link: RawStrapiCollection) => {
+    const linksArray = links?.data.map((link: RawStrapiCollection) => {
       return new ProjectLink();
     });
 
-    const technologiesArray = technologies.data.map(
+    const technologiesArray = technologies?.data.map(
       (tech: RawStrapiCollection) => {
-        return new Skill({ data: tech });
+        return new SkillFactory().parseFromRawCollection(tech);
       }
     );
 

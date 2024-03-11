@@ -1,21 +1,18 @@
-import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
+import type { RawStrapiCollection } from "@infra/Strapi";
 import { StrapiSvg } from "@interfaces/StrapiSvg";
-import type { StrapiCollection } from "@util/StrapiCollection";
+import { StrapiCollectionFactory } from "@util/StrapiCollectionFactory";
 
-export class ContactLink implements StrapiCollection {
-  readonly username: string;
-  readonly url: string;
-  readonly svg: StrapiSvg;
+export interface ContactLink {
+  username: string;
+  url: string;
+  svg: StrapiSvg;
+}
 
-  constructor(strapiRes: StrapiRes) {
-    const { username, url, svg } = this.fromRawCollection(strapiRes.data);
-    this.username = username;
-    this.url = url;
-    this.svg = svg;
-  }
+export class ContactLinkFactory extends StrapiCollectionFactory<ContactLink> {
+  readonly ENDPOINT = "contact-links";
 
-  fromRawCollection(apiRes: RawStrapiCollection) {
-    const { username, url, svg } = apiRes.attributes;
+  parseFromRawCollection(rawCollection: RawStrapiCollection): ContactLink {
+    const { username, url, svg } = rawCollection.attributes;
     const { url: svgUrl } = svg?.data?.attributes || {};
     return {
       username,

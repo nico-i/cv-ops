@@ -1,11 +1,17 @@
 ---
-import { Strapi, StrapiEndpoint } from "@infra/Strapi";
-import { ContactLink } from "@interfaces/ContactLink";
-import { Skill } from "@interfaces/Skill";
+import { Strapi } from "@infra/Strapi";
+import { ContactLinkFactory } from "@interfaces/ContactLink";
+import { ProjectFactory } from "@interfaces/Project";
+import { SkillFactory } from "@interfaces/Skill";
 
-const skills = await Strapi.fetchApi(Skill, StrapiEndpoint.SKILLS);
-const contactLinks = await Strapi.fetchApi(ContactLink, StrapiEndpoint.CONTACT_LINKS);
-// const projects = await Strapi.fetchApi(Project);
+const skillFactory = new SkillFactory();
+const skills =  skillFactory.parseL10nFromApiRes(await Strapi.fetchApi(skillFactory.ENDPOINT))
+
+const contactLinkFactory = new ContactLinkFactory();
+const contactLinks = contactLinkFactory.parseFromApiRes(await Strapi.fetchApi(contactLinkFactory.ENDPOINT))
+
+const projectFactory = new ProjectFactory();
+const projects = projectFactory.parseL10nFromApiRes(await Strapi.fetchApi(projectFactory.ENDPOINT))
 ---
 
 <html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">
@@ -16,8 +22,10 @@ const contactLinks = await Strapi.fetchApi(ContactLink, StrapiEndpoint.CONTACT_L
 		<title>CV | Nico Ismaili</title>
 	</head>
 	<body>
-		{skills.map((skill) => <div>{skill.getTranslated('de').name}</div>)}
+		{skills.map((skill) => <div>{skill.en?.name}</div>)}
 		<br />
 		{contactLinks.map((contactLink) => <div>{contactLink.username}</div>)}
+		<br />
+		{projects.map((project) => <div>{project.en?.title}</div>)}
 	</body>
 </html>

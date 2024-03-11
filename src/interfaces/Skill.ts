@@ -1,9 +1,9 @@
-import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
+import type { RawStrapiCollection } from "@infra/Strapi";
 import { StrapiSvg } from "@interfaces/StrapiSvg";
 import type { Locale } from "@util/Locale";
-import { LocalizedCollection } from "@util/StrapiCollection";
+import { LocalizedStrapiCollectionFactory } from "@util/StrapiCollectionFactory";
 
-export class Skill extends LocalizedCollection {
+export interface Skill {
   id: number;
   summary: string;
   locale: Locale;
@@ -12,22 +12,11 @@ export class Skill extends LocalizedCollection {
   priority?: number;
   url: string;
   svg?: StrapiSvg;
+}
 
-  constructor(strapiRes: StrapiRes) {
-    super(strapiRes);
-    const { id, summary, locale, name, proficiency, priority, url, svg } =
-      this.fromRawCollection(strapiRes.data);
-    this.id = id;
-    this.summary = summary;
-    this.locale = locale;
-    this.name = name;
-    this.proficiency = proficiency;
-    this.priority = priority;
-    this.url = url;
-    this.svg = svg;
-  }
-
-  override fromRawCollection(rawCollection: RawStrapiCollection) {
+export class SkillFactory extends LocalizedStrapiCollectionFactory<Skill> {
+  readonly ENDPOINT = "skills";
+  parseFromRawCollection(rawCollection: RawStrapiCollection): Skill {
     const { locale, name, priority, proficiency, summary, url, svg } =
       rawCollection.attributes;
     const { url: svgUrl } = svg?.data?.attributes || {};
