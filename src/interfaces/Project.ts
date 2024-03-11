@@ -44,14 +44,11 @@ export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
       technologies,
     } = rawCollection.attributes;
 
-    const headerImage = new StrapiImage();
-    const seoImage = new StrapiImage();
-
     const startDate = new Date(start);
     const endDate = new Date(end);
 
     const linksArray = links?.data.map((link: RawStrapiCollection) => {
-      return new ProjectLink();
+      return new ProjectLink(link);
     });
 
     const technologiesArray = technologies?.data.map(
@@ -62,8 +59,12 @@ export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
 
     return {
       locale,
-      headerImage,
-      seoImage,
+      ...(header_image && {
+        headerImage: new StrapiImage(header_image.data as RawStrapiCollection),
+      }),
+      ...(seo_image && {
+        seoImage: new StrapiImage(seo_image.data as RawStrapiCollection),
+      }),
       title,
       slug,
       seoTitle: seo_title,
