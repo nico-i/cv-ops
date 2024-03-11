@@ -1,4 +1,4 @@
-import type { StrapiCollectionApiRes } from "@infra/Strapi";
+import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
 import { StrapiSvg } from "@interfaces/StrapiSvg";
 import type { StrapiCollection } from "@util/StrapiCollection";
 
@@ -7,12 +7,20 @@ export class ContactLink implements StrapiCollection {
   readonly url: string;
   readonly svg: StrapiSvg;
 
-  constructor(apiRes: StrapiCollectionApiRes) {
-    const { username, url, svg } = apiRes.data.attributes;
-    const { url: svgUrl } = svg?.data?.attributes || {};
-
+  constructor(strapiRes: StrapiRes) {
+    const { username, url, svg } = this.fromRawCollection(strapiRes.data);
     this.username = username;
     this.url = url;
-    this.svg = new StrapiSvg(svgUrl);
+    this.svg = svg;
+  }
+
+  fromRawCollection(apiRes: RawStrapiCollection) {
+    const { username, url, svg } = apiRes.attributes;
+    const { url: svgUrl } = svg?.data?.attributes || {};
+    return {
+      username,
+      url,
+      svg: new StrapiSvg(svgUrl),
+    };
   }
 }

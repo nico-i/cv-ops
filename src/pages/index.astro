@@ -1,15 +1,10 @@
 ---
-import { Strapi } from "@infra/Strapi";
+import { Strapi, StrapiEndpoint } from "@infra/Strapi";
 import { ContactLink } from "@interfaces/ContactLink";
 import { Skill } from "@interfaces/Skill";
-import { GraphQLClient } from 'graphql-request';
-import { getSdk } from '../__generated__/gql';
 
-const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL + '/graphql');
-const sdk = getSdk(gqlClient);
-
-const skills = await Strapi.fetchApi(Skill);
-const contactLinks = await Strapi.fetchApi(ContactLink);
+const skills = await Strapi.fetchApi(Skill, StrapiEndpoint.SKILLS);
+const contactLinks = await Strapi.fetchApi(ContactLink, StrapiEndpoint.CONTACT_LINKS);
 // const projects = await Strapi.fetchApi(Project);
 ---
 
@@ -21,7 +16,7 @@ const contactLinks = await Strapi.fetchApi(ContactLink);
 		<title>CV | Nico Ismaili</title>
 	</head>
 	<body>
-		{skills.map((skill) => <div>{skill['de']?.name}</div>)}
+		{skills.map((skill) => <div>{skill.getTranslated('de').name}</div>)}
 		<br />
 		{contactLinks.map((contactLink) => <div>{contactLink.username}</div>)}
 	</body>

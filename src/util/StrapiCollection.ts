@@ -1,31 +1,37 @@
-import type { StrapiCollectionApiRes } from "@infra/Strapi";
-import type { Locale } from "./Locale";
+import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
+import type { Locale } from "@util/Locale";
 
 export interface StrapiCollection {
-  locale?: Locale;
+  [key: string]: any;
+  fromRawCollection(
+    rawCollection: RawStrapiCollection
+  ): Omit<StrapiCollection, "fromApiRes">;
 }
 
-export function parseFromApiRes<T extends StrapiCollection>(
-  apiRes: StrapiCollectionApiRes
-): T {
-  return new CollectionClass(apiRes);
-}
+type L10nItem<
+  T extends {
+    locale: Locale;
+  }
+> = {
+  [key in keyof T]: T[key];
+};
 
 export abstract class LocalizedCollection implements StrapiCollection {
-  private _l10n: Partial<Record<Locale, StrapiCollection>> = {};
+  abstract locale: Locale;
 
-  constructor(
-    initialCollectionItem: StrapiCollection & { locale: Locale },
-    strapiRes: StrapiCollectionApiRes
-  ) {
-    const localizations = strapiRes.data.localizations;
+  private _l10n: Partial<Record<Locale, L10nItem<this>>> = {};
+
+  constructor(strapiRes: StrapiRes) {
+    const initialCollectionItem = this.fromRawCollection(strapiRes.data);
+
+    const localizations = strapiRes.data.attributes.localizations;
 
     if (!localizations) {
       this._l10n[initialCollectionItem.locale] = initialCollectionItem;
     }
 
-    localizations?.data.forEach((loc: StrapiCollectionApiRes) => {
-      const l10nItem = this.fromApiRes(loc);
+    localizations?.data.forEach((loc: RawStrapiCollection) => {
+      const l10nItem = this.fromRawCollection(loc);
       if (!("locale" in l10nItem)) {
         return;
       }
@@ -34,9 +40,13 @@ export abstract class LocalizedCollection implements StrapiCollection {
     });
   }
 
+  abstract fromRawCollection(
+    rawCollection: RawStrapiCollection
+  ): L10nItem<this>;
+
   private setUndefinedFields(
-    newInstanceRef: StrapiCollection,
-    fallBackRef: StrapiCollection
+    newInstanceRef: L10nItem<this>,
+    fallBackRef: L10nItem<this>
   ): void {
     for (const key in newInstanceRef) {
       if (fallBackRef.hasOwnProperty(key) && !newInstanceRef[key]) {
@@ -45,7 +55,7 @@ export abstract class LocalizedCollection implements StrapiCollection {
     }
   }
 
-  public getTranslated(locale: Locale): StrapiCollection {
+  public getTranslated(locale: Locale): L10nItem<this> {
     const translatedItem = this._l10n[locale];
     if (!translatedItem) {
       throw new Error(`No translation found for locale ${locale}`);
