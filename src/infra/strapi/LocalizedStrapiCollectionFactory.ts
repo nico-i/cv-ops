@@ -1,25 +1,10 @@
-import type { RawStrapiCollection, StrapiRes } from "@infra/Strapi";
+import type {
+  LocalizedCollection,
+  RawStrapiCollection,
+  StrapiCollection,
+  StrapiRes,
+} from "@infra/strapi";
 import type { Locale } from "@util/Locale";
-
-interface StrapiCollection<T> {
-  readonly ENDPOINT: string;
-  parseFromRawCollection(rawCollection: RawStrapiCollection): T;
-}
-
-export abstract class StrapiCollectionFactory<T>
-  implements StrapiCollection<T>
-{
-  abstract readonly ENDPOINT: string;
-  abstract parseFromRawCollection(rawCollection: RawStrapiCollection): T;
-  parseFromApiRes(strapiResponse: StrapiRes): T[] {
-    const { data } = strapiResponse;
-    return data.map((rawCollection: RawStrapiCollection): T => {
-      return this.parseFromRawCollection(rawCollection);
-    });
-  }
-}
-
-export type LocalizedCollection<T> = Partial<Record<Locale, T>>;
 
 export abstract class LocalizedStrapiCollectionFactory<
   T extends {

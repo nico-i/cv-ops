@@ -1,6 +1,8 @@
-import type { RawStrapiCollection } from "@infra/Strapi";
+import {
+  StrapiCollectionFactory,
+  type RawStrapiCollection,
+} from "@infra/strapi";
 import { StrapiSvg } from "@interfaces/StrapiSvg";
-import { StrapiCollectionFactory } from "@util/StrapiCollectionFactory";
 
 export interface ContactLink {
   username: string;

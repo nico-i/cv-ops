@@ -1,21 +1,6 @@
-export type RawStrapiCollection = {
-  id: number;
-  attributes: {
-    [key: string]: any;
-  };
-};
+import type { StrapiRes } from "@infra/strapi";
 
-export type StrapiRes = {
-  data: (RawStrapiCollection & {
-    attributes: {
-      localizations?: {
-        data: RawStrapiCollection[];
-      };
-    };
-  })[];
-};
-
-export class Strapi {
+export class StrapiClient {
   /**
    * Fetches data from the Strapi API
    * @returns

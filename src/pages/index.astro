@@ -1,17 +1,17 @@
 ---
-import { Strapi } from "@infra/Strapi";
+import { StrapiClient } from "@infra/strapi";
 import { ContactLinkFactory } from "@interfaces/ContactLink";
 import { ProjectFactory } from "@interfaces/Project";
 import { SkillFactory } from "@interfaces/Skill";
 
 const skillFactory = new SkillFactory();
-const skills =  skillFactory.parseL10nFromApiRes(await Strapi.fetchApi(skillFactory.ENDPOINT))
+const skills =  skillFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(skillFactory.ENDPOINT))
 
 const contactLinkFactory = new ContactLinkFactory();
-const contactLinks = contactLinkFactory.parseFromApiRes(await Strapi.fetchApi(contactLinkFactory.ENDPOINT))
+const contactLinks = contactLinkFactory.parseFromApiRes(await StrapiClient.fetchApi(contactLinkFactory.ENDPOINT))
 
 const projectFactory = new ProjectFactory();
-const projects = projectFactory.parseL10nFromApiRes(await Strapi.fetchApi(projectFactory.ENDPOINT))
+const projects = projectFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(projectFactory.ENDPOINT))
 ---
 
 <html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">

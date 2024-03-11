@@ -1,9 +1,11 @@
-import type { RawStrapiCollection } from "@infra/Strapi";
+import {
+  LocalizedStrapiCollectionFactory,
+  type RawStrapiCollection,
+} from "@infra/strapi";
 import { ProjectLink } from "@interfaces/ProjectLink";
 import { SkillFactory, type Skill } from "@interfaces/Skill";
-import { StrapiImage } from "@interfaces/StrapImage";
+import { StrapiImage } from "@interfaces/StrapiImage";
 import type { Locale } from "@util/Locale";
-import { LocalizedStrapiCollectionFactory } from "@util/StrapiCollectionFactory";
 
 export interface Project {
   locale: Locale;
