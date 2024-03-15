@@ -7,13 +7,18 @@ export interface BulletListProps {
     | ReactElement<typeof BulletListItem>[]
     | ReactElement<typeof BulletListItem>;
   hideBullets?: boolean;
+  id?: string;
 }
 
 export const BulletList = ({
   children,
   hideBullets,
+  id,
 }: Readonly<BulletListProps>) => (
-  <ul className={clsx("my-6 [&>li]:mt-2", !hideBullets && "ml-6 list-disc")}>
+  <ul
+    id={id}
+    className={clsx("flex flex-col gap-2", !hideBullets && "ml-6 list-disc")}
+  >
     {children}
   </ul>
 );

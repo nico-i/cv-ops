@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React, { type ElementType } from "react";
 
-interface TypographyProps extends React.HTMLProps<HTMLElement> {
+export interface TypographyProps extends React.HTMLProps<HTMLElement> {
   ele: "p" | "h1" | "h2" | "h3" | "h4" | "code" | "small" | "span";
   children?: React.ReactNode;
   className?: string;

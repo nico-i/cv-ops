@@ -41,28 +41,30 @@ const { localizedInfo, locale } = Astro.props;
       {localizedInfo?.[locale]?.occupation}
     </CardDescription>
   </CardHeader>
-  <CardContent>
-    <IconText>
-      <Svg Icon={Cake} />
-      {
-        localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      }
-    </IconText>
-    <IconText>
-      <Svg Icon={Phone} />
-      <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
-        {localizedInfo?.[locale]?.phone}
-      </a>
-    </IconText>
-    <IconText>
-      <Svg Icon={MapPin} />
-      {localizedInfo?.[locale]?.address}
-    </IconText>
-    <BulletList hideBullets>
+  <CardContent className="flex flex-col gap-6">
+    <div id="info" class="flex flex-col gap-2">
+      <IconText ele="small">
+        <Svg Icon={Cake} />
+        {
+          localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }
+      </IconText>
+      <IconText ele="small">
+        <Svg Icon={Phone} />
+        <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
+          {localizedInfo?.[locale]?.phone}
+        </a>
+      </IconText>
+      <IconText ele="small">
+        <Svg Icon={MapPin} />
+        {localizedInfo?.[locale]?.address}
+      </IconText>
+    </div>
+    <BulletList hideBullets id="contact">
       {
         localizedInfo?.[locale]?.contacts?.map((contact) => (
           <BulletListItem>
