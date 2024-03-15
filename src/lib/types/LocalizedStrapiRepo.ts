@@ -1,6 +1,6 @@
-import type { EntityByLocale } from "@util/types/EntityByLocale";
-import { Locale } from "@util/types/Locale";
-import type { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import { Locale } from "@/lib/types/Locale";
+import type { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export abstract class LocalizedStrapiRepo<T extends LocalizedStrapiEntity> {
   abstract getAll(locale: Locale): Promise<T[]>;

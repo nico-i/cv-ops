@@ -1,8 +1,8 @@
-import { Xp } from "@domain/xp";
-import { StrapiClient } from "@infra/strapi/StrapiClient";
-import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiRepo } from "@util/types/LocalizedStrapiRepo";
+import { Xp } from "@/domain/xp";
+import { StrapiClient } from "@/infra/strapi/StrapiClient";
+import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
 class StrapiRepo extends LocalizedStrapiRepo<Xp> {
   override async getAll(locale: Locale): Promise<Xp[]> {

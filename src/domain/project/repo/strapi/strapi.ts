@@ -1,12 +1,12 @@
-import { Project } from "@domain/project";
-import { Skill } from "@domain/skill";
-import { StrapiClient } from "@infra/strapi/StrapiClient";
-import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
-import { StrapiImage } from "@util/DTOs/StrapiImage";
-import { StrapiLink } from "@util/DTOs/StrapiLink";
-import { StrapiSvg } from "@util/DTOs/StrapiSvg";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiRepo } from "@util/types/LocalizedStrapiRepo";
+import { Project } from "@/domain/project";
+import { Skill } from "@/domain/skill";
+import { StrapiClient } from "@/infra/strapi/StrapiClient";
+import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
+import { StrapiImage } from "@/lib/DTOs/StrapiImage";
+import { StrapiLink } from "@/lib/DTOs/StrapiLink";
+import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
 class StrapiRepository extends LocalizedStrapiRepo<Project> {
   override async getAll(locale: Locale): Promise<Project[]> {

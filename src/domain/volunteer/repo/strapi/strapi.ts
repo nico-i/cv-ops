@@ -1,7 +1,7 @@
-import { Volunteer } from "@domain/volunteer";
-import { StrapiClient } from "@infra/strapi/StrapiClient";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiRepo } from "@util/types/LocalizedStrapiRepo";
+import { Volunteer } from "@/domain/volunteer";
+import { StrapiClient } from "@/infra/strapi/StrapiClient";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
 class StrapiRepo extends LocalizedStrapiRepo<Volunteer> {
   override async getAll(locale: Locale): Promise<Volunteer[]> {

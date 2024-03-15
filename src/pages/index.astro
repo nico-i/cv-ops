@@ -1,13 +1,15 @@
 ---
-import { CertStrapiRepo } from "@domain/cert/repo/strapi";
-import { EdStrapiRepo } from "@domain/ed/repo/strapi";
-import { InterestStrapiRepo } from "@domain/interest/repo/strapi";
-import { LangStrapiRepo } from "@domain/lang/repo/strapi";
-import { ProjectStrapiRepo } from "@domain/project/repo/strapi";
-import { SkillStrapiRepo } from "@domain/skill/repo/strapi";
-import { VolunteerStrapiRepo } from "@domain/volunteer/repo/strapi";
-import { XpStrapiRepo } from "@domain/xp/repo/strapi";
-import { Locale } from "@util/types/Locale";
+import { Typography } from "@/components/Typography";
+import { CertStrapiRepo } from "@/domain/cert/repo/strapi";
+import { EdStrapiRepo } from "@/domain/ed/repo/strapi";
+import { InterestStrapiRepo } from "@/domain/interest/repo/strapi";
+import { LangStrapiRepo } from "@/domain/lang/repo/strapi";
+import { ProjectStrapiRepo } from "@/domain/project/repo/strapi";
+import { SkillStrapiRepo } from "@/domain/skill/repo/strapi";
+import { VolunteerStrapiRepo } from "@/domain/volunteer/repo/strapi";
+import { XpStrapiRepo } from "@/domain/xp/repo/strapi";
+import { Locale } from "@/lib/types/Locale";
+import "@/styles/globals.css";
 
 const localizedCerts = await CertStrapiRepo.getAllLocalized();
 const localizedEds = await EdStrapiRepo.getAllLocalized();
@@ -18,31 +20,61 @@ const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 const localizedXps = await XpStrapiRepo.getAllLocalized();
 const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 
-const currentLocale: Locale= Object.values<string>(Locale)[0] as Locale;
+const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
+
+// {localizedCerts.map((cert) => <div>{cert[currentLocale]?.title}</div>)}
+// 		<br />
+// 		{localizedEds.map((ed) => <div>{ed[currentLocale]?.degree}</div>)}
+// 		<br />
+// 		{localizedLangs.map((lang) => <div>{lang[currentLocale]?.name}</div>)}
+// 		<br />
+// 		{localizedSkills.map((skill) => <div>{skill[currentLocale]?.name}</div>)}
+// 		<br />
+// 		{localizedProjects.map((project) => <div>{project[currentLocale]?.title}</div>)}
+// 		<br />
+// 		{localizedVolunteers.map((volunteer) => <div>{volunteer[currentLocale]?.activity}</div>)}
+// 		<br />
+// 		{localizedXps.map((xp) => <div>{xp[currentLocale]?.position}</div>)}
+// 		<br />
+// 		{localizedInterests.map((interest) => <div>{interest[currentLocale]?.name}</div>)}
 ---
 
-<html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>CV | Nico Ismaili</title>
-	</head>
-	<body>
-		{localizedCerts.map((cert) => <div>{cert[currentLocale]?.title}</div>)}
-		<br />
-		{localizedEds.map((ed) => <div>{ed[currentLocale]?.degree}</div>)}
-		<br />
-		{localizedLangs.map((lang) => <div>{lang[currentLocale]?.name}</div>)}
-		<br />
-		{localizedSkills.map((skill) => <div>{skill[currentLocale]?.name}</div>)}
-		<br />
-		{localizedProjects.map((project) => <div>{project[currentLocale]?.title}</div>)}
-		<br />
-		{localizedVolunteers.map((volunteer) => <div>{volunteer[currentLocale]?.activity}</div>)}
-		<br />
-		{localizedXps.map((xp) => <div>{xp[currentLocale]?.position}</div>)}
-		<br />
-		{localizedInterests.map((interest) => <div>{interest[currentLocale]?.name}</div>)}
-	</body>
-</html>
+<html lang="en" class="text-text-body bg-bg-page">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>CV | Nico Ismaili</title>
+  </head>
+  <body>
+    <Typography ele="h1">Nico Ismaili</Typography>
+
+	<!-- Auto Theme Switcher Script -->
+    <script is:inline>
+      const getThemePreference = () => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+      const isDark = getThemePreference() === "dark";
+      document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          const isDark = document.documentElement.classList.contains("dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+      }
+    </script>
+  </body>
+</html>@/lib/types/Locale

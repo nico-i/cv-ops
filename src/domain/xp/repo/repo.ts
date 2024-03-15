@@ -1,5 +1,5 @@
-import type { Xp } from "@domain/xp";
-import type { EntityByLocale } from "@util/types/EntityByLocale";
+import type { Xp } from "@/domain/xp";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 
 export interface XpRepo {
   getAll(locale: string): Promise<Xp[]>;

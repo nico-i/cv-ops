@@ -1,6 +1,6 @@
-import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
+import type { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export class Cert extends LocalizedStrapiEntity {
   received: Date;

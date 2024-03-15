@@ -1,8 +1,8 @@
-import { Ed } from "@domain/ed";
-import type { EdRepo } from "@domain/ed/repo/repo";
-import { StrapiClient } from "@infra/strapi/StrapiClient";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiRepo } from "@util/types/LocalizedStrapiRepo";
+import { Ed } from "@/domain/ed";
+import type { EdRepo } from "@/domain/ed/repo/repo";
+import { StrapiClient } from "@/infra/strapi/StrapiClient";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
 class StrapiRepo extends LocalizedStrapiRepo<Ed> implements EdRepo {
   override async getAll(locale: Locale): Promise<Ed[]> {

@@ -1,4 +1,4 @@
-import { StrapiSvg } from "@util/DTOs/StrapiSvg";
+import type { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
 
 export class StrapiLink {
   constructor(

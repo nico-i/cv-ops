@@ -1,5 +1,5 @@
-import type { Volunteer } from "@domain/volunteer/volunteer";
-import type { EntityByLocale } from "@util/types/EntityByLocale";
+import type { Volunteer } from "@/domain/volunteer";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 
 export interface VolunteerRepo {
   getAll(locale: string): Promise<Volunteer[]>;

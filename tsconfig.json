@@ -2,14 +2,12 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "baseUrl": "./",
+    "jsxImportSource": "react",
+    "baseUrl": "/home/nico/Code/git/cv-ops",
     "paths": {
-      "@infra/*": ["src/infra/*"],
-      "@domain/*": ["src/domain/*"],
-      "@components/*": ["src/components/*"],
-      "@interfaces/*": ["src/interfaces/*"],
-      "@util/*": ["src/util/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   }
 }

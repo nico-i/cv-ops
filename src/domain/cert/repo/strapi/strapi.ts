@@ -1,9 +1,9 @@
-import { Cert } from "@domain/cert/cert";
-import type { CertRepo } from "@domain/cert/repo/repo";
-import { StrapiClient } from "@infra/strapi/StrapiClient";
-import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
-import { Locale } from "@util/types/Locale";
-import { LocalizedStrapiRepo } from "@util/types/LocalizedStrapiRepo";
+import { Cert } from "@/domain/cert";
+import type { CertRepo } from "@/domain/cert/repo/repo";
+import { StrapiClient } from "@/infra/strapi/StrapiClient";
+import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
 class StrapiRepo extends LocalizedStrapiRepo<Cert> implements CertRepo {
   override async getAll(locale: Locale): Promise<Cert[]> {

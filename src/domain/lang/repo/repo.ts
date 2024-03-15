@@ -1,5 +1,5 @@
-import type { Lang } from "@domain/lang";
-import type { EntityByLocale } from "@util/types/EntityByLocale";
+import type { Lang } from "@/domain/lang";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 
 export interface LangRepo {
   getAll(locale: string): Promise<Lang[]>;

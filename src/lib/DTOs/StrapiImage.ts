@@ -1,4 +1,4 @@
-import { StrapiEntity } from "@util/types/StrapiEntity";
+import { StrapiEntity } from "@/lib/types/StrapiEntity";
 
 interface StrapiImageFormat {
   name: string;

@@ -1,5 +1,5 @@
-import type { Interest } from "@domain/interest";
-import type { EntityByLocale } from "@util/types/EntityByLocale";
+import type { Interest } from "@/domain/interest";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 
 export interface InterestRepo {
   getAll(locale: string): Promise<Interest[]>;

@@ -1,9 +1,9 @@
-import type { Skill } from "@domain/skill";
-import type { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
-import type { StrapiImage } from "@util/DTOs/StrapiImage";
-import type { StrapiLink } from "@util/DTOs/StrapiLink";
-import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
+import type { Skill } from "@/domain/skill";
+import type { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
+import type { StrapiImage } from "@/lib/DTOs/StrapiImage";
+import type { StrapiLink } from "@/lib/DTOs/StrapiLink";
+import type { Locale } from "@/lib/types/Locale";
+import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export class Project extends LocalizedStrapiEntity {
   start: Date;
