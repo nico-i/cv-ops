@@ -1,8 +1,8 @@
 import type { StrapiSvg } from "@util/DTOs/StrapiSvg";
 import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export class Skill extends LocalizedStrapiCollection {
+export class Skill extends LocalizedStrapiEntity {
   constructor(
     id: string,
     locale: Locale,

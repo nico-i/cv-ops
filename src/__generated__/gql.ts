@@ -2065,7 +2065,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects?: { __typename?: 'ProjectEntityResponseCollection', data: Array<{ __typename?: 'ProjectEntity', id?: string | null, attributes?: { __typename?: 'Project', locale?: string | null, title: string, slug: string, start: any, end?: any | null, tldr: string, summary?: string | null, work_hours?: number | null, demo_url?: string | null, links?: Array<{ __typename?: 'ComponentCommonLink', text: string, url: string, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null> | null, technologies?: { __typename?: 'SkillRelationResponseCollection', data: Array<{ __typename?: 'SkillEntity', id?: string | null, attributes?: { __typename?: 'Skill', locale?: string | null, name: string, proficiency: number, url: string, summary: string, svg?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null } | null }> } | null };
+export type GetProjectsQuery = { __typename?: 'Query', projects?: { __typename?: 'ProjectEntityResponseCollection', data: Array<{ __typename?: 'ProjectEntity', id?: string | null, attributes?: { __typename?: 'Project', locale?: string | null, title: string, slug: string, start: any, end?: any | null, tldr: string, summary?: string | null, work_hours?: number | null, demo_url?: string | null, header_image?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', url: string, alternativeText?: string | null, width?: number | null, height?: number | null, formats?: any | null } | null } | null } | null, links?: Array<{ __typename?: 'ComponentCommonLink', text: string, url: string, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null> | null, technologies?: { __typename?: 'SkillRelationResponseCollection', data: Array<{ __typename?: 'SkillEntity', id?: string | null, attributes?: { __typename?: 'Skill', locale?: string | null, name: string, proficiency: number, url: string, summary: string, svg?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null } | null }> } | null };
 
 export type GetSkillsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -2187,6 +2187,18 @@ export const GetProjectsDocument = gql`
         summary
         work_hours
         demo_url
+        header_image {
+          data {
+            id
+            attributes {
+              url
+              alternativeText
+              width
+              height
+              formats
+            }
+          }
+        }
         links {
           text
           url

@@ -1,11 +1,11 @@
-import type { CollectionByLocale } from "@util/types/CollectionByLocale";
+import type { EntityByLocale } from "@util/types/EntityByLocale";
 import { Locale } from "@util/types/Locale";
-import type { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import type { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export abstract class LocalizedStrapiRepo<T extends LocalizedStrapiCollection> {
+export abstract class LocalizedStrapiRepo<T extends LocalizedStrapiEntity> {
   abstract getAll(locale: Locale): Promise<T[]>;
 
-  async getAllLocalized(): Promise<CollectionByLocale<T>[]> {
+  async getAllLocalized(): Promise<EntityByLocale<T>[]> {
     const locales = Object.values(Locale);
 
     let allItemsByLocale: Record<Locale, T[]> = locales.reduce(

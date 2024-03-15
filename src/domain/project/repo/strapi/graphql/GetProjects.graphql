@@ -12,6 +12,18 @@ query GetProjects($locale: I18NLocaleCode!) {
         summary
         work_hours
         demo_url
+        header_image {
+          data {
+            id
+            attributes {
+              url
+              alternativeText
+              width
+              height
+              formats
+            }
+          }
+        }
         links {
           text
           url

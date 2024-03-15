@@ -1,7 +1,7 @@
 import type { Cert } from "@domain/cert/cert";
-import type { CollectionByLocale } from "@util/types/CollectionByLocale";
+import type { EntityByLocale } from "@util/types/EntityByLocale";
 
 export interface CertRepo {
   getAll(locale: string): Promise<Cert[]>;
-  getAllLocalized(locale: string): Promise<CollectionByLocale<Cert>[]>;
+  getAllLocalized(locale: string): Promise<EntityByLocale<Cert>[]>;
 }

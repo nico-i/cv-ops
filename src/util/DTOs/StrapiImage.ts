@@ -1,43 +1,30 @@
-import type { RawStrapiCollection } from "@infra/strapi";
+import { StrapiEntity } from "@util/types/StrapiEntity";
 
-export interface StrapiImageFormat {
+interface StrapiImageFormat {
+  name: string;
+  hash: string;
+  ext: string;
+  mime: string;
+  path: null;
   width: number;
   height: number;
+  size: number;
   url: string;
+  provider_metadata: { public_id: string; resource_type: string };
 }
 
-export class StrapiImage {
-  width: number;
-  height: number;
-  url: string;
-  formats?: {
-    thumbnail?: StrapiImageFormat;
-    small?: StrapiImageFormat;
-    large?: StrapiImageFormat;
-    medium?: StrapiImageFormat;
-  };
-  alternativeText?: string;
-
-  constructor(rawImage: RawStrapiCollection) {
-    const { width, height, url, formats, alternativeText } =
-      rawImage.attributes;
-    this.width = width;
-    this.height = height;
-    this.url = url;
-    this.alternativeText = alternativeText;
-
-    if (formats) {
-      this.formats = {};
-      Object.keys(formats).forEach((key: string) => {
-        const { width, height, url } = formats[key];
-        const strapiFormat: StrapiImageFormat = {
-          width,
-          height,
-          url,
-        };
-        this.formats![key as "thumbnail" | "small" | "large" | "medium"] =
-          strapiFormat;
-      });
-    }
+export class StrapiImage extends StrapiEntity {
+  constructor(
+    id: string,
+    public width: number,
+    public height: number,
+    public url: string,
+    public formats?: Record<
+      "thumbnail" | "small" | "medium" | "large",
+      StrapiImageFormat
+    >,
+    public alternativeText?: string
+  ) {
+    super(id);
   }
 }

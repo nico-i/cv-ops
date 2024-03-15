@@ -1,7 +1,7 @@
 import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export class Volunteer extends LocalizedStrapiCollection {
+export class Volunteer extends LocalizedStrapiEntity {
   public start: Date;
   public end?: Date;
 

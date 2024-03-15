@@ -1,7 +1,7 @@
 import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export class Lang extends LocalizedStrapiCollection {
+export class Lang extends LocalizedStrapiEntity {
   constructor(
     id: string,
     locale: Locale,

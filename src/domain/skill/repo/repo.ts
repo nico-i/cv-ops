@@ -1,7 +1,7 @@
 import type { Skill } from "@domain/skill/skill";
-import type { CollectionByLocale } from "@util/types/CollectionByLocale";
+import type { EntityByLocale } from "@util/types/EntityByLocale";
 
 export interface SkillRepo {
   getAll(locale: string): Promise<Skill[]>;
-  getAllLocalized(locale: string): Promise<CollectionByLocale<Skill>[]>;
+  getAllLocalized(locale: string): Promise<EntityByLocale<Skill>[]>;
 }

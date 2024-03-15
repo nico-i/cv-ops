@@ -2,6 +2,7 @@ import { Project } from "@domain/project";
 import { Skill } from "@domain/skill";
 import { StrapiClient } from "@infra/strapi/StrapiClient";
 import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
+import { StrapiImage } from "@util/DTOs/StrapiImage";
 import { StrapiLink } from "@util/DTOs/StrapiLink";
 import { StrapiSvg } from "@util/DTOs/StrapiSvg";
 import type { Locale } from "@util/types/Locale";
@@ -23,6 +24,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
           summary,
           work_hours,
           demo_url,
+          header_image,
           links,
           technologies,
         } = rawProject.attributes!;
@@ -35,6 +37,15 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
           start,
           tldr,
           end,
+          header_image
+            ? new StrapiImage(
+                header_image.data?.id!,
+                header_image.data?.attributes?.width!,
+                header_image.data?.attributes?.height!,
+                header_image.data?.attributes?.url!,
+                header_image.data?.attributes?.formats
+              )
+            : undefined,
           work_hours ?? undefined,
           summary ? new StrapiBulletList(summary) : undefined,
           demo_url ?? undefined,

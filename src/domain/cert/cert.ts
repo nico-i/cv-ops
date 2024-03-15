@@ -1,8 +1,8 @@
 import { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
 import type { Locale } from "@util/types/Locale";
-import { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export class Cert extends LocalizedStrapiCollection {
+export class Cert extends LocalizedStrapiEntity {
   received: Date;
 
   constructor(

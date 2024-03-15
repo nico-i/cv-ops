@@ -1,7 +1,7 @@
 import type { Ed } from "@domain/ed";
-import type { CollectionByLocale } from "@util/types/CollectionByLocale";
+import type { EntityByLocale } from "@util/types/EntityByLocale";
 
 export interface EdRepo {
   getAll(locale: string): Promise<Ed[]>;
-  getAllLocalized(locale: string): Promise<CollectionByLocale<Ed>[]>;
+  getAllLocalized(locale: string): Promise<EntityByLocale<Ed>[]>;
 }

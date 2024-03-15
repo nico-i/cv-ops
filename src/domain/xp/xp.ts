@@ -1,8 +1,8 @@
 import type { StrapiBulletList } from "@util/DTOs/StrapiBulletList";
 import { Locale } from "@util/types/Locale";
-import { LocalizedStrapiCollection } from "@util/types/LocalizedStrapiCollection";
+import { LocalizedStrapiEntity } from "@util/types/LocalizedStrapiEntity";
 
-export class Xp extends LocalizedStrapiCollection {
+export class Xp extends LocalizedStrapiEntity {
   public start: Date;
   public end?: Date;
 
