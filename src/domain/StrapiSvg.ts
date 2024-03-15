@@ -1,9 +1,11 @@
+import type { RawStrapiCollection } from "@infra/strapi";
+
 export class StrapiSvg {
   private _svgUrl: string;
   private _html?: string;
 
-  constructor(url: string) {
-    this._svgUrl = url;
+  constructor(rawCollection: RawStrapiCollection) {
+    this._svgUrl = rawCollection.attributes.url;
   }
 
   async fetchHtml(): Promise<string> {

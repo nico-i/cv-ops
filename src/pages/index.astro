@@ -1,15 +1,13 @@
 ---
 import { StrapiClient } from "@infra/strapi";
-import { ContactLinkFactory } from "@interfaces/ContactLink";
-import { ProjectFactory } from "@interfaces/Project";
-import { SkillFactory } from "@interfaces/Skill";
+import { SkillFactory } from "@domain/Skill";
+import { certFactory } from "@domain/Cert";
+import { ProjectFactory } from "@domain/Project";
 
 const skillFactory = new SkillFactory();
 const skills =  skillFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(skillFactory.ENDPOINT))
 
-const contactLinkFactory = new ContactLinkFactory();
-const contactLinks = contactLinkFactory.parseFromApiRes(await StrapiClient.fetchApi(contactLinkFactory.ENDPOINT))
-
+const certs = certFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(certFactory.ENDPOINT))
 const projectFactory = new ProjectFactory();
 const projects = projectFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(projectFactory.ENDPOINT))
 ---
@@ -23,9 +21,7 @@ const projects = projectFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(
 	</head>
 	<body>
 		{skills.map((skill) => <div>{skill.en?.name}</div>)}
-		<br />
-		{contactLinks.map((contactLink) => <div>{contactLink.username}</div>)}
-		<br />
-		{projects.map((project) => <div>{project.en?.title}</div>)}
+		<br/>
+		{certs.map((cert) => <div>{cert.en?.title}</div>)}
 	</body>
 </html>

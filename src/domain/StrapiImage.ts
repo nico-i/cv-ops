@@ -6,7 +6,7 @@ export interface StrapiImageFormat {
   url: string;
 }
 
-export class StrapiImage implements StrapiImageFormat {
+export class StrapiImage {
   width: number;
   height: number;
   url: string;

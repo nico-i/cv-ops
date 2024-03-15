@@ -2,8 +2,8 @@ import {
   LocalizedStrapiCollectionFactory,
   type RawStrapiCollection,
 } from "@infra/strapi";
-import { StrapiSvg } from "@interfaces/StrapiSvg";
 import type { Locale } from "@util/Locale";
+import { StrapiSvg } from "src/domain/StrapiSvg";
 
 export interface Skill {
   id: number;

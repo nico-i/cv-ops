@@ -1,5 +1,5 @@
 import type {
-  LocalizedCollection,
+  CollectionByLocale,
   RawStrapiCollection,
   StrapiCollection,
   StrapiRes,
@@ -19,11 +19,11 @@ export abstract class LocalizedStrapiCollectionFactory<
   >(
     strapiResponse: StrapiRes,
     parseFn: (rawCollection: RawStrapiCollection) => T
-  ): LocalizedCollection<T>[] {
+  ): CollectionByLocale<T>[] {
     const { data } = strapiResponse;
 
-    return data.map((rawCollectionWithL10n): LocalizedCollection<T> => {
-      let l10n: LocalizedCollection<T> = {};
+    return data.map((rawCollectionWithL10n): CollectionByLocale<T> => {
+      let l10n: CollectionByLocale<T> = {};
 
       const initialL10nItem = parseFn(rawCollectionWithL10n);
 
@@ -43,6 +43,6 @@ export abstract class LocalizedStrapiCollectionFactory<
   abstract readonly ENDPOINT: string;
   abstract parseFromRawCollection(rawCollection: RawStrapiCollection): T;
 
-  parseL10nFromApiRes = (strapiResponse: StrapiRes): LocalizedCollection<T>[] =>
+  parseL10nFromApiRes = (strapiResponse: StrapiRes): CollectionByLocale<T>[] =>
     this._parseLocalizations<T>(strapiResponse, this.parseFromRawCollection);
 }

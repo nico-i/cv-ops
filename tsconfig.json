@@ -6,6 +6,7 @@
     "baseUrl": "./",
     "paths": {
       "@infra/*": ["src/infra/*"],
+      "@domain/*": ["src/domain/*"],
       "@components/*": ["src/components/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@util/*": ["src/util/*"]

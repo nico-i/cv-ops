@@ -1,27 +1,27 @@
+import type { StrapiBulletList } from "@domain/StrapiBulletList";
+import type { StrapiLink } from "@domain/StrapiLink";
 import {
   LocalizedStrapiCollectionFactory,
+  type LocalizedCollection,
   type RawStrapiCollection,
 } from "@infra/strapi";
-import { ProjectLink } from "@interfaces/ProjectLink";
-import { SkillFactory, type Skill } from "@interfaces/Skill";
-import { StrapiImage } from "@interfaces/StrapiImage";
 import type { Locale } from "@util/Locale";
+import { SkillFactory, type Skill } from "src/domain/Skill";
+import { StrapiImage } from "src/domain/StrapiImage";
 
-export interface Project {
+export interface Project extends LocalizedCollection {
   locale: Locale;
-  headerImage: StrapiImage;
-  seoImage: StrapiImage;
+  headerImage?: StrapiImage;
   title: string;
   slug: string;
-  seoTitle: string;
   startDate: Date;
-  endDate: Date;
-  workHours: number;
-  projectUrl: string;
+  endDate?: Date;
+  workHours?: number;
+  demoUrl?: string;
   tldr: string;
-  summary: string;
-  links: ProjectLink[];
-  technologies: Skill[];
+  summary?: StrapiBulletList;
+  links?: StrapiLink[];
+  technologies?: Skill[];
 }
 
 export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
@@ -44,12 +44,10 @@ export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
       technologies,
     } = rawCollection.attributes;
 
+    console.log(links);
+
     const startDate = new Date(start);
     const endDate = new Date(end);
-
-    const linksArray = links?.data.map((link: RawStrapiCollection) => {
-      return new ProjectLink(link);
-    });
 
     const technologiesArray = technologies?.data.map(
       (tech: RawStrapiCollection) => {
@@ -74,7 +72,6 @@ export class ProjectFactory extends LocalizedStrapiCollectionFactory<Project> {
       projectUrl: url,
       tldr,
       summary,
-      links: linksArray,
       technologies: technologiesArray,
     };
   }
