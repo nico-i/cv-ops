@@ -1,0 +1,48 @@
+query GetProjects($locale: I18NLocaleCode!) {
+  projects(locale: $locale, sort: "start:desc") {
+    data {
+      id
+      attributes {
+        locale
+        title
+        slug
+        start
+        end
+        tldr
+        summary
+        work_hours
+        demo_url
+        links {
+          text
+          url
+          icon {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+        technologies {
+          data {
+            id
+            attributes {
+              locale
+              name
+              proficiency
+              url
+              summary
+              svg {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

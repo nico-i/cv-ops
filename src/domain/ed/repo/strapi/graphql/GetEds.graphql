@@ -1,0 +1,23 @@
+query GetEds($locale: I18NLocaleCode!) {
+  eds(locale: $locale, sort: ["end:desc", "start:desc"]) {
+    data {
+      id
+      attributes {
+        locale
+        institute
+        start
+        end
+        degree
+        url
+        grade
+        doc {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

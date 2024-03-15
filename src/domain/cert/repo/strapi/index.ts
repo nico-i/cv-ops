@@ -1,0 +1,1 @@
+export { CertStrapiRepo } from "./strapi";

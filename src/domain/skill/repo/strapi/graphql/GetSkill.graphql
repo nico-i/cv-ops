@@ -1,0 +1,21 @@
+query GetSkills($locale: I18NLocaleCode!) {
+  skills(locale: $locale, sort: ["priority:desc", "name"]) {
+    data {
+      id
+      attributes {
+        locale
+        name
+        proficiency
+        url
+        summary
+        svg {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

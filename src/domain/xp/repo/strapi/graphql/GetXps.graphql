@@ -1,0 +1,16 @@
+query GetXps($locale: I18NLocaleCode!) {
+  xps(locale: $locale, sort: "start:desc") {
+    data {
+      id
+      attributes {
+        locale
+        position
+        company
+        info
+        start
+        end
+        url
+      }
+    }
+  }
+}

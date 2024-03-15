@@ -1,0 +1,23 @@
+query GetVolunteers($locale: I18NLocaleCode!) {
+  volunteers(locale: $locale, sort: "start:desc") {
+    data {
+      id
+      attributes {
+        locale
+        org
+        activity
+        info
+        start
+        end
+        url
+        doc {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

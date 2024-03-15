@@ -1,0 +1,1 @@
+export { ProjectStrapiRepo } from "./strapi";

@@ -1,0 +1,19 @@
+query GetLangs($locale: I18NLocaleCode!) {
+  langs(locale: $locale, sort: "level:desc") {
+    data {
+      id
+      attributes {
+        locale
+        name
+        level
+        doc {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

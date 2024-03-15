@@ -1,15 +1,22 @@
 ---
-import { StrapiClient } from "@infra/strapi";
-import { SkillFactory } from "@domain/Skill";
-import { certFactory } from "@domain/Cert";
-import { ProjectFactory } from "@domain/Project";
+import { CertStrapiRepo } from "@domain/cert/repo/strapi";
+import { EdStrapiRepo } from "@domain/ed/repo/strapi";
+import { LangStrapiRepo } from "@domain/lang/repo/strapi";
+import { ProjectStrapiRepo } from "@domain/project/repo/strapi";
+import { SkillStrapiRepo } from "@domain/skill/repo/strapi";
+import { VolunteerStrapiRepo } from "@domain/volunteer/repo/strapi";
+import { XpStrapiRepo } from "@domain/xp/repo/strapi";
+import { Locale } from "@util/types/Locale";
 
-const skillFactory = new SkillFactory();
-const skills =  skillFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(skillFactory.ENDPOINT))
+const localizedCerts = await CertStrapiRepo.getAllLocalized();
+const localizedEds = await EdStrapiRepo.getAllLocalized();
+const localizedLangs = await LangStrapiRepo.getAllLocalized();
+const localizedSkills = await SkillStrapiRepo.getAllLocalized();
+const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
+const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
+const localizedXps = await XpStrapiRepo.getAllLocalized();
 
-const certs = certFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(certFactory.ENDPOINT))
-const projectFactory = new ProjectFactory();
-const projects = projectFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(projectFactory.ENDPOINT))
+const currentLocale: Locale= Object.values<string>(Locale)[0] as Locale;
 ---
 
 <html lang="en" class="bg-stone-900 text-white print:h-[297mm] print:w-[210mm]">
@@ -20,8 +27,18 @@ const projects = projectFactory.parseL10nFromApiRes(await StrapiClient.fetchApi(
 		<title>CV | Nico Ismaili</title>
 	</head>
 	<body>
-		{skills.map((skill) => <div>{skill.en?.name}</div>)}
-		<br/>
-		{certs.map((cert) => <div>{cert.en?.title}</div>)}
+		{localizedCerts.map((cert) => <div>{cert[currentLocale]?.title}</div>)}
+		<br />
+		{localizedEds.map((ed) => <div>{ed[currentLocale]?.degree}</div>)}
+		<br />
+		{localizedLangs.map((lang) => <div>{lang[currentLocale]?.name}</div>)}
+		<br />
+		{localizedSkills.map((skill) => <div>{skill[currentLocale]?.name}</div>)}
+		<br />
+		{localizedProjects.map((project) => <div>{project[currentLocale]?.title}</div>)}
+		<br />
+		{localizedVolunteers.map((volunteer) => <div>{volunteer[currentLocale]?.activity}</div>)}
+		<br />
+		{localizedXps.map((xp) => <div>{xp[currentLocale]?.position}</div>)}
 	</body>
 </html>

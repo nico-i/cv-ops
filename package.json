@@ -5,6 +5,8 @@
     "@astrojs/check": "^0.5.6",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.4.11",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
   },
@@ -13,7 +15,20 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen:gql": "bunx graphql-codegen",
+    "gen:gql:watch": "bunx graphql-codegen --watch",
+    "o:gql": "dotenvx run -- xdg-open $STRAPI_URL/graphql",
+    "o:cms": "dotenvx run -- xdg-open $STRAPI_URL/admin"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^0.25.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@parcel/watcher": "^2.4.1",
+    "@types/node": "^20.11.25"
+  }
 }

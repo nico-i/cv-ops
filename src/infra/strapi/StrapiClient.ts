@@ -1,22 +1,10 @@
-import type { StrapiRes } from "@infra/strapi";
+import { GraphQLClient } from "graphql-request";
+import { getSdk } from "src/__generated__/gql";
 
-export class StrapiClient {
-  /**
-   * Fetches data from the Strapi API
-   * @returns
-   */
-  public static async fetchApi(endpoint: string, pop): Promise<StrapiRes> {
-    const url = new URL(
-      `${
-        import.meta.env.STRAPI_URL
-      }/api/${endpoint}?populate[links][populate]=*`
-    );
+const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL + "/graphql", {
+  headers: {
+    Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
+  },
+});
 
-    const res = await fetch(url.toString(), {
-      headers: [
-        ["Authorization", "bearer " + import.meta.env.STRAPI_API_TOKEN],
-      ],
-    });
-    return await res.json();
-  }
-}
+export const StrapiClient = getSdk(gqlClient);

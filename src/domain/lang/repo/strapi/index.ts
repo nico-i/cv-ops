@@ -1,0 +1,1 @@
+export { LangStrapiRepo } from "./strapi";
