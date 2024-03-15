@@ -2046,6 +2046,13 @@ export type GetEdsQueryVariables = Exact<{
 
 export type GetEdsQuery = { __typename?: 'Query', eds?: { __typename?: 'EdEntityResponseCollection', data: Array<{ __typename?: 'EdEntity', id?: string | null, attributes?: { __typename?: 'Ed', locale?: string | null, institute: string, start: any, end?: any | null, degree: string, url?: string | null, grade: string, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
+export type GetInterestsQueryVariables = Exact<{
+  locale: Scalars['I18NLocaleCode']['input'];
+}>;
+
+
+export type GetInterestsQuery = { __typename?: 'Query', interests?: { __typename?: 'InterestEntityResponseCollection', data: Array<{ __typename?: 'InterestEntity', id?: string | null, attributes?: { __typename?: 'Interest', locale?: string | null, name: string } | null }> } | null };
+
 export type GetLangsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
 }>;
@@ -2126,6 +2133,19 @@ export const GetEdsDocument = gql`
             }
           }
         }
+      }
+    }
+  }
+}
+    `;
+export const GetInterestsDocument = gql`
+    query GetInterests($locale: I18NLocaleCode!) {
+  interests(locale: $locale, sort: "name") {
+    data {
+      id
+      attributes {
+        locale
+        name
       }
     }
   }
@@ -2281,6 +2301,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetEds(variables: GetEdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEdsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetEdsQuery>(GetEdsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEds', 'query', variables);
+    },
+    GetInterests(variables: GetInterestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetInterestsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetInterestsQuery>(GetInterestsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetInterests', 'query', variables);
     },
     GetLangs(variables: GetLangsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetLangsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetLangsQuery>(GetLangsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetLangs', 'query', variables);

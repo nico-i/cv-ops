@@ -1,6 +1,7 @@
 ---
 import { CertStrapiRepo } from "@domain/cert/repo/strapi";
 import { EdStrapiRepo } from "@domain/ed/repo/strapi";
+import { InterestStrapiRepo } from "@domain/interest/repo/strapi";
 import { LangStrapiRepo } from "@domain/lang/repo/strapi";
 import { ProjectStrapiRepo } from "@domain/project/repo/strapi";
 import { SkillStrapiRepo } from "@domain/skill/repo/strapi";
@@ -15,6 +16,7 @@ const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
 const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 const localizedXps = await XpStrapiRepo.getAllLocalized();
+const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 
 const currentLocale: Locale= Object.values<string>(Locale)[0] as Locale;
 ---
@@ -40,5 +42,7 @@ const currentLocale: Locale= Object.values<string>(Locale)[0] as Locale;
 		{localizedVolunteers.map((volunteer) => <div>{volunteer[currentLocale]?.activity}</div>)}
 		<br />
 		{localizedXps.map((xp) => <div>{xp[currentLocale]?.position}</div>)}
+		<br />
+		{localizedInterests.map((interest) => <div>{interest[currentLocale]?.name}</div>)}
 	</body>
 </html>
