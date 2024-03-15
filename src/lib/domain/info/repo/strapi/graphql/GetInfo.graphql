@@ -1,0 +1,38 @@
+query GetInfo($locale: I18NLocaleCode!) {
+  info(locale: $locale) {
+    data {
+      id
+      attributes {
+        locale
+        name
+        phone
+        address
+        dob
+        bio
+        portrait {
+          data {
+            id
+            attributes {
+              alternativeText
+              width
+              height
+              formats
+              url
+            }
+          }
+        }
+        contact {
+          text
+          url
+          icon {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

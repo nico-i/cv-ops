@@ -364,8 +364,8 @@ export type IdFilterInput = {
 
 export type Info = {
   __typename?: 'Info';
-  Bio?: Maybe<Scalars['String']['output']>;
   address: Scalars['String']['output'];
+  bio?: Maybe<Scalars['String']['output']>;
   contact?: Maybe<Array<Maybe<ComponentCommonLink>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   dob: Scalars['Date']['output'];
@@ -396,8 +396,8 @@ export type InfoEntityResponse = {
 };
 
 export type InfoInput = {
-  Bio?: InputMaybe<Scalars['String']['input']>;
   address?: InputMaybe<Scalars['String']['input']>;
+  bio?: InputMaybe<Scalars['String']['input']>;
   contact?: InputMaybe<Array<InputMaybe<ComponentCommonLinkInput>>>;
   dob?: InputMaybe<Scalars['Date']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2046,6 +2046,13 @@ export type GetEdsQueryVariables = Exact<{
 
 export type GetEdsQuery = { __typename?: 'Query', eds?: { __typename?: 'EdEntityResponseCollection', data: Array<{ __typename?: 'EdEntity', id?: string | null, attributes?: { __typename?: 'Ed', locale?: string | null, institute: string, start: any, end?: any | null, degree: string, url?: string | null, grade: string, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
+export type GetInfoQueryVariables = Exact<{
+  locale: Scalars['I18NLocaleCode']['input'];
+}>;
+
+
+export type GetInfoQuery = { __typename?: 'Query', info?: { __typename?: 'InfoEntityResponse', data?: { __typename?: 'InfoEntity', id?: string | null, attributes?: { __typename?: 'Info', locale?: string | null, name: string, phone: string, address: string, dob: any, bio?: string | null, portrait: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', alternativeText?: string | null, width?: number | null, height?: number | null, formats?: any | null, url: string } | null } | null }, contact?: Array<{ __typename?: 'ComponentCommonLink', text: string, url: string, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null> | null } | null } | null } | null };
+
 export type GetInterestsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
 }>;
@@ -2130,6 +2137,46 @@ export const GetEdsDocument = gql`
           data {
             attributes {
               url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetInfoDocument = gql`
+    query GetInfo($locale: I18NLocaleCode!) {
+  info(locale: $locale) {
+    data {
+      id
+      attributes {
+        locale
+        name
+        phone
+        address
+        dob
+        bio
+        portrait {
+          data {
+            id
+            attributes {
+              alternativeText
+              width
+              height
+              formats
+              url
+            }
+          }
+        }
+        contact {
+          text
+          url
+          icon {
+            data {
+              attributes {
+                url
+              }
             }
           }
         }
@@ -2313,6 +2360,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetEds(variables: GetEdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetEdsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetEdsQuery>(GetEdsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetEds', 'query', variables);
+    },
+    GetInfo(variables: GetInfoQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetInfoQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetInfoQuery>(GetInfoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetInfo', 'query', variables);
     },
     GetInterests(variables: GetInterestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetInterestsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetInterestsQuery>(GetInterestsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetInterests', 'query', variables);

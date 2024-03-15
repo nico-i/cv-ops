@@ -1,14 +1,18 @@
 ---
+import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
+import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
+import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
+import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
+import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
+import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
+import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
+import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
+import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
+
 import { Typography } from "@/components/Typography";
-import { CertStrapiRepo } from "@/domain/cert/repo/strapi";
-import { EdStrapiRepo } from "@/domain/ed/repo/strapi";
-import { InterestStrapiRepo } from "@/domain/interest/repo/strapi";
-import { LangStrapiRepo } from "@/domain/lang/repo/strapi";
-import { ProjectStrapiRepo } from "@/domain/project/repo/strapi";
-import { SkillStrapiRepo } from "@/domain/skill/repo/strapi";
-import { VolunteerStrapiRepo } from "@/domain/volunteer/repo/strapi";
-import { XpStrapiRepo } from "@/domain/xp/repo/strapi";
+
 import { Locale } from "@/lib/types/Locale";
+
 import "@/styles/globals.css";
 
 const localizedCerts = await CertStrapiRepo.getAllLocalized();
@@ -20,23 +24,9 @@ const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 const localizedXps = await XpStrapiRepo.getAllLocalized();
 const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 
-const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
+const localizedInfo = await InfoStrapiRepo.getAllLocalized();
 
-// {localizedCerts.map((cert) => <div>{cert[currentLocale]?.title}</div>)}
-// 		<br />
-// 		{localizedEds.map((ed) => <div>{ed[currentLocale]?.degree}</div>)}
-// 		<br />
-// 		{localizedLangs.map((lang) => <div>{lang[currentLocale]?.name}</div>)}
-// 		<br />
-// 		{localizedSkills.map((skill) => <div>{skill[currentLocale]?.name}</div>)}
-// 		<br />
-// 		{localizedProjects.map((project) => <div>{project[currentLocale]?.title}</div>)}
-// 		<br />
-// 		{localizedVolunteers.map((volunteer) => <div>{volunteer[currentLocale]?.activity}</div>)}
-// 		<br />
-// 		{localizedXps.map((xp) => <div>{xp[currentLocale]?.position}</div>)}
-// 		<br />
-// 		{localizedInterests.map((interest) => <div>{interest[currentLocale]?.name}</div>)}
+const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
 ---
 
 <html lang="en" class="text-text-body bg-bg-page">
@@ -47,9 +37,9 @@ const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
     <title>CV | Nico Ismaili</title>
   </head>
   <body>
-    <Typography ele="h1">Nico Ismaili</Typography>
+    <Typography ele="h1">{localizedInfo[0]?.[currentLocale]?.name}</Typography>
 
-	<!-- Auto Theme Switcher Script -->
+    <!-- Auto Theme Switcher Script -->
     <script is:inline>
       const getThemePreference = () => {
         if (
@@ -77,4 +67,4 @@ const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
       }
     </script>
   </body>
-</html>@/lib/types/Locale
+</html>
