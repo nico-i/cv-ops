@@ -1,0 +1,38 @@
+---
+import { BulletList } from "@/components/ui/BulletList";
+import { BulletListItem } from "@/components/ui/BulletListItem";
+import { Typography } from "@/components/ui/Typography";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Interest } from "@/lib/domain/interest";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+import type { ReactElement } from "react";
+
+interface Props {
+  localizedInterests: EntityByLocale<Interest>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedInterests, locale } = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <Typography ele="h3">Interests</Typography>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    {
+      localizedInterests && (
+        <BulletList>
+          {localizedInterests?.map(
+            (interest): ReactElement => (
+              <BulletListItem>{interest[locale]?.name}</BulletListItem>
+            )
+          )}
+        </BulletList>
+      )
+    }
+  </CardContent>
+</Card>
