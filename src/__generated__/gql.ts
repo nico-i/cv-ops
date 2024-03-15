@@ -372,6 +372,7 @@ export type Info = {
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<InfoRelationResponseCollection>;
   name: Scalars['String']['output'];
+  occupation: Scalars['String']['output'];
   phone: Scalars['String']['output'];
   portrait: UploadFileEntityResponse;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -401,6 +402,7 @@ export type InfoInput = {
   contact?: InputMaybe<Array<InputMaybe<ComponentCommonLinkInput>>>;
   dob?: InputMaybe<Scalars['Date']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  occupation?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   portrait?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -2051,7 +2053,7 @@ export type GetInfoQueryVariables = Exact<{
 }>;
 
 
-export type GetInfoQuery = { __typename?: 'Query', info?: { __typename?: 'InfoEntityResponse', data?: { __typename?: 'InfoEntity', id?: string | null, attributes?: { __typename?: 'Info', locale?: string | null, name: string, phone: string, address: string, dob: any, bio?: string | null, portrait: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', alternativeText?: string | null, width?: number | null, height?: number | null, formats?: any | null, url: string } | null } | null }, contact?: Array<{ __typename?: 'ComponentCommonLink', text: string, url: string, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null> | null } | null } | null } | null };
+export type GetInfoQuery = { __typename?: 'Query', info?: { __typename?: 'InfoEntityResponse', data?: { __typename?: 'InfoEntity', id?: string | null, attributes?: { __typename?: 'Info', locale?: string | null, name: string, phone: string, address: string, dob: any, bio?: string | null, occupation: string, portrait: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', alternativeText?: string | null, width?: number | null, height?: number | null, formats?: any | null, url: string } | null } | null }, contact?: Array<{ __typename?: 'ComponentCommonLink', text: string, url: string, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null> | null } | null } | null } | null };
 
 export type GetInterestsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -2157,6 +2159,7 @@ export const GetInfoDocument = gql`
         address
         dob
         bio
+        occupation
         portrait {
           data {
             id

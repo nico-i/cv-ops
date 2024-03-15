@@ -18,6 +18,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Info> {
       dob,
       bio,
       portrait,
+      occupation,
       contact,
     } = res.info?.data?.attributes!;
 
@@ -32,15 +33,19 @@ class StrapiRepository extends LocalizedStrapiRepo<Info> {
       portraitAttributes?.alternativeText!
     );
 
-    const contacts = contact?.map(
-      (resContact) =>
-        new StrapiLink(
-          resContact?.text!,
-          resContact?.url!,
-          resContact?.icon?.data?.attributes?.url
-            ? new StrapiSvg(resContact?.icon?.data?.attributes?.url)
-            : undefined
-        )
+    const contacts = await Promise.all(
+      contact?.map(
+        async (resContact): Promise<StrapiLink> =>
+          new StrapiLink(
+            resContact?.text!,
+            resContact?.url!,
+            resContact?.icon?.data?.attributes?.url
+              ? await new StrapiSvg(
+                  resContact?.icon?.data?.attributes?.url
+                ).fetchHtml()
+              : undefined
+          )
+      ) ?? []
     );
 
     return [
@@ -49,10 +54,11 @@ class StrapiRepository extends LocalizedStrapiRepo<Info> {
         resLocale as Locale,
         portraitImage,
         address,
+        occupation,
         name,
         phone,
         dob,
-        contacts,
+        await Promise.all(contacts),
         bio ?? undefined
       ),
     ];

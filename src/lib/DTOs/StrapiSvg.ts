@@ -1,15 +1,15 @@
 export class StrapiSvg {
   private _svgUrl: string;
-  private _html?: string;
+  public html?: string;
 
   constructor(url: string) {
     this._svgUrl = url;
   }
 
-  async fetchHtml(): Promise<string> {
-    if (!this._html) {
-      this._html = await fetch(this._svgUrl).then((res) => res.text());
+  async fetchHtml(): Promise<this> {
+    if (!this.html) {
+      this.html = await fetch(this._svgUrl).then((res) => res.text());
     }
-    return this._html;
+    return this;
   }
 }

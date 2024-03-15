@@ -10,6 +10,7 @@ export class Info extends LocalizedStrapiEntity {
     locale: Locale,
     public portrait: StrapiImage,
     public address: string,
+    public occupation: string,
     public name: string,
     public phone: string,
     dob: string,

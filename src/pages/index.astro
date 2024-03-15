@@ -1,30 +1,32 @@
 ---
-import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
-import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
-import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
-import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
-import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
-import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
-import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
-import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
-import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
+// import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
+// import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
+// import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
+// import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
+// import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
+// import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
+// import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
+// import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
 
-import { Typography } from "@/components/Typography";
+import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Typography } from "@/components/ui/Typography";
 
 import { Locale } from "@/lib/types/Locale";
 
 import "@/styles/globals.css";
+import Profile from "@/components/sections/Profile.astro";
 
-const localizedCerts = await CertStrapiRepo.getAllLocalized();
-const localizedEds = await EdStrapiRepo.getAllLocalized();
-const localizedLangs = await LangStrapiRepo.getAllLocalized();
-const localizedSkills = await SkillStrapiRepo.getAllLocalized();
-const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
-const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
-const localizedXps = await XpStrapiRepo.getAllLocalized();
-const localizedInterests = await InterestStrapiRepo.getAllLocalized();
+// const localizedCerts = await CertStrapiRepo.getAllLocalized();
+// const localizedEds = await EdStrapiRepo.getAllLocalized();
+// const localizedLangs = await LangStrapiRepo.getAllLocalized();
+// const localizedSkills = await SkillStrapiRepo.getAllLocalized();
+// const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
+// const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
+// const localizedXps = await XpStrapiRepo.getAllLocalized();
+// const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 
-const localizedInfo = await InfoStrapiRepo.getAllLocalized();
+const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
 
 const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
 ---
@@ -36,9 +38,20 @@ const currentLocale: Locale = Object.values<string>(Locale)[0] as Locale;
     <meta name="generator" content={Astro.generator} />
     <title>CV | Nico Ismaili</title>
   </head>
-  <body>
-    <Typography ele="h1">{localizedInfo[0]?.[currentLocale]?.name}</Typography>
-
+  <body class="flex mx-auto max-w-[215.9mm] gap-3 my-16">
+    <div class="w-2/5">
+      <Profile locale={currentLocale} localizedInfo={localizedInfo} />
+    </div>
+    <div class="w-3/5">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <Typography ele="h3">Experience</Typography>
+          </CardTitle>
+        </CardHeader>
+        <CardContent />
+      </Card>
+    </div>
     <!-- Auto Theme Switcher Script -->
     <script is:inline>
       const getThemePreference = () => {

@@ -1,10 +1,10 @@
-import { Project } from "@/lib/domain/project";
-import { Skill } from "@/lib/domain/skill";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
 import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
+import { Project } from "@/lib/domain/project";
+import { Skill } from "@/lib/domain/skill";
+import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
@@ -12,8 +12,8 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
   override async getAll(locale: Locale): Promise<Project[]> {
     const res = await StrapiClient.GetProjects({ locale });
 
-    const projects =
-      res.projects?.data.map((rawProject) => {
+    const projects = Promise.all(
+      res.projects?.data.map(async (rawProject) => {
         const {
           locale,
           title,
@@ -49,34 +49,39 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
           work_hours ?? undefined,
           summary ? new StrapiBulletList(summary) : undefined,
           demo_url ?? undefined,
-          links?.map((resLink) => {
-            const { text, url, icon } = resLink!;
-            return new StrapiLink(
-              text,
-              url,
-              icon?.data?.attributes?.url
-                ? new StrapiSvg(icon?.data?.attributes?.url)
-                : undefined
-            );
-          }),
-          technologies?.data.map((rawSkill) => {
-            const { locale, name, proficiency, url, summary, svg } =
-              rawSkill.attributes!;
+          await Promise.all(
+            links?.map(async (resLink) => {
+              const { text, url, icon } = resLink!;
+              return new StrapiLink(
+                text,
+                url,
+                icon?.data?.attributes?.url
+                  ? await new StrapiSvg(icon?.data?.attributes?.url).fetchHtml()
+                  : undefined
+              );
+            }) ?? []
+          ),
+          await Promise.all(
+            technologies?.data.map(async (rawSkill) => {
+              const { locale, name, proficiency, url, summary, svg } =
+                rawSkill.attributes!;
 
-            return new Skill(
-              rawSkill.id!,
-              locale as Locale,
-              name,
-              proficiency,
-              summary,
-              url,
-              svg?.data?.attributes?.url
-                ? new StrapiSvg(svg?.data?.attributes?.url)
-                : undefined
-            );
-          })
+              return new Skill(
+                rawSkill.id!,
+                locale as Locale,
+                name,
+                proficiency,
+                summary,
+                url,
+                svg?.data?.attributes?.url
+                  ? await new StrapiSvg(svg?.data?.attributes?.url).fetchHtml()
+                  : undefined
+              );
+            }) ?? []
+          )
         );
-      }) ?? [];
+      }) ?? []
+    );
 
     return projects;
   }

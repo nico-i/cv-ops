@@ -1,0 +1,80 @@
+---
+import { BulletList } from "@/components/ui/BulletList";
+import { BulletListItem } from "@/components/ui/BulletListItem";
+import { IconText } from "@/components/ui/IconText";
+import { Link } from "@/components/ui/Link";
+import { Svg } from "@/components/ui/Svg";
+import { Typography } from "@/components/ui/Typography";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Cake, MapPin, Phone } from "lucide-react";
+
+import { Info } from "@/lib/domain/info";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+import type { ReactElement } from "react";
+
+interface Props {
+  localizedInfo: EntityByLocale<Info> | undefined;
+  locale: Locale;
+}
+
+const { localizedInfo, locale } = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <img
+        src={localizedInfo?.[locale]?.portrait.url}
+        alt=""
+        class="rounded-full mb-3"
+      />
+      <Typography ele="h2">{localizedInfo?.[locale]?.name}</Typography>
+    </CardTitle>
+    <CardDescription>
+      {localizedInfo?.[locale]?.occupation}
+    </CardDescription>
+  </CardHeader>
+  <CardContent>
+    <IconText>
+      <Svg Icon={Cake} />
+      {
+        localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      }
+    </IconText>
+    <IconText>
+      <Svg Icon={Phone} />
+      <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
+        {localizedInfo?.[locale]?.phone}
+      </a>
+    </IconText>
+    <IconText>
+      <Svg Icon={MapPin} />
+      {localizedInfo?.[locale]?.address}
+    </IconText>
+    <BulletList hideBullets>
+      {
+        localizedInfo?.[locale]?.contacts?.map((contact) => (
+          <BulletListItem>
+            <Link href={contact.url} className="flex gap-2 items-center">
+              {contact.icon && (
+                <Svg strapiSvg={contact.icon} className="mt-1" />
+              )}
+              {contact.text}
+            </Link>
+          </BulletListItem>
+        )) as ReactElement[]
+      }
+    </BulletList>
+  </CardContent>
+</Card>

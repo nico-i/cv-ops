@@ -9,6 +9,7 @@ query GetInfo($locale: I18NLocaleCode!) {
         address
         dob
         bio
+        occupation
         portrait {
           data {
             id
