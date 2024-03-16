@@ -2334,7 +2334,7 @@ export const GetVolunteersDocument = gql`
     `;
 export const GetXpsDocument = gql`
     query GetXps($locale: I18NLocaleCode!) {
-  xps(locale: $locale, sort: ["end", "start:desc"]) {
+  xps(locale: $locale) {
     data {
       id
       attributes {

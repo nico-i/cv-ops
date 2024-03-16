@@ -24,6 +24,20 @@ class StrapiRepo extends LocalizedStrapiRepo<Xp> {
       );
     });
 
+    xps?.sort((a, b) => {
+     // if end date is not given put it to the top and sort by start date descending
+      if (a.end === undefined && b.end === undefined) {
+        return b.start.getTime() - a.start.getTime();
+      }
+      if (a.end === undefined) {
+        return -1;
+      }
+      if (b.end === undefined) {
+        return 1;
+      }
+      return b.start.getTime() - a.start.getTime();
+    });
+
     return xps ?? [];
   }
 }
