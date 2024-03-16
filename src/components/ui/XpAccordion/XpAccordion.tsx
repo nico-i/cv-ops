@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Circle,
   CircleDot,
+  ExternalLink,
   Wrench,
 } from "lucide-react";
 import { useState } from "react";
@@ -54,11 +55,22 @@ export const XpAccordion = ({
               )}
               <div className="w-[0.1rem] bg-current h-full -mt-[1px] rounded-full" />
             </div>
-            <AccordionTrigger className="flex flex-col gap-0.5 pb-3 z-10 bg-background">
+            <div className="flex flex-col gap-0.5 pb-3 z-10 bg-background">
               <div className="flex justify-between items-center">
                 <div className="flex flex-col">
-                  <Typography ele="large" className="self-start">
+                  <Typography
+                    ele="large"
+                    className="self-start flex items-center gap-1.5"
+                  >
                     {currentLocaleXp?.company}
+                    <a
+                      href={currentLocaleXp?.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-muted-foreground hover:text-primary"
+                    >
+                      <Svg Icon={ExternalLink} />
+                    </a>
                   </Typography>
 
                   <div className="flex flex-col">
@@ -84,15 +96,17 @@ export const XpAccordion = ({
                     </IconText>
                   </div>
                 </div>
-                <Svg
-                  Icon={ChevronDown}
-                  className={clsx(
-                    "transition-transform duration-200 print:hidden",
-                    isCurrentLocaleXp && "rotate-180"
-                  )}
-                />
+                <AccordionTrigger>
+                  <Svg
+                    Icon={ChevronDown}
+                    className={clsx(
+                      "transition-transform duration-200 print:hidden",
+                      isCurrentLocaleXp && "rotate-180"
+                    )}
+                  />
+                </AccordionTrigger>
               </div>
-            </AccordionTrigger>
+            </div>
             <AccordionContent className="pb-6 animate-accordion-down">
               {currentLocaleXp?.info?.listItems && (
                 <BulletList>

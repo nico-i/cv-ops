@@ -4,7 +4,6 @@ import type { LucideProps } from "lucide-react";
 import type { ComponentType } from "react";
 
 export type SvgProps = {
-  size?: "small" | "medium" | "large";
   className?: string;
 } & (
   | {
@@ -17,26 +16,17 @@ export type SvgProps = {
     }
 );
 
-export const Svg = ({
-  strapiSvg,
-  size = "medium",
-  className,
-  Icon,
-}: Readonly<SvgProps>) => {
-  const stylesBySize = {
-    small: "max-h-3 w-3",
-    medium: "max-h-4 w-4",
-    large: "h-5 w-5",
-  };
+export const Svg = ({ strapiSvg, className, Icon }: Readonly<SvgProps>) => {
+  const classes = "max-h-4 w-4";
 
-  if (Icon) return <Icon className={cn(stylesBySize[size], className)} />;
+  if (Icon) return <Icon className={cn(classes, className)} />;
 
   return (
     <span
       dangerouslySetInnerHTML={
         strapiSvg ? { __html: strapiSvg.html || "" } : undefined
       }
-      className={cn(stylesBySize[size], className)}
+      className={cn(classes, className)}
     />
   );
 };
