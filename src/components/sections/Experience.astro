@@ -1,0 +1,30 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Typography } from "@/components/ui/Typography";
+import { XpAccordion } from "@/components/ui/XpAccordion";
+import type { Xp } from "@/lib/domain/xp";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+
+interface Props {
+  localizedXps: EntityByLocale<Xp>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedXps, locale }: Props = Astro.props;
+---
+
+<Card className="h-min">
+  <CardHeader>
+    <CardTitle>
+      <Typography ele="h3">Experience</Typography>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    {
+      localizedXps && (
+        <XpAccordion localizedXps={localizedXps} locale={locale} client:load />
+      )
+    }
+  </CardContent>
+</Card>

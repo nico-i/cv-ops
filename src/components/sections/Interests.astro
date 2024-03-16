@@ -1,6 +1,5 @@
 ---
 import { BulletList } from "@/components/ui/BulletList";
-import { BulletListItem } from "@/components/ui/BulletListItem";
 import { Typography } from "@/components/ui/Typography";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Interest } from "@/lib/domain/interest";
@@ -28,7 +27,7 @@ const { localizedInterests, locale } = Astro.props;
         <BulletList>
           {localizedInterests?.map(
             (interest): ReactElement => (
-              <BulletListItem>{interest[locale]?.name}</BulletListItem>
+              <li>{interest[locale]?.name}</li>
             )
           )}
         </BulletList>

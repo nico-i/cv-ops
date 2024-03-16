@@ -1,6 +1,4 @@
 ---
-import { BulletList } from "@/components/ui/BulletList";
-import { BulletListItem } from "@/components/ui/BulletListItem";
 import { IconText } from "@/components/ui/IconText";
 import { Link } from "@/components/ui/Link";
 import { Svg } from "@/components/ui/Svg";
@@ -14,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Cake, MapPin, Phone } from "lucide-react";
 
+import { BulletList } from "@/components/ui/BulletList";
 import { Info } from "@/lib/domain/info";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
@@ -67,14 +66,14 @@ const { localizedInfo, locale } = Astro.props;
     <BulletList hideBullets id="contact">
       {
         localizedInfo?.[locale]?.contacts?.map((contact) => (
-          <BulletListItem>
+          <li>
             <Link href={contact.url} className="flex gap-2 items-center">
               {contact.icon && (
                 <Svg strapiSvg={contact.icon} className="mt-1" />
               )}
               {contact.text}
             </Link>
-          </BulletListItem>
+          </li>
         )) as ReactElement[]
       }
     </BulletList>

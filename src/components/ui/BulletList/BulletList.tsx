@@ -1,11 +1,8 @@
-import type { BulletListItem } from "@/components/ui/BulletListItem";
 import clsx from "clsx";
 import type { ReactElement } from "react";
 
 export interface BulletListProps {
-  children:
-    | ReactElement<typeof BulletListItem>[]
-    | ReactElement<typeof BulletListItem>;
+  children: ReactElement<HTMLLIElement> | ReactElement<HTMLLIElement>[];
   hideBullets?: boolean;
   id?: string;
 }

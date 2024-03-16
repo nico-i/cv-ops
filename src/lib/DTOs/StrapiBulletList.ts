@@ -2,6 +2,8 @@ export class StrapiBulletList {
   public listItems: string[];
 
   constructor(resString: string) {
-    this.listItems = resString.split("\n- ");
+    let resStringNoPrefix  = resString.replaceAll("- ", "");
+    
+    this.listItems = resStringNoPrefix.split("\n");
   }
 }

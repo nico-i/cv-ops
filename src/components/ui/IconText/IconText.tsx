@@ -13,7 +13,7 @@ export const IconText = ({
   ele = "span",
 }: Readonly<IconTextProps>) => {
   return (
-    <Typography ele={ele} className="inline-flex items-center gap-2">
+    <Typography ele={ele} className="inline-flex items-center gap-1.5">
       {children}
     </Typography>
   );
