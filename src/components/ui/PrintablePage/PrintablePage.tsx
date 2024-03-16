@@ -8,7 +8,12 @@ export interface PrintablePageProps {
 
 export const PrintablePage = ({ children, className }: PrintablePageProps) => {
   return (
-    <article className={clsx("w-[215.9mm] h-[297mm] mx-auto border border-pink-700 p-1.5", className)}>
+    <article
+      className={clsx(
+        "w-full lg:w-[215.9mm] h-full lg:h-[297mm] mx-auto p-1.5 bg-background shadow-lg shadow-black/40 print:shadow-none",
+        className
+      )}
+    >
       {children}
     </article>
   );

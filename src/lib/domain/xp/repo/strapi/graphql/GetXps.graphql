@@ -1,5 +1,5 @@
 query GetXps($locale: I18NLocaleCode!) {
-  xps(locale: $locale, sort: "start:desc") {
+  xps(locale: $locale, sort: ["end","start:desc"]) {
     data {
       id
       attributes {

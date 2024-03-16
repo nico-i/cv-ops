@@ -1,5 +1,11 @@
 ---
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Typography } from "@/components/ui/Typography";
 import { XpAccordion } from "@/components/ui/XpAccordion";
 import type { Xp } from "@/lib/domain/xp";
@@ -14,14 +20,12 @@ interface Props {
 const { localizedXps, locale }: Props = Astro.props;
 ---
 
-<Card className="h-min">
+<Card>
   <CardHeader>
     <CardTitle>
       <Typography ele="h3">Experience</Typography>
     </CardTitle>
-    <CardDescription>
-      My professional journey up to now.
-    </CardDescription>
+    <CardDescription> My professional journey up to now. </CardDescription>
   </CardHeader>
   <CardContent>
     {

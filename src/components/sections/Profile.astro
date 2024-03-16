@@ -31,8 +31,8 @@ const { localizedInfo, locale } = Astro.props;
     <CardTitle>
       <img
         src={localizedInfo?.[locale]?.portrait.url}
-        alt=""
-        class="rounded-full mb-3"
+        alt="Portrait Nico Ismaili"
+        class="rounded-full mb-3 aspect-square w-40 mx-auto"
       />
       <Typography ele="h2">{localizedInfo?.[locale]?.name}</Typography>
     </CardTitle>

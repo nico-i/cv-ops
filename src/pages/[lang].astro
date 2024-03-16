@@ -8,9 +8,9 @@ import Interests from "@/components/sections/Interests.astro";
 import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
 import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
 import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
+import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
 
 // import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
-// import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
 // import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
 // import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
 // import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
@@ -19,9 +19,9 @@ import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
 import { PrintablePage } from "@/components/ui/PrintablePage";
 
 import { Locale } from "@/lib/types/Locale";
+import Education from "@/components/sections/Education.astro";
 
 // const localizedCerts = await CertStrapiRepo.getAllLocalized();
-// const localizedEds = await EdStrapiRepo.getAllLocalized();
 // const localizedLangs = await LangStrapiRepo.getAllLocalized();
 // const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 // const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
@@ -39,6 +39,7 @@ const { lang } = Astro.params;
 
 const localizedXps = await XpStrapiRepo.getAllLocalized();
 const localizedInterests = await InterestStrapiRepo.getAllLocalized();
+const localizedEds = await EdStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
 ---
@@ -50,14 +51,19 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
     <meta name="generator" content={Astro.generator} />
     <title>CV | Nico Ismaili</title>
   </head>
-  <body class="mx-auto">
-    <PrintablePage className="grid gap-3 grid-cols-[34%,auto]">
-      <div class="flex flex-col gap-3">
+  <body
+    class="mx-auto print:m-0 bg-zinc-800 print:bg-background lg:p-12 print:p-0 flex flex-col gap-0 lg:gap-3 print:gap-0"
+  >
+    <PrintablePage
+      className="grid gap-1.5 grid-cols-1 lg:grid-cols-[34%,auto] auto-cols-min"
+    >
+      <div class="flex flex-col gap-1.5">
         <Profile locale={lang} localizedInfo={localizedInfo} />
         <Interests locale={lang} localizedInterests={localizedInterests} />
       </div>
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-1.5">
         <Experience locale={lang} localizedXps={localizedXps} />
+        <Education locale={lang} localizedEds={localizedEds} />
       </div>
     </PrintablePage>
 
