@@ -9,21 +9,21 @@ import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
 import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
 import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
 import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
+import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 
 // import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
 // import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
 // import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
-// import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 // import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
 
 import { PrintablePage } from "@/components/ui/PrintablePage";
 
 import { Locale } from "@/lib/types/Locale";
 import Education from "@/components/sections/Education.astro";
+import Skills from "@/components/sections/Skills.astro";
 
 // const localizedCerts = await CertStrapiRepo.getAllLocalized();
 // const localizedLangs = await LangStrapiRepo.getAllLocalized();
-// const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 // const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
 // const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 
@@ -40,6 +40,7 @@ const { lang } = Astro.params;
 const localizedXps = await XpStrapiRepo.getAllLocalized();
 const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 const localizedEds = await EdStrapiRepo.getAllLocalized();
+const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
 ---
@@ -60,6 +61,7 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
       <div class="flex flex-col gap-1.5">
         <Profile locale={lang} localizedInfo={localizedInfo} />
         <Interests locale={lang} localizedInterests={localizedInterests} />
+        <Skills locale={lang} localizedSkills={localizedSkills} />
       </div>
       <div class="flex flex-col gap-1.5">
         <Experience locale={lang} localizedXps={localizedXps} />

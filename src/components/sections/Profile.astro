@@ -65,16 +65,20 @@ const { localizedInfo, locale } = Astro.props;
     </div>
     <BulletList hideBullets id="contact">
       {
-        localizedInfo?.[locale]?.contacts?.map((contact) => (
-          <li>
-            <Link href={contact.url} className="flex gap-2 items-center">
-              {contact.icon && (
-                <Svg strapiSvg={contact.icon} className="mt-1" />
-              )}
-              {contact.text}
-            </Link>
-          </li>
-        )) as ReactElement[]
+        localizedInfo?.[locale]?.contacts?.map((contact) => {
+          if (!contact.icon) {
+            return null;
+          }
+
+          return (
+            <li>
+              <Link href={contact.url} className="flex gap-2 items-center">
+                <Svg strapiSvg={contact.icon} className="mb-1" />
+                {contact.text}
+              </Link>
+            </li>
+          );
+        }) as ReactElement[]
       }
     </BulletList>
   </CardContent>

@@ -1,0 +1,61 @@
+---
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+import { ExternalIconLink } from "@/components/ui/ExternalIconLink";
+import { Gauge } from "@/components/ui/Gauge";
+import { Svg } from "@/components/ui/Svg";
+import { Typography } from "@/components/ui/Typography";
+import type { Skill } from "@/lib/domain/skill";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+
+interface Props {
+  localizedSkills: EntityByLocale<Skill>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedSkills, locale }: Props = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <Typography ele="h3">Skills</Typography>
+    </CardTitle>
+    <CardDescription> My strengths and weaknesses. </CardDescription>
+  </CardHeader>
+  <CardContent className="flex flex-wrap gap-6 bg-pink-500">
+    {
+      localizedSkills?.map((skill) => {
+        const localizedSkill = skill[locale];
+        if (!localizedSkill.svg) {
+          return null;
+        }
+        return (
+          <>
+            <Gauge radius={50} percentage={50} />
+            <Svg
+              className="flex"
+              strapiSvg={localizedSkill.svg}
+              size="lg"
+              client:load
+            >
+              <div class="flex items-center gap-1.5">
+                {localizedSkill.name}
+                {localizedSkill.url && (
+                  <ExternalIconLink href={localizedSkill.url} />
+                )}
+              </div>
+            </Svg>
+          </>
+        );
+      })
+    }
+  </CardContent>
+</Card>
