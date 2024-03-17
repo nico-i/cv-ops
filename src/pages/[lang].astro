@@ -11,23 +11,17 @@ import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
 import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
 import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
-
-// import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
+import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
 // import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
 // import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 // import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
-
-import { PrintablePage } from "@/components/ui/PrintablePage";
 
 import { Locale } from "@/lib/types/Locale";
 import Education from "@/components/sections/Education.astro";
 import Skills from "@/components/sections/Skills.astro";
 import Languages from "@/components/sections/Languages.astro";
-
-// const localizedCerts = await CertStrapiRepo.getAllLocalized();
-// const localizedSkills = await SkillStrapiRepo.getAllLocalized();
-// const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
-// const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
+import Certificates from "@/components/sections/Certificates.astro";
+import PrintablePage from "@/components/ui/PrintablePage.astro";
 
 export async function getStaticPaths() {
   const paths = Object.values(Locale).map((locale) => {
@@ -44,6 +38,10 @@ const localizedInterests = await InterestStrapiRepo.getAllLocalized();
 const localizedEds = await EdStrapiRepo.getAllLocalized();
 const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 const localizedLangs = await LangStrapiRepo.getAllLocalized();
+const localizedCerts = await CertStrapiRepo.getAllLocalized();
+// const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
+// const localizedSkills = await SkillStrapiRepo.getAllLocalized();
+// const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
 ---
@@ -62,7 +60,7 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
 
-    <title>Nico Ismaili</title>
+    <title>CV | Nico Ismaili</title>
   </head>
   <body
     class="mx-auto print:m-0 bg-zinc-900 print:bg-background lg:p-12 print:p-0 flex flex-col gap-0 lg:gap-3 print:gap-0"
@@ -79,6 +77,7 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
       <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
         <Experience locale={lang} localizedXps={localizedXps} />
         <Education locale={lang} localizedEds={localizedEds} />
+        <Certificates locale={lang} localizedCerts={localizedCerts} />
       </div>
 
       <div class="lg:hidden flex flex-col gap-1.5">

@@ -1,0 +1,33 @@
+---
+import { Typography } from "@/components/ui/Typography";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Cert } from "@/lib/domain/cert";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+
+interface Props {
+  localizedCerts: EntityByLocale<Cert>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedCerts, locale }: Props = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <Typography ele="h3">Education</Typography>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul>
+      {
+        localizedCerts?.map((cert) => {
+          const localizedCert = cert[locale];
+
+          return <>{localizedCert.title}</>;
+        })
+      }
+    </ul>
+  </CardContent>
+</Card>

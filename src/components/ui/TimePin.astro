@@ -1,0 +1,18 @@
+---
+import Svg from "@/components/ui/Svg.astro";
+import { Circle, CircleDot } from "lucide-react";
+
+export interface Props {
+  isCompleted: boolean;
+}
+
+const { isCompleted }: Props = Astro.props;
+---
+
+<div class="absolute h-full top-0 left-0 overflow-clip">
+  {isCompleted ? <Svg Icon={CircleDot} /> : <Svg Icon={Circle} />}
+  <div
+    class="w-[0.13rem] bg-current h-full mx-auto rounded-full -translate-y-1.5"
+  >
+  </div>
+</div>

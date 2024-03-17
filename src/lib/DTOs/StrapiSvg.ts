@@ -8,7 +8,9 @@ export class StrapiSvg {
 
   async fetchHtml(): Promise<this> {
     if (!this.html) {
-      this.html = await fetch(this._svgUrl).then((res) => res.text());
+      const fetchedHtml = await fetch(this._svgUrl).then((res) => res.text());
+      // TODO: Remove <title> in CMS instead of here
+      this.html = fetchedHtml.replace(/<title>.*<\/title>/, "");
     }
     return this;
   }

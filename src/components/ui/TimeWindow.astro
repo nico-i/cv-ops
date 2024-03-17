@@ -1,0 +1,25 @@
+---
+import DateWithIcon from "@/components/ui/DateWithIcon.astro";
+import { Typography } from "@/components/ui/Typography";
+import type { Locale } from "@/lib/types/Locale";
+
+export interface Props {
+  locale: Locale;
+  start: Date;
+  end: Date | undefined;
+}
+const { locale, start, end }: Props = Astro.props;
+---
+
+<Typography ele="muted" className="inline-flex gap-1.5 items-center">
+  <DateWithIcon date={start} locale={locale} />
+  <span>&ndash;</span>
+  {
+    end
+      ? end.toLocaleDateString(locale, {
+          year: "numeric",
+          month: "short",
+        })
+      : "Present"
+  }
+</Typography>

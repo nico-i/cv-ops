@@ -1,0 +1,13 @@
+---
+import { Typography, type TypographyProps } from "@/components/ui/Typography";
+
+interface Props {
+  ele?: TypographyProps["ele"];
+}
+
+const { ele = "span" }: Props = Astro.props;
+---
+
+<Typography ele={ele} className="inline-flex items-center gap-1.5">
+  <slot />
+</Typography>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  radius: number;
+  strokeWidth?: number;
+  percentage: number;
+}
+
+const { radius, strokeWidth = 4, percentage }: Props = Astro.props;
+
+const circumference = radius * 2 * Math.PI;
+const offset = circumference - (percentage / 100) * circumference;
+const size = radius * 2 + strokeWidth;
+---
+
+<div class="relative flex justify-center items-center">
+  <svg height={size} width={size} class="relative">
+    <circle
+      stroke-dashoffset={offset}
+      class="transition-[stroke-dashoffset] duration-300 ease-in-out rotate-90 origin-center"
+      stroke-dasharray={`${circumference} ${circumference}`}
+      stroke="currentColor"
+      stroke-width={strokeWidth}
+      stroke-linecap="round"
+      fill="transparent"
+      r={radius}
+      cx="50%"
+      cy="50%"></circle>
+  </svg>
+  <div class="absolute -mt-1"><slot /></div>
+</div>

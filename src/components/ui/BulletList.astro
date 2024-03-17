@@ -1,0 +1,11 @@
+---
+interface Props {
+  hideBullets?: boolean;
+}
+
+const { hideBullets }: Props = Astro.props;
+---
+
+<ul class:list={["flex flex-col gap-2", !hideBullets && "ml-6 list-disc"]}>
+  <slot />
+</ul>

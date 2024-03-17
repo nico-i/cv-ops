@@ -1,7 +1,8 @@
 ---
-import { IconText } from "@/components/ui/IconText";
-import { Link } from "@/components/ui/Link";
-import { Svg } from "@/components/ui/Svg";
+import BulletList from "@/components/ui/BulletList.astro";
+import IconText from "@/components/ui/IconText.astro";
+import Link from "@/components/ui/Link.astro";
+import Svg from "@/components/ui/Svg.astro";
 import { Typography } from "@/components/ui/Typography";
 import {
   Card,
@@ -10,12 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Cake, MapPin, Phone } from "lucide-react";
-
-import { BulletList } from "@/components/ui/BulletList";
 import { Info } from "@/lib/domain/info";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { Cake, MapPin, Phone } from "lucide-react";
 import type { ReactElement } from "react";
 
 interface Props {
@@ -63,7 +62,7 @@ const { localizedInfo, locale } = Astro.props;
         {localizedInfo?.[locale]?.address}
       </IconText>
     </div>
-    <BulletList hideBullets id="contact">
+    <BulletList hideBullets>
       {
         localizedInfo?.[locale]?.contacts?.map((contact) => {
           if (!contact.icon) {
@@ -71,11 +70,9 @@ const { localizedInfo, locale } = Astro.props;
           }
 
           return (
-            <li>
-              <Link href={contact.url} className="flex gap-2 items-center">
-                <Svg strapiSvg={contact.icon} className="mb-1" />
-                {contact.text}
-              </Link>
+            <li class="flex gap-1.5">
+              <Svg Icon={contact.icon} />
+              <Link href={contact.url}>{contact.text}</Link>
             </li>
           );
         }) as ReactElement[]

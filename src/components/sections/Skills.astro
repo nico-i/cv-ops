@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Gauge from "@/components/ui/Gauge.astro";
+import Svg from "@/components/ui/Svg.astro";
 
-import { Gauge } from "@/components/ui/Gauge";
-import { Svg } from "@/components/ui/Svg";
 import { Typography } from "@/components/ui/Typography";
 import type { Skill } from "@/lib/domain/skill";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
@@ -49,10 +49,7 @@ const { localizedSkills, locale }: Props = Astro.props;
                 rel="noopener noreferrer"
                 title={`${localizedSkill.proficiency}% | ${localizedSkill.name}`}
               >
-                <Svg
-                  className="block w-[19px]"
-                  strapiSvg={localizedSkill.svg}
-                />
+                <Svg className="block w-[19px]" Icon={localizedSkill.svg} />
               </a>
             </Gauge>
           );
