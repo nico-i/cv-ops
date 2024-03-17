@@ -9,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import clsx from "clsx";
 
 export type SvgProps = {
   className?: string;
@@ -33,11 +34,11 @@ export const Svg = ({
   size = "md",
 }: Readonly<SvgProps>) => {
   const classesBySize = {
-    md: "w-4 h-5",
-    lg: "w-5 h-5",
+    md: "w-4 h-max-5",
+    lg: "w-5 h-max-5",
   };
 
-  const classes = classesBySize[size];
+  const classes = clsx(classesBySize[size]);
 
   if (Icon) return <Icon className={cn(classes, className)} />;
 
