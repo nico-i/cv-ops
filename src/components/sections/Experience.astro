@@ -1,10 +1,10 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
+import Details from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
-import TimelineDetail from "@/components/ui/TimelineDetail.astro";
 import Typography from "@/components/ui/Typography.astro";
 import {
   Card,
@@ -16,7 +16,7 @@ import {
 import type { Xp } from "@/lib/domain/xp";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { Building2 } from "lucide-react";
+import { Building2, Telescope } from "lucide-react";
 
 interface Props {
   localizedXps: EntityByLocale<Xp>[] | undefined;
@@ -29,7 +29,10 @@ const { localizedXps, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography variant="h3">Experience</Typography>
+      <IconText variant="h3">
+        <Svg Icon={Telescope} />
+        <span>Experience</span>
+      </IconText>
     </CardTitle>
     <CardDescription> My professional journey </CardDescription>
   </CardHeader>
@@ -39,8 +42,13 @@ const { localizedXps, locale }: Props = Astro.props;
         localizedXps.map((xp) => {
           const currentLocaleXp = xp[locale];
           return (
-            <TimelineDetail isCompleted={currentLocaleXp?.end !== undefined}>
-              <Fragment slot="title"> {currentLocaleXp?.position}</Fragment>
+            <Details
+              isCompleted={currentLocaleXp?.end !== undefined}
+              asTimeLine
+            >
+              <Typography variant="large" slot="title">
+                {currentLocaleXp?.position}
+              </Typography>
               <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
                 <IconText variant="muted">
                   <Svg Icon={Building2} />
@@ -57,7 +65,7 @@ const { localizedXps, locale }: Props = Astro.props;
                   locale={locale}
                 />
               </div>
-              <Fragment slot="summary">
+              <Fragment slot="content">
                 {currentLocaleXp?.info?.listItems && (
                   <BulletList>
                     {currentLocaleXp?.info?.listItems.map((bullet) => (
@@ -66,7 +74,7 @@ const { localizedXps, locale }: Props = Astro.props;
                   </BulletList>
                 )}
               </Fragment>
-            </TimelineDetail>
+            </Details>
           );
         })
     }

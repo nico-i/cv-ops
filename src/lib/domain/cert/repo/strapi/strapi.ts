@@ -20,7 +20,7 @@ class StrapiRepo extends LocalizedStrapiRepo<Cert> implements CertRepo {
           locale as Locale,
           issuer,
           received,
-          info ? new StrapiBulletList(info) : undefined,
+          new StrapiBulletList(info),
           doc?.data?.attributes?.url,
           url ?? undefined
         );

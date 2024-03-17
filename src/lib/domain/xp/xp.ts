@@ -12,9 +12,9 @@ export class Xp extends LocalizedStrapiEntity {
     public position: string,
     public company: string,
     start: string,
+    public info: StrapiBulletList,
     end?: string,
-    public url?: string,
-    public info?: StrapiBulletList
+    public url?: string
   ) {
     super(id, locale);
     this.start = new Date(start);

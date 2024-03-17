@@ -1,11 +1,12 @@
 ---
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
+import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
-import Typography from "@/components/ui/Typography.astro";
 import type { Lang } from "@/lib/domain/lang";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { LanguagesIcon } from "lucide-react";
 
 interface Props {
   localizedLangs: EntityByLocale<Lang>[] | undefined;
@@ -18,7 +19,10 @@ const { localizedLangs, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography variant="h3">Languages</Typography>
+      <IconText variant="h3">
+        <Svg Icon={LanguagesIcon} />
+        <span>Languages</span>
+      </IconText>
     </CardTitle>
   </CardHeader>
   <CardContent>

@@ -1,10 +1,12 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
-import Typography from "@/components/ui/Typography.astro";
+import IconText from "@/components/ui/IconText.astro";
+import Svg from "@/components/ui/Svg.astro";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Interest } from "@/lib/domain/interest";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { Joystick } from "lucide-react";
 import type { ReactElement } from "react";
 
 interface Props {
@@ -18,7 +20,10 @@ const { localizedInterests, locale } = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography variant="h3">Interests</Typography>
+      <IconText variant="h3">
+        <Svg Icon={Joystick} />
+        <span>Interests</span>
+      </IconText>
     </CardTitle>
   </CardHeader>
   <CardContent>

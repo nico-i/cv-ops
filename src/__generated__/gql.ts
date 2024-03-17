@@ -51,7 +51,7 @@ export type Cert = {
   __typename?: 'Cert';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   doc?: Maybe<UploadFileEntityResponse>;
-  info?: Maybe<Scalars['String']['output']>;
+  info: Scalars['String']['output'];
   issuer: Scalars['String']['output'];
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<CertRelationResponseCollection>;
@@ -520,7 +520,7 @@ export type Lang = {
   __typename?: 'Lang';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   doc?: Maybe<UploadFileEntityResponse>;
-  icon?: Maybe<UploadFileEntityResponse>;
+  icon: UploadFileEntityResponse;
   level: Enum_Lang_Level;
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<LangRelationResponseCollection>;
@@ -1972,7 +1972,7 @@ export type Xp = {
   company: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   end?: Maybe<Scalars['Date']['output']>;
-  info?: Maybe<Scalars['String']['output']>;
+  info: Scalars['String']['output'];
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<XpRelationResponseCollection>;
   position: Scalars['String']['output'];
@@ -2041,7 +2041,7 @@ export type GetCertsQueryVariables = Exact<{
 }>;
 
 
-export type GetCertsQuery = { __typename?: 'Query', certs?: { __typename?: 'CertEntityResponseCollection', data: Array<{ __typename?: 'CertEntity', id?: string | null, attributes?: { __typename?: 'Cert', locale?: string | null, title: string, received: any, issuer: string, info?: string | null, url?: string | null, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
+export type GetCertsQuery = { __typename?: 'Query', certs?: { __typename?: 'CertEntityResponseCollection', data: Array<{ __typename?: 'CertEntity', id?: string | null, attributes?: { __typename?: 'Cert', locale?: string | null, title: string, received: any, issuer: string, info: string, url?: string | null, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
 export type GetEdsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -2069,7 +2069,7 @@ export type GetLangsQueryVariables = Exact<{
 }>;
 
 
-export type GetLangsQuery = { __typename?: 'Query', langs?: { __typename?: 'LangEntityResponseCollection', data: Array<{ __typename?: 'LangEntity', id?: string | null, attributes?: { __typename?: 'Lang', locale?: string | null, name: string, level: Enum_Lang_Level, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
+export type GetLangsQuery = { __typename?: 'Query', langs?: { __typename?: 'LangEntityResponseCollection', data: Array<{ __typename?: 'LangEntity', id?: string | null, attributes?: { __typename?: 'Lang', locale?: string | null, name: string, level: Enum_Lang_Level, icon: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null }, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
 export type GetProjectsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -2097,7 +2097,7 @@ export type GetXpsQueryVariables = Exact<{
 }>;
 
 
-export type GetXpsQuery = { __typename?: 'Query', xps?: { __typename?: 'XpEntityResponseCollection', data: Array<{ __typename?: 'XpEntity', id?: string | null, attributes?: { __typename?: 'Xp', locale?: string | null, position: string, company: string, info?: string | null, start: any, end?: any | null, url?: string | null } | null }> } | null };
+export type GetXpsQuery = { __typename?: 'Query', xps?: { __typename?: 'XpEntityResponseCollection', data: Array<{ __typename?: 'XpEntity', id?: string | null, attributes?: { __typename?: 'Xp', locale?: string | null, position: string, company: string, info: string, start: any, end?: any | null, url?: string | null } | null }> } | null };
 
 
 export const GetCertsDocument = gql`

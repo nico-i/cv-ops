@@ -43,8 +43,8 @@ const { localizedInfo, locale } = Astro.props;
     <div id="info" class="flex flex-col gap-2">
       <IconText variant="small">
         <Svg Icon={Cake} />
-        <span
-          >{
+        <span>
+          {
             localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
               year: "numeric",
               month: "long",

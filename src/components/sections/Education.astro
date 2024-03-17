@@ -4,12 +4,11 @@ import GradedListItem from "@/components/ui/GradedListItem.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
-import Typography from "@/components/ui/Typography.astro";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Ed } from "@/lib/domain/ed";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, University } from "lucide-react";
 
 interface Props {
   localizedEds: EntityByLocale<Ed>[] | undefined;
@@ -22,41 +21,42 @@ const { localizedEds, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography variant="h3">Education</Typography>
+      <IconText variant="h3">
+        <Svg Icon={GraduationCap} />
+        <span>Education</span>
+      </IconText>
     </CardTitle>
   </CardHeader>
   <CardContent>
-    <ul>
+    <ul class="flex flex-col gap-3">
       {
         localizedEds?.map((ed) => {
           const localizedEd = ed[locale];
 
           return (
-            <>
-              <GradedListItem
-                grade={localizedEd?.grade}
-                docUrl={localizedEd?.docUrl}
-              >
-                <span slot="title">
-                  {localizedEd?.institute}{" "}
-                  {localizedEd?.url && (
-                    <ExternalIconLink href={localizedEd?.url} />
-                  )}
-                </span>
+            <GradedListItem
+              grade={localizedEd?.grade}
+              docUrl={localizedEd?.docUrl}
+            >
+              <span slot="title">
+                {localizedEd?.institute}{" "}
+                {localizedEd?.url && (
+                  <ExternalIconLink href={localizedEd?.url} />
+                )}
+              </span>
 
-                <div class="flex flex-col" slot="subtitle">
-                  <IconText variant="muted">
-                    <Svg Icon={GraduationCap} slot="icon" />
-                    <Fragment slot="text">{localizedEd?.degree}</Fragment>
-                  </IconText>
-                  <TimeWindow
-                    start={localizedEd?.start}
-                    end={localizedEd?.end}
-                    locale={locale}
-                  />
-                </div>
-              </GradedListItem>
-            </>
+              <div class="flex flex-col" slot="subtitle">
+                <IconText variant="muted">
+                  <Svg Icon={University} />
+                  <span>{localizedEd?.degree}</span>
+                </IconText>
+                <TimeWindow
+                  start={localizedEd?.start}
+                  end={localizedEd?.end}
+                  locale={locale}
+                />
+              </div>
+            </GradedListItem>
           );
         })
       }

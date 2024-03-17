@@ -4,18 +4,18 @@ import Typography from "@/components/ui/Typography.astro";
 interface Props {
   grade: string;
   docUrl: string | undefined;
+  children: [Slottable, Slottable];
 }
 
 const { grade, docUrl }: Props = Astro.props;
 ---
 
-<li class="flex flex-col gap-0.5 pb-3 z-10 bg-background">
+<li class="flex flex-col gap-0.5 z-10 bg-background">
   <div class="flex justify-between items-center">
     <div>
       <Typography variant="large">
         <slot name="title" />
       </Typography>
-
       <slot name="subtitle" />
     </div>
     <a

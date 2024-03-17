@@ -11,7 +11,7 @@ export class Cert extends LocalizedStrapiEntity {
     locale: Locale,
     public issuer: string,
     received: string,
-    public info?: StrapiBulletList,
+    public info: StrapiBulletList,
     public docUrl?: string,
     public url?: string
   ) {
