@@ -10,7 +10,7 @@ export const ExternalIconLink = ({ href }: Readonly<ExternalIconLinkProps>) => (
     href={href}
     target="_blank"
     rel="noreferrer"
-    className="text-muted-foreground hover:text-primary inline-flex"
+    className="text-muted-foreground hover:text-primary inline-flex translate-y-1"
   >
     <Svg Icon={ExternalLink} />
   </a>

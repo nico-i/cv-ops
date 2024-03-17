@@ -28,10 +28,10 @@ const { localizedSkills, locale }: Props = Astro.props;
     <CardTitle>
       <Typography ele="h3">Skills</Typography>
     </CardTitle>
-    <CardDescription> My strengths and weaknesses. </CardDescription>
+    <CardDescription> My tools and technologies of choice. </CardDescription>
   </CardHeader>
   <CardContent>
-    <div class="grid grid-cols-4 gap-3">
+    <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
       {
         localizedSkills?.map((skill) => {
           const localizedSkill = skill[locale];
@@ -39,21 +39,23 @@ const { localizedSkills, locale }: Props = Astro.props;
             return null;
           }
           return (
-            <Gauge radius={21} strokeWidth={3} percentage={localizedSkill.proficiency}>
+            <Gauge
+              radius={21}
+              strokeWidth={3}
+              percentage={localizedSkill.proficiency}
+            >
               <Svg
                 className="block"
                 size="lg"
                 strapiSvg={localizedSkill.svg}
                 client:load
               >
-                <div class="flex items-center gap-1.5">
-                  <span>
-                    {`${localizedSkill.proficiency}%`} | {localizedSkill.name}
-                  </span>
-                  {localizedSkill.url && (
-                    <ExternalIconLink href={localizedSkill.url} />
-                  )}
-                </div>
+                <span>
+                  {`${localizedSkill.proficiency}%`} | {localizedSkill.name}
+                </span>
+                {localizedSkill.url && (
+                  <ExternalIconLink href={localizedSkill.url} />
+                )}
               </Svg>
             </Gauge>
           );

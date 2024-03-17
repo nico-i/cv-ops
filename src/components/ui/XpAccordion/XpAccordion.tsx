@@ -35,11 +35,11 @@ export const XpAccordion = ({
             open={isCurrentLocaleXp}
             title={currentLocaleXp?.position}
             subtitle={
-              <div className="flex gap-3">
+              <div className="flex flex-col lg:flex-row lg:gap-3">
                 <IconText ele="muted">
                   <Svg Icon={Building2} />
-                  <div className="flex items-center">
-                    {currentLocaleXp?.company}&nbsp;
+                  <div>
+                    {currentLocaleXp?.company}{" "}
                     {currentLocaleXp?.url && (
                       <ExternalIconLink href={currentLocaleXp?.url} />
                     )}
