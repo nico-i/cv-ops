@@ -1,19 +1,12 @@
 ---
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Card from "@/components/ui/Card.astro";
 import Gauge from "@/components/ui/Gauge.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
-
 import type { Skill } from "@/lib/domain/skill";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { PencilRuler } from "lucide-react";
+import PencilRuler from "@/svg/pencil-ruler.svg?raw";
 
 interface Props {
   localizedSkills: EntityByLocale<Skill>[] | undefined;
@@ -24,21 +17,19 @@ const { localizedSkills, locale }: Props = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={PencilRuler} />
-        <span>Skills</span>
-      </IconText>
-    </CardTitle>
-    <CardDescription> Tools & technologies </CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={PencilRuler} />
+      <span>Skills</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="description"> Tools & technologies </Fragment>
+  <Fragment slot="content">
     <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
       {
         localizedSkills?.map((skill) => {
           const localizedSkill = skill[locale];
-          if (!localizedSkill.svg) {
+          if (!localizedSkill.svgHtml) {
             return null;
           }
           return (
@@ -53,12 +44,15 @@ const { localizedSkills, locale }: Props = Astro.props;
                 rel="noopener noreferrer"
                 title={`${localizedSkill.proficiency}% | ${localizedSkill.name}`}
               >
-                <Svg className="block w-[19px]" Icon={localizedSkill.svg} />
+                <Svg
+                  className="block w-[19px]"
+                  svgHtml={localizedSkill.svgHtml}
+                />
               </a>
             </Gauge>
           );
         })
       }
     </div>
-  </CardContent>
+  </Fragment>
 </Card>

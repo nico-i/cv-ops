@@ -13,7 +13,6 @@ import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
 import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
 // import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
-// import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 // import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
 
 import { Locale } from "@/lib/types/Locale";
@@ -41,7 +40,6 @@ const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 const localizedLangs = await LangStrapiRepo.getAllLocalized();
 const localizedCerts = await CertStrapiRepo.getAllLocalized();
 // const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
-// const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 // const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];

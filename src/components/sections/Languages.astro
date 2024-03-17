@@ -1,12 +1,12 @@
 ---
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Card from "@/components/ui/Card.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import type { Lang } from "@/lib/domain/lang";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { LanguagesIcon } from "lucide-react";
+import LanguagesIcon from "@/svg/languages.svg?raw";
 
 interface Props {
   localizedLangs: EntityByLocale<Lang>[] | undefined;
@@ -17,16 +17,14 @@ const { localizedLangs, locale }: Props = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={LanguagesIcon} />
-        <span>Languages</span>
-      </IconText>
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
-    <ul>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={LanguagesIcon} />
+      <span>Languages</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="content">
+    <ul class="flex flex-col gap-1.5">
       {
         localizedLangs?.map((lang) => {
           const localizedLang = lang[locale];
@@ -34,7 +32,7 @@ const { localizedLangs, locale }: Props = Astro.props;
           return (
             <GradedListItem grade={localizedLang.level} docUrl={undefined}>
               <span slot="title" class="inline-flex gap-2 items-center">
-                <Svg Icon={localizedLang.icon} className="w-6" />
+                <Svg svgHtml={localizedLang.svgHtml} className="w-6" />
                 {localizedLang.name}
               </span>
             </GradedListItem>
@@ -42,5 +40,5 @@ const { localizedLangs, locale }: Props = Astro.props;
         })
       }
     </ul>
-  </CardContent>
+  </Fragment>
 </Card>

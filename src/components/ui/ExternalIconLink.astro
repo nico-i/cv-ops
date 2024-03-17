@@ -1,6 +1,6 @@
 ---
 import Svg from "@/components/ui/Svg.astro";
-import { ExternalLink } from "lucide-react";
+import ExternalLink from "@/svg/external-link.svg?raw";
 
 interface Props {
   href: string;
@@ -15,5 +15,5 @@ const { href }: Props = Astro.props;
   rel="noreferrer"
   class="text-muted-foreground hover:text-primary inline-flex align-bottom"
 >
-  <Svg Icon={ExternalLink} />
+  <Svg svgHtml={ExternalLink} />
 </a>

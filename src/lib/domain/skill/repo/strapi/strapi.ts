@@ -1,8 +1,8 @@
-import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
 import { Skill } from "@/lib/domain/skill";
 import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
+import { fetchSvgHtml } from "@/lib/utils";
 
 class StrapiRepo extends LocalizedStrapiRepo<Skill> {
   override async getAll(locale: Locale): Promise<Skill[]> {
@@ -21,7 +21,7 @@ class StrapiRepo extends LocalizedStrapiRepo<Skill> {
           summary,
           url,
           svg?.data?.attributes?.url
-            ? await new StrapiSvg(svg.data?.attributes?.url).fetchHtml()
+            ? await fetchSvgHtml(svg.data?.attributes?.url)
             : undefined
         );
       }) ?? []

@@ -1,12 +1,12 @@
 import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
-import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
 import { Project } from "@/lib/domain/project";
 import { Skill } from "@/lib/domain/skill";
 import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
+import { fetchSvgHtml } from "@/lib/utils";
 
 class StrapiRepository extends LocalizedStrapiRepo<Project> {
   override async getAll(locale: Locale): Promise<Project[]> {
@@ -56,7 +56,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
                 text,
                 url,
                 icon?.data?.attributes?.url
-                  ? await new StrapiSvg(icon?.data?.attributes?.url).fetchHtml()
+                  ? await fetchSvgHtml(icon?.data?.attributes?.url)
                   : undefined
               );
             }) ?? []
@@ -74,7 +74,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
                 summary,
                 url,
                 svg?.data?.attributes?.url
-                  ? await new StrapiSvg(svg?.data?.attributes?.url).fetchHtml()
+                  ? await fetchSvgHtml(svg?.data?.attributes?.url)
                   : undefined
               );
             }) ?? []

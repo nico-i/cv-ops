@@ -1,14 +1,15 @@
 ---
+import Card from "@/components/ui/Card.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Ed } from "@/lib/domain/ed";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { GraduationCap, University } from "lucide-react";
+import GraduationCap from "@/svg/graduation-cap.svg?raw";
+import University from "@/svg/university.svg?raw";
 
 interface Props {
   localizedEds: EntityByLocale<Ed>[] | undefined;
@@ -19,15 +20,13 @@ const { localizedEds, locale }: Props = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={GraduationCap} />
-        <span>Education</span>
-      </IconText>
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={GraduationCap} />
+      <span>Education</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="content">
     <ul class="flex flex-col gap-3">
       {
         localizedEds?.map((ed) => {
@@ -47,7 +46,7 @@ const { localizedEds, locale }: Props = Astro.props;
 
               <div class="flex flex-col" slot="subtitle">
                 <IconText variant="muted">
-                  <Svg Icon={University} />
+                  <Svg svgHtml={University} />
                   <span>{localizedEd?.degree}</span>
                 </IconText>
                 <TimeWindow
@@ -61,5 +60,5 @@ const { localizedEds, locale }: Props = Astro.props;
         })
       }
     </ul>
-  </CardContent>
+  </Fragment>
 </Card>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  headerClassName?: string;
+  contentClassName?: string;
+}
+
+const { headerClassName, contentClassName }: Props = Astro.props;
+---
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm" ,>
+  <div class:list={["flex flex-col space-y-1.5 p-6", headerClassName]}>
+    <slot name="title" />
+    <slot name="description" />
+  </div>
+  <div class:list={["p-6 pt-0", contentClassName]}>
+    <slot name="content" />
+  </div>
+</div>

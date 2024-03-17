@@ -1,10 +1,10 @@
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
-import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
 import { Info } from "@/lib/domain/info";
 import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
+import { fetchSvgHtml } from "@/lib/utils";
 
 class StrapiRepository extends LocalizedStrapiRepo<Info> {
   override async getAll(locale: Locale): Promise<Info[]> {
@@ -40,9 +40,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Info> {
             resContact?.text!,
             resContact?.url!,
             resContact?.icon?.data?.attributes?.url
-              ? await new StrapiSvg(
-                  resContact?.icon?.data?.attributes?.url
-                ).fetchHtml()
+              ? await fetchSvgHtml(resContact?.icon?.data?.attributes?.url)
               : undefined
           )
       ) ?? []

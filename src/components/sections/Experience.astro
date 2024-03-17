@@ -1,22 +1,17 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
+import Card from "@/components/ui/Card.astro";
 import Details from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import type { Xp } from "@/lib/domain/xp";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { Building2, Telescope } from "lucide-react";
+import Building2 from "@/svg/building-2.svg?raw";
+import Telescope from "@/svg/telescope.svg?raw";
 
 interface Props {
   localizedXps: EntityByLocale<Xp>[] | undefined;
@@ -27,16 +22,14 @@ const { localizedXps, locale }: Props = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={Telescope} />
-        <span>Experience</span>
-      </IconText>
-    </CardTitle>
-    <CardDescription> My professional journey </CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={Telescope} />
+      <span>Experience</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="description"> My professional journey </Fragment>
+  <Fragment slot="content">
     {
       localizedXps &&
         localizedXps.map((xp) => {
@@ -51,7 +44,7 @@ const { localizedXps, locale }: Props = Astro.props;
               </Typography>
               <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
                 <IconText variant="muted">
-                  <Svg Icon={Building2} />
+                  <Svg svgHtml={Building2} />
                   <span>
                     {currentLocaleXp?.company}{" "}
                     {currentLocaleXp?.url && (
@@ -78,5 +71,5 @@ const { localizedXps, locale }: Props = Astro.props;
           );
         })
     }
-  </CardContent>
+  </Fragment>
 </Card>

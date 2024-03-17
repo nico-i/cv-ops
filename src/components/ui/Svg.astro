@@ -1,20 +1,10 @@
 ---
-import { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
-import type { LucideProps } from "lucide-react";
-import type { ComponentType } from "react";
-
 export type Props = {
   className?: string;
-  Icon: ComponentType<LucideProps> | StrapiSvg;
+  svgHtml: string;
 };
 
-const { className = "w-4 h-max-4", Icon }: Props = Astro.props;
+const { className = "w-4 h-max-4 inline-block", svgHtml }: Props = Astro.props;
 ---
 
-{
-  Icon instanceof StrapiSvg ? (
-    <span class={className} set:html={Icon.html} />
-  ) : (
-    <Icon className={className} />
-  )
-}
+<span class={className} set:html={svgHtml} />

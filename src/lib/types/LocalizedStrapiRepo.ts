@@ -21,11 +21,13 @@ export abstract class LocalizedStrapiRepo<T extends LocalizedStrapiEntity> {
     }
 
     return allItemsByLocale.en.map((_, i) => {
-      const itemsByLocale: Partial<Record<Locale, T>> = {};
-      for (const locale of locales) {
-        itemsByLocale[locale as Locale] =
-          allItemsByLocale[locale as Locale][i]!;
-      }
+      const itemsByLocale: Record<Locale, T> = Object.values(Locale).reduce(
+        (acc, locale) => {
+          acc[locale] = allItemsByLocale[locale][i]!;
+          return acc;
+        },
+        {} as Record<Locale, T>
+      );
       return itemsByLocale;
     });
   }

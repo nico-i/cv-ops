@@ -1,21 +1,16 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
+import Card from "@/components/ui/Card.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Link from "@/components/ui/Link.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Info } from "@/lib/domain/info";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { Cake, MapPin, Phone } from "lucide-react";
-import type { ReactElement } from "react";
+import Cake from "@/svg/cake.svg?raw";
+import MapPin from "@/svg/map-pin.svg?raw";
+import Phone from "@/svg/phone.svg?raw";
 
 interface Props {
   localizedInfo: EntityByLocale<Info> | undefined;
@@ -25,24 +20,22 @@ interface Props {
 const { localizedInfo, locale } = Astro.props;
 ---
 
-<Card>
-  <CardHeader>
-    <CardTitle>
-      <img
-        src={localizedInfo?.[locale]?.portrait.url}
-        alt="Portrait Nico Ismaili"
-        class="rounded-full mb-3 aspect-square w-40 mx-auto"
-      />
-      <Typography variant="h2">{localizedInfo?.[locale]?.name}</Typography>
-    </CardTitle>
-    <CardDescription>
-      {localizedInfo?.[locale]?.occupation}
-    </CardDescription>
-  </CardHeader>
-  <CardContent className="flex flex-col gap-6">
+<Card contentClassName="flex flex-col gap-6">
+  <Fragment slot="title">
+    <img
+      src={localizedInfo?.[locale]?.portrait.url}
+      alt="Portrait Nico Ismaili"
+      class="rounded-full mb-3 aspect-square w-40 mx-auto"
+    />
+    <Typography variant="h2">{localizedInfo?.[locale]?.name}</Typography>
+  </Fragment>
+  <Fragment slot="description">
+    {localizedInfo?.[locale]?.occupation}
+  </Fragment>
+  <Fragment slot="content">
     <div id="info" class="flex flex-col gap-2">
       <IconText variant="small">
-        <Svg Icon={Cake} />
+        <Svg svgHtml={Cake} />
         <span>
           {
             localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
@@ -54,31 +47,31 @@ const { localizedInfo, locale } = Astro.props;
         </span>
       </IconText>
       <IconText variant="small">
-        <Svg Icon={Phone} />
+        <Svg svgHtml={Phone} />
         <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
           {localizedInfo?.[locale]?.phone}
         </a>
       </IconText>
       <IconText variant="small">
-        <Svg Icon={MapPin} />
+        <Svg svgHtml={MapPin} />
         <span>{localizedInfo?.[locale]?.address}</span>
       </IconText>
     </div>
     <BulletList hideBullets>
       {
         localizedInfo?.[locale]?.contacts?.map((contact) => {
-          if (!contact.icon) {
+          if (!contact.svgHtml) {
             return null;
           }
 
           return (
             <li class="flex gap-1.5">
-              <Svg Icon={contact.icon} />
+              <Svg svgHtml={contact.svgHtml} />
               <Link href={contact.url}>{contact.text}</Link>
             </li>
           );
-        }) as ReactElement[]
+        })
       }
     </BulletList>
-  </CardContent>
+  </Fragment>
 </Card>

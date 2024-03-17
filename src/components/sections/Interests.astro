@@ -1,12 +1,12 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
+import Card from "@/components/ui/Card.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Interest } from "@/lib/domain/interest";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { Joystick } from "lucide-react";
+import Joystick from "@/svg/joystick.svg?raw";
 import type { ReactElement } from "react";
 
 interface Props {
@@ -18,15 +18,13 @@ const { localizedInterests, locale } = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={Joystick} />
-        <span>Interests</span>
-      </IconText>
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={Joystick} />
+      <span>Interests</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="content">
     {
       localizedInterests && (
         <BulletList>
@@ -38,5 +36,5 @@ const { localizedInterests, locale } = Astro.props;
         </BulletList>
       )
     }
-  </CardContent>
+  </Fragment>
 </Card>

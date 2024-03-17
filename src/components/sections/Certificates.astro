@@ -1,15 +1,17 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
+import Card from "@/components/ui/Card.astro";
 import Details from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Cert } from "@/lib/domain/cert";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { Building, Calendar, ShieldCheck } from "lucide-react";
+import Building from "@/svg/building.svg?raw";
+import Calendar from "@/svg/calendar-days.svg?raw";
+import ShieldCheck from "@/svg/shield-check.svg?raw";
 
 interface Props {
   localizedCerts: EntityByLocale<Cert>[] | undefined;
@@ -20,15 +22,13 @@ const { localizedCerts, locale }: Props = Astro.props;
 ---
 
 <Card>
-  <CardHeader>
-    <CardTitle>
-      <IconText variant="h3">
-        <Svg Icon={ShieldCheck} />
-        <span>Certificates</span>
-      </IconText>
-    </CardTitle>
-  </CardHeader>
-  <CardContent>
+  <Fragment slot="title">
+    <IconText variant="h3">
+      <Svg svgHtml={ShieldCheck} />
+      <span>Certificates</span>
+    </IconText>
+  </Fragment>
+  <Fragment slot="content">
     <ul class="flex flex-col">
       {
         localizedCerts?.map((cert) => {
@@ -51,11 +51,11 @@ const { localizedCerts, locale }: Props = Astro.props;
                 slot="subtitle"
               >
                 <IconText variant="muted">
-                  <Svg Icon={Building} />
+                  <Svg svgHtml={Building} />
                   <span>{localizedCert.issuer}</span>
                 </IconText>
                 <IconText variant="muted">
-                  <Svg Icon={Calendar} />
+                  <Svg svgHtml={Calendar} />
                   <span>
                     {localizedCert.received.toLocaleDateString(locale, {
                       year: "numeric",
@@ -75,5 +75,5 @@ const { localizedCerts, locale }: Props = Astro.props;
         })
       }
     </ul>
-  </CardContent>
+  </Fragment>
 </Card>
