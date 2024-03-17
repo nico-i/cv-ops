@@ -1,11 +1,12 @@
 ---
 import Svg from "@/components/ui/Svg.astro";
 import TimePin from "@/components/ui/TimePin.astro";
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 import { ChevronDown } from "lucide-react";
 
 export interface Props {
   isCompleted: boolean;
+  children: Slottable[];
 }
 
 const { isCompleted }: Props = Astro.props;
@@ -19,7 +20,7 @@ const { isCompleted }: Props = Astro.props;
     <div class="flex justify-between items-center">
       <div class="flex flex-col">
         <Typography
-          ele="large"
+          variant="large"
           className="self-start flex items-center gap-1.5"
         >
           <slot name="title" />

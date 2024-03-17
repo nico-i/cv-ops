@@ -3,7 +3,7 @@ import BulletList from "@/components/ui/BulletList.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Link from "@/components/ui/Link.astro";
 import Svg from "@/components/ui/Svg.astro";
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 import {
   Card,
   CardContent,
@@ -33,7 +33,7 @@ const { localizedInfo, locale } = Astro.props;
         alt="Portrait Nico Ismaili"
         class="rounded-full mb-3 aspect-square w-40 mx-auto"
       />
-      <Typography ele="h2">{localizedInfo?.[locale]?.name}</Typography>
+      <Typography variant="h2">{localizedInfo?.[locale]?.name}</Typography>
     </CardTitle>
     <CardDescription>
       {localizedInfo?.[locale]?.occupation}
@@ -41,25 +41,27 @@ const { localizedInfo, locale } = Astro.props;
   </CardHeader>
   <CardContent className="flex flex-col gap-6">
     <div id="info" class="flex flex-col gap-2">
-      <IconText ele="small">
+      <IconText variant="small">
         <Svg Icon={Cake} />
-        {
-          localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-        }
+        <span
+          >{
+            localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </span>
       </IconText>
-      <IconText ele="small">
+      <IconText variant="small">
         <Svg Icon={Phone} />
         <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
           {localizedInfo?.[locale]?.phone}
         </a>
       </IconText>
-      <IconText ele="small">
+      <IconText variant="small">
         <Svg Icon={MapPin} />
-        {localizedInfo?.[locale]?.address}
+        <span>{localizedInfo?.[locale]?.address}</span>
       </IconText>
     </div>
     <BulletList hideBullets>

@@ -1,7 +1,9 @@
 ---
-import DateWithIcon from "@/components/ui/DateWithIcon.astro";
-import { Typography } from "@/components/ui/Typography";
+import IconText from "@/components/ui/IconText.astro";
+import Svg from "@/components/ui/Svg.astro";
+import Typography from "@/components/ui/Typography.astro";
 import type { Locale } from "@/lib/types/Locale";
+import { CalendarDays } from "lucide-react";
 
 export interface Props {
   locale: Locale;
@@ -11,8 +13,18 @@ export interface Props {
 const { locale, start, end }: Props = Astro.props;
 ---
 
-<Typography ele="muted" className="inline-flex gap-1.5 items-center">
-  <DateWithIcon date={start} locale={locale} />
+<Typography variant="muted" className="inline-flex gap-1.5 items-center">
+  <IconText>
+    <Svg Icon={CalendarDays} />
+    <span>
+      {
+        start.toLocaleDateString(locale, {
+          year: "numeric",
+          month: "short",
+        })
+      }
+    </span>
+  </IconText>
   <span>&ndash;</span>
   {
     end

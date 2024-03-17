@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Cert } from "@/lib/domain/cert";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
@@ -16,7 +16,7 @@ const { localizedCerts, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography ele="h3">Education</Typography>
+      <Typography variant="h3">Education</Typography>
     </CardTitle>
   </CardHeader>
   <CardContent>

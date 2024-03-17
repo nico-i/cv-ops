@@ -22,14 +22,15 @@ import Skills from "@/components/sections/Skills.astro";
 import Languages from "@/components/sections/Languages.astro";
 import Certificates from "@/components/sections/Certificates.astro";
 import PrintablePage from "@/components/ui/PrintablePage.astro";
+import type { GetStaticPaths } from "astro";
 
-export async function getStaticPaths() {
+export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
     return { params: { lang: locale, slug: `/${locale}/` } };
   });
 
   return paths;
-}
+}) satisfies GetStaticPaths;
 
 const { lang } = Astro.params;
 

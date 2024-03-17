@@ -4,7 +4,7 @@ import GradedListItem from "@/components/ui/GradedListItem.astro";
 import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Ed } from "@/lib/domain/ed";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
@@ -22,7 +22,7 @@ const { localizedEds, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography ele="h3">Education</Typography>
+      <Typography variant="h3">Education</Typography>
     </CardTitle>
   </CardHeader>
   <CardContent>
@@ -45,9 +45,9 @@ const { localizedEds, locale }: Props = Astro.props;
                 </span>
 
                 <div class="flex flex-col" slot="subtitle">
-                  <IconText ele="muted">
-                    <Svg Icon={GraduationCap} />
-                    {localizedEd?.degree}
+                  <IconText variant="muted">
+                    <Svg Icon={GraduationCap} slot="icon" />
+                    <Fragment slot="text">{localizedEd?.degree}</Fragment>
                   </IconText>
                   <TimeWindow
                     start={localizedEd?.start}

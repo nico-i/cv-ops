@@ -1,5 +1,5 @@
 ---
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 
 interface Props {
   grade: string;
@@ -12,7 +12,7 @@ const { grade, docUrl }: Props = Astro.props;
 <li class="flex flex-col gap-0.5 pb-3 z-10 bg-background">
   <div class="flex justify-between items-center">
     <div>
-      <Typography ele="large">
+      <Typography variant="large">
         <slot name="title" />
       </Typography>
 
@@ -24,7 +24,7 @@ const { grade, docUrl }: Props = Astro.props;
       rel="noopener noreferrer"
       class="whitespace-nowrap"
     >
-      <Typography ele="code">{grade}</Typography>
+      <Typography variant="code">{grade}</Typography>
     </a>
   </div>
 </li>

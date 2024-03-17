@@ -1,13 +1,16 @@
 ---
-import { Typography, type TypographyProps } from "@/components/ui/Typography";
+import Typography, {
+  type Props as TypographyProps,
+} from "@/components/ui/Typography.astro";
 
 interface Props {
-  ele?: TypographyProps["ele"];
+  variant?: TypographyProps["variant"];
+  children: [Slottable, Slottable];
 }
 
-const { ele = "span" }: Props = Astro.props;
+const { variant = "span" }: Props = Astro.props;
 ---
 
-<Typography ele={ele} className="inline-flex items-center gap-1.5">
+<Typography variant={variant} className="inline-flex items-center gap-1.5">
   <slot />
 </Typography>

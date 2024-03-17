@@ -5,7 +5,7 @@ import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import TimelineDetail from "@/components/ui/TimelineDetail.astro";
-import { Typography } from "@/components/ui/Typography";
+import Typography from "@/components/ui/Typography.astro";
 import {
   Card,
   CardContent,
@@ -29,7 +29,7 @@ const { localizedXps, locale }: Props = Astro.props;
 <Card>
   <CardHeader>
     <CardTitle>
-      <Typography ele="h3">Experience</Typography>
+      <Typography variant="h3">Experience</Typography>
     </CardTitle>
     <CardDescription> My professional journey </CardDescription>
   </CardHeader>
@@ -42,14 +42,14 @@ const { localizedXps, locale }: Props = Astro.props;
             <TimelineDetail isCompleted={currentLocaleXp?.end !== undefined}>
               <Fragment slot="title"> {currentLocaleXp?.position}</Fragment>
               <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
-                <IconText ele="muted">
+                <IconText variant="muted">
                   <Svg Icon={Building2} />
-                  <spa>
+                  <span>
                     {currentLocaleXp?.company}{" "}
                     {currentLocaleXp?.url && (
                       <ExternalIconLink href={currentLocaleXp?.url} />
                     )}
-                  </spa>
+                  </span>
                 </IconText>
                 <TimeWindow
                   start={currentLocaleXp?.start!}
