@@ -31,9 +31,7 @@ export const Gauge = ({
           cy="50%"
         />
       </svg>
-      <div className="absolute -mt-1">
-        {children}
-      </div>
+      <div className="absolute -mt-1">{children}</div>
     </div>
   );
 };

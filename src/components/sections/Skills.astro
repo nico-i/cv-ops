@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { ExternalIconLink } from "@/components/ui/ExternalIconLink";
 import { Gauge } from "@/components/ui/Gauge";
 import { Svg } from "@/components/ui/Svg";
 import { Typography } from "@/components/ui/Typography";
@@ -44,18 +43,18 @@ const { localizedSkills, locale }: Props = Astro.props;
               strokeWidth={3}
               percentage={localizedSkill.proficiency}
             >
-              <Svg
-                className="block w-[19px]"
-                strapiSvg={localizedSkill.svg}
-                client:load
+              <a
+                href={localizedSkill.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`${localizedSkill.proficiency}% | ${localizedSkill.name}`}
               >
-                <span>
-                  {`${localizedSkill.proficiency}%`} | {localizedSkill.name}{" "}
-                  {localizedSkill.url && (
-                    <ExternalIconLink href={localizedSkill.url} />
-                  )}
-                </span>
-              </Svg>
+                <Svg
+                  className="block w-[19px]"
+                  strapiSvg={localizedSkill.svg}
+                  client:load
+                />
+              </a>
             </Gauge>
           );
         })
