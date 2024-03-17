@@ -30,32 +30,35 @@ const { localizedSkills, locale }: Props = Astro.props;
     </CardTitle>
     <CardDescription> My strengths and weaknesses. </CardDescription>
   </CardHeader>
-  <CardContent className="flex flex-wrap gap-6 bg-pink-500">
-    {
-      localizedSkills?.map((skill) => {
-        const localizedSkill = skill[locale];
-        if (!localizedSkill.svg) {
-          return null;
-        }
-        return (
-          <>
-            <Gauge radius={50} percentage={50} />
-            <Svg
-              className="flex"
-              strapiSvg={localizedSkill.svg}
-              size="lg"
-              client:load
-            >
-              <div class="flex items-center gap-1.5">
-                {localizedSkill.name}
-                {localizedSkill.url && (
-                  <ExternalIconLink href={localizedSkill.url} />
-                )}
-              </div>
-            </Svg>
-          </>
-        );
-      })
-    }
+  <CardContent>
+    <div class="grid grid-cols-4 gap-3">
+      {
+        localizedSkills?.map((skill) => {
+          const localizedSkill = skill[locale];
+          if (!localizedSkill.svg) {
+            return null;
+          }
+          return (
+            <Gauge radius={21} strokeWidth={3} percentage={localizedSkill.proficiency}>
+              <Svg
+                className="block"
+                size="lg"
+                strapiSvg={localizedSkill.svg}
+                client:load
+              >
+                <div class="flex items-center gap-1.5">
+                  <span>
+                    {`${localizedSkill.proficiency}%`} | {localizedSkill.name}
+                  </span>
+                  {localizedSkill.url && (
+                    <ExternalIconLink href={localizedSkill.url} />
+                  )}
+                </div>
+              </Svg>
+            </Gauge>
+          );
+        })
+      }
+    </div>
   </CardContent>
 </Card>

@@ -6,27 +6,34 @@ export interface GaugeProps {
   children?: ReactNode;
   percentage: number;
 }
-export const Gauge = ({ percentage, radius }: GaugeProps) => {
-  var circumference = radius * 2 * Math.PI;
-
+export const Gauge = ({
+  percentage,
+  radius,
+  strokeWidth = 4,
+  children,
+}: GaugeProps) => {
+  const circumference = radius * 2 * Math.PI;
   const offset = circumference - (percentage / 100) * circumference;
+  const size = radius * 2 + strokeWidth;
   return (
-    <svg width="120" height="120">
-      <circle
-        strokeDashoffset={offset}
-        style={{
-          transition: " 0.35s stroke-dashoffset",
-          transform: "rotate(-270deg)",
-          transformOrigin: "50% 50%",
-        }}
-        strokeDasharray={`${circumference} ${circumference}`}
-        stroke="black"
-        stroke-width="4"
-        fill="transparent"
-        r={radius}
-        cx="60"
-        cy="60"
-      />
-    </svg>
+    <div className="relative flex justify-center items-center">
+      <svg height={size} width={size} className="relative">
+        <circle
+          strokeDashoffset={offset}
+          className="transition-[stroke-dashoffset] duration-300 ease-in-out rotate-90 origin-center"
+          strokeDasharray={`${circumference} ${circumference}`}
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          fill="transparent"
+          r={radius}
+          cx="50%"
+          cy="50%"
+        />
+      </svg>
+      <div className="absolute -mt-1">
+        {children}
+      </div>
+    </div>
   );
 };

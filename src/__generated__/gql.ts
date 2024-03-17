@@ -2286,7 +2286,7 @@ export const GetProjectsDocument = gql`
     `;
 export const GetSkillsDocument = gql`
     query GetSkills($locale: I18NLocaleCode!) {
-  skills(locale: $locale, sort: ["priority:desc", "name"]) {
+  skills(locale: $locale, sort: ["priority:desc", "proficiency:desc"]) {
     data {
       id
       attributes {
