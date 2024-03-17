@@ -11,27 +11,46 @@ interface Props {
 const { asTimeLine = false, isCompleted = false }: Props = Astro.props;
 ---
 
-<details
-  class:list={[
-    "flex flex-col [&_span.open-indicator]:open:rotate-180",
-    asTimeLine && "relative pl-6",
-  ]}
->
-  <summary class:list={["flex flex-col cursor-pointer pb-3"]}>
-    {asTimeLine && <TimePin isCompleted={isCompleted} />}
-    <div class="flex justify-between items-center">
-      <div class="flex flex-col">
-        <slot name="title" />
-        <slot name="subtitle" />
+{
+  Astro.slots.has("content") ? (
+    <details
+      class:list={[
+        "flex flex-col [&_span.open-indicator]:open:rotate-180",
+        asTimeLine && "relative pl-6",
+      ]}
+    >
+      <summary class:list={["flex flex-col cursor-pointer pb-3"]}>
+        {asTimeLine && <TimePin isCompleted={isCompleted} />}
+        <div class="flex justify-between items-center">
+          <div class="flex flex-col">
+            <slot name="title" />
+            <slot name="subtitle" />
+          </div>
+          <Svg
+            svgHtml={ChevronDown}
+            size="md"
+            className="rotate-0 transition-transform duration-200 open-indicator"
+          />
+        </div>
+      </summary>
+      <div class="pb-6">
+        <slot name="content" />
       </div>
-      <Svg
-        svgHtml={ChevronDown}
-        size="md"
-        className="rotate-0 transition-transform duration-200 open-indicator"
-      />
+    </details>
+  ) : (
+    <div
+      class:list={[
+        "flex flex-col [&_span.open-indicator]:open:rotate-180",
+        asTimeLine && "relative pl-6",
+      ]}
+    >
+      <div class="flex flex-col cursor-pointer pb-3">
+        {asTimeLine && <TimePin isCompleted={isCompleted} />}
+        <div class="flex flex-col">
+          <slot name="title" />
+          <slot name="subtitle" />
+        </div>
+      </div>
     </div>
-  </summary>
-  <div class="pb-6">
-    <slot name="content" />
-  </div>
-</details>
+  )
+}

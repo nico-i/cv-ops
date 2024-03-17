@@ -47,7 +47,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
               )
             : undefined,
           work_hours ?? undefined,
-          summary ? new StrapiBulletList(summary) : undefined,
+          !!summary ? new StrapiBulletList(summary) : undefined,
           demo_url ?? undefined,
           await Promise.all(
             links?.map(async (resLink) => {

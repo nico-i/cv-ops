@@ -1,0 +1,63 @@
+---
+import BulletList from "@/components/ui/BulletList.astro";
+import Card from "@/components/ui/Card.astro";
+import Details from "@/components/ui/Details.astro";
+import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import TimeWindow from "@/components/ui/TimeWindow.astro";
+import Typography from "@/components/ui/Typography.astro";
+import type { Project } from "@/lib/domain/project";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+import Telescope from "@/svg/telescope.svg?raw";
+
+interface Props {
+  localizedProjects: EntityByLocale<Project>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedProjects, locale }: Props = Astro.props;
+---
+
+<Card>
+  <Fragment slot="title">
+    <SectionTitle title="Projects" svgHtml={Telescope} />
+  </Fragment>
+  <Fragment slot="content">
+    {
+      localizedProjects &&
+        localizedProjects.map((localizedProject) => {
+          const project = localizedProject[locale];
+          return (
+            <Details isCompleted={project?.end !== undefined} asTimeLine>
+              <Typography variant="large" slot="title">
+                {project?.title}
+                &thinsp;
+                {project?.demoUrl && (
+                  <ExternalIconLink href={project?.demoUrl} />
+                )}
+              </Typography>
+              <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
+                <TimeWindow
+                  start={project?.start!}
+                  end={project?.end}
+                  locale={locale}
+                />
+              </div>
+              {project?.summary?.listItems ? (
+                <Fragment slot="content">
+                  <BulletList>
+                    {project?.summary?.listItems.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </BulletList>
+                </Fragment>
+              ) : (
+                project.tldr
+              )}
+            </Details>
+          );
+        })
+    }
+  </Fragment>
+</Card>

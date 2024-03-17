@@ -12,7 +12,7 @@ import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
 import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
 import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
-// import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
+import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
 import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
 
 import { Locale } from "@/lib/types/Locale";
@@ -20,9 +20,9 @@ import Education from "@/components/sections/Education.astro";
 import Skills from "@/components/sections/Skills.astro";
 import Languages from "@/components/sections/Languages.astro";
 import Certificates from "@/components/sections/Certificates.astro";
-import PrintablePage from "@/components/ui/PrintablePage.astro";
 import type { GetStaticPaths } from "astro";
 import VolunteerWork from "@/components/sections/VolunteerWork.astro";
+import Projects from "@/components/sections/Projects.astro";
 
 export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
@@ -40,7 +40,7 @@ const localizedEds = await EdStrapiRepo.getAllLocalized();
 const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 const localizedLangs = await LangStrapiRepo.getAllLocalized();
 const localizedCerts = await CertStrapiRepo.getAllLocalized();
-// const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
+const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
 const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
@@ -63,68 +63,65 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
     <title>CV | Nico Ismaili</title>
   </head>
   <body
-    class="mx-auto print:m-0 bg-zinc-900 print:bg-background lg:p-12 print:p-0 flex flex-col gap-0 lg:gap-3 print:gap-0"
+    class="w-full
+    lg:w-[215.9mm]
+    h-full
+    mx-auto
+    p-1.5
+    grid gap-1.5 grid-cols-1 lg:grid-cols-[34%,auto] auto-cols-min"
   >
-    <PrintablePage
-      className="grid gap-1.5 grid-cols-1 lg:grid-cols-[34%,auto] auto-cols-min"
-    >
-      <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-        <Profile locale={lang} localizedInfo={localizedInfo} />
-        <Skills locale={lang} localizedSkills={localizedSkills} />
-        <Languages locale={lang} localizedLangs={localizedLangs} />
-        <Interests locale={lang} localizedInterests={localizedInterests} />
-      </div>
-      <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-        <Experience locale={lang} localizedXps={localizedXps} />
-        <Education locale={lang} localizedEds={localizedEds} />
-        <Certificates locale={lang} localizedCerts={localizedCerts} />
-        <VolunteerWork
-          locale={lang}
-          localizedVolunteers={localizedVolunteers}
-        />
-      </div>
+    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
+      <Profile locale={lang} localizedInfo={localizedInfo} />
+      <Skills locale={lang} localizedSkills={localizedSkills} />
+      <Languages locale={lang} localizedLangs={localizedLangs} />
+      <Interests locale={lang} localizedInterests={localizedInterests} />
+    </div>
+    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
+      <Experience locale={lang} localizedXps={localizedXps} />
+      <Education locale={lang} localizedEds={localizedEds} />
+      <Projects locale={lang} localizedProjects={localizedProjects} />
+      <Certificates locale={lang} localizedCerts={localizedCerts} />
+      <VolunteerWork locale={lang} localizedVolunteers={localizedVolunteers} />
+    </div>
 
-      <div class="lg:hidden flex flex-col gap-1.5">
-        <Profile locale={lang} localizedInfo={localizedInfo} />
-        <Experience locale={lang} localizedXps={localizedXps} />
-        <Skills locale={lang} localizedSkills={localizedSkills} />
-        <Education locale={lang} localizedEds={localizedEds} />
-        <Certificates locale={lang} localizedCerts={localizedCerts} />
-        <Languages locale={lang} localizedLangs={localizedLangs} />
-        <VolunteerWork
-          locale={lang}
-          localizedVolunteers={localizedVolunteers}
-        />
-        <Interests locale={lang} localizedInterests={localizedInterests} />
-      </div>
-    </PrintablePage>
-
-    <!-- Auto Theme Switcher Script -->
-    <script is:inline>
-      const getThemePreference = () => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
-        }
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      };
-      const isDark = getThemePreference() === "dark";
-      document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-
-      if (typeof localStorage !== "undefined") {
-        const observer = new MutationObserver(() => {
-          const isDark = document.documentElement.classList.contains("dark");
-          localStorage.setItem("theme", isDark ? "dark" : "light");
-        });
-        observer.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ["class"],
-        });
-      }
-    </script>
+    <div class="lg:hidden flex flex-col gap-1.5">
+      <Profile locale={lang} localizedInfo={localizedInfo} />
+      <Experience locale={lang} localizedXps={localizedXps} />
+      <Skills locale={lang} localizedSkills={localizedSkills} />
+      <Education locale={lang} localizedEds={localizedEds} />
+      <Projects locale={lang} localizedProjects={localizedProjects} />
+      <Certificates locale={lang} localizedCerts={localizedCerts} />
+      <Languages locale={lang} localizedLangs={localizedLangs} />
+      <VolunteerWork locale={lang} localizedVolunteers={localizedVolunteers} />
+      <Interests locale={lang} localizedInterests={localizedInterests} />
+    </div>
   </body>
+
+  <!-- Auto Theme Switcher Script -->
+  <script is:inline>
+    const getThemePreference = () => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    };
+    const isDark = getThemePreference() === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    if (typeof localStorage !== "undefined") {
+      const observer = new MutationObserver(() => {
+        const isDark = document.documentElement.classList.contains("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    }
+  </script>
 </html>
