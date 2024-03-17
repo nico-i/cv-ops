@@ -30,8 +30,8 @@
     "astro": "astro",
     "gen:gql": "bunx graphql-codegen",
     "gen:gql:watch": "bunx graphql-codegen --watch",
-    "o:gql": "dotenvx run -- xdg-open $STRAPI_URL/graphql",
-    "o:cms": "dotenvx run -- xdg-open $STRAPI_URL/admin"
+    "o:gql": "dotenvx run -- npx opn-cli $STRAPI_URL/graphql",
+    "o:cms": "dotenvx run -- npx opn-cli $STRAPI_URL/admin"
   },
   "type": "module",
   "devDependencies": {

@@ -6,6 +6,13 @@ query GetLangs($locale: I18NLocaleCode!) {
         locale
         name
         level
+        icon {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
         doc {
           data {
             attributes {

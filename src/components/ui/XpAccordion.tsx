@@ -2,15 +2,17 @@ import { BulletList } from "@/components/ui/BulletList";
 import { ExternalIconLink } from "@/components/ui/ExternalIconLink";
 import { IconText } from "@/components/ui/IconText";
 import { Svg } from "@/components/ui/Svg";
+import { TimeWindow } from "@/components/ui/TimeWindow";
 import { TimelineAccordionItem } from "@/components/ui/TimelineAccordionItem";
 import type { Xp } from "@/lib/domain/xp";
+import type { Locale } from "@/lib/types/Locale";
 import { Accordion } from "@radix-ui/react-accordion";
-import { Building2, CalendarDays } from "lucide-react";
+import { Building2 } from "lucide-react";
 import { useState } from "react";
 
 export interface XpAccordionProps {
   localizedXps: Record<string, Xp>[];
-  locale: string;
+  locale: Locale;
 }
 
 export const XpAccordion = ({
@@ -45,22 +47,11 @@ export const XpAccordion = ({
                     )}
                   </div>
                 </IconText>
-                <IconText ele="muted">
-                  <Svg Icon={CalendarDays} />
-                  <>
-                    {currentLocaleXp?.start.toLocaleDateString(locale, {
-                      year: "numeric",
-                      month: "short",
-                    })}
-                    &nbsp;&ndash;&nbsp;
-                    {currentLocaleXp?.end
-                      ? currentLocaleXp?.end.toLocaleDateString(locale, {
-                          year: "numeric",
-                          month: "short",
-                        })
-                      : "Present"}
-                  </>
-                </IconText>
+                <TimeWindow
+                  start={currentLocaleXp?.start!}
+                  end={currentLocaleXp?.end}
+                  locale={locale}
+                />
               </div>
             }
             value={currentLocaleXp?.id!}

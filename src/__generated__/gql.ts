@@ -520,6 +520,7 @@ export type Lang = {
   __typename?: 'Lang';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   doc?: Maybe<UploadFileEntityResponse>;
+  icon?: Maybe<UploadFileEntityResponse>;
   level: Enum_Lang_Level;
   locale?: Maybe<Scalars['String']['output']>;
   localizations?: Maybe<LangRelationResponseCollection>;
@@ -566,6 +567,7 @@ export type LangFiltersInput = {
 
 export type LangInput = {
   doc?: InputMaybe<Scalars['ID']['input']>;
+  icon?: InputMaybe<Scalars['ID']['input']>;
   level?: InputMaybe<Enum_Lang_Level>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2067,7 +2069,7 @@ export type GetLangsQueryVariables = Exact<{
 }>;
 
 
-export type GetLangsQuery = { __typename?: 'Query', langs?: { __typename?: 'LangEntityResponseCollection', data: Array<{ __typename?: 'LangEntity', id?: string | null, attributes?: { __typename?: 'Lang', locale?: string | null, name: string, level: Enum_Lang_Level, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
+export type GetLangsQuery = { __typename?: 'Query', langs?: { __typename?: 'LangEntityResponseCollection', data: Array<{ __typename?: 'LangEntity', id?: string | null, attributes?: { __typename?: 'Lang', locale?: string | null, name: string, level: Enum_Lang_Level, icon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null, doc?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
 export type GetProjectsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -2210,6 +2212,13 @@ export const GetLangsDocument = gql`
         locale
         name
         level
+        icon {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
         doc {
           data {
             attributes {

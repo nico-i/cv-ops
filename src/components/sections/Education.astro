@@ -1,19 +1,15 @@
 ---
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { ExternalIconLink } from "@/components/ui/ExternalIconLink";
+import GradedListItem from "@/components/ui/GradedListItem/GradedListItem.astro";
 import { IconText } from "@/components/ui/IconText";
 import { Svg } from "@/components/ui/Svg";
+import { TimeWindow } from "@/components/ui/TimeWindow";
 import { Typography } from "@/components/ui/Typography";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Ed } from "@/lib/domain/ed";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import { CalendarDays, GraduationCap } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 
 interface Props {
   localizedEds: EntityByLocale<Ed>[] | undefined;
@@ -28,7 +24,6 @@ const { localizedEds, locale }: Props = Astro.props;
     <CardTitle>
       <Typography ele="h3">Education</Typography>
     </CardTitle>
-    <CardDescription> Who taught me what.</CardDescription>
   </CardHeader>
   <CardContent>
     <ul>
@@ -37,49 +32,31 @@ const { localizedEds, locale }: Props = Astro.props;
           const localizedEd = ed[locale];
 
           return (
-            <li class="flex flex-col gap-0.5 pb-3 z-10 bg-background">
-              <div class="flex justify-between items-center">
-                <div>
-                  <Typography ele="large">
-                    {localizedEd?.institute}{" "}
-                    {localizedEd?.url && (
-                      <ExternalIconLink href={localizedEd?.url} />
-                    )}
-                  </Typography>
+            <>
+              <GradedListItem
+                grade={localizedEd?.grade}
+                docUrl={localizedEd?.docUrl}
+              >
+                <span slot="title">
+                  {localizedEd?.institute}{" "}
+                  {localizedEd?.url && (
+                    <ExternalIconLink href={localizedEd?.url} />
+                  )}
+                </span>
 
-                  <div class="flex flex-col">
-                    <IconText ele="muted">
-                      <Svg Icon={GraduationCap} />
-                      {localizedEd?.degree}
-                    </IconText>
-                    <IconText ele="muted">
-                      <Svg Icon={CalendarDays} />
-                      <>
-                        {localizedEd?.start.toLocaleDateString(locale, {
-                          year: "numeric",
-                          month: "short",
-                        })}
-                        &nbsp;&ndash;&nbsp;
-                        {localizedEd?.end
-                          ? localizedEd?.end.toLocaleDateString(locale, {
-                              year: "numeric",
-                              month: "short",
-                            })
-                          : "Present"}
-                      </>
-                    </IconText>
-                  </div>
+                <div class="flex flex-col" slot="subtitle">
+                  <IconText ele="muted">
+                    <Svg Icon={GraduationCap} />
+                    {localizedEd?.degree}
+                  </IconText>
+                  <TimeWindow
+                    start={localizedEd?.start}
+                    end={localizedEd?.end}
+                    locale={locale}
+                  />
                 </div>
-                <a
-                  href={localizedEd?.docUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="whitespace-nowrap"
-                >
-                  <Typography ele="code">{localizedEd?.grade}</Typography>
-                </a>
-              </div>
-            </li>
+              </GradedListItem>
+            </>
           );
         })
       }

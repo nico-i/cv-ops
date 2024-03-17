@@ -1,13 +1,7 @@
 ---
 import { BulletList } from "@/components/ui/BulletList";
 import { Typography } from "@/components/ui/Typography";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Interest } from "@/lib/domain/interest";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
@@ -26,7 +20,6 @@ const { localizedInterests, locale } = Astro.props;
     <CardTitle>
       <Typography ele="h3">Interests</Typography>
     </CardTitle>
-    <CardDescription> What I do in my free time. </CardDescription>
   </CardHeader>
   <CardContent>
     {

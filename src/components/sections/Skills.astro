@@ -28,7 +28,7 @@ const { localizedSkills, locale }: Props = Astro.props;
     <CardTitle>
       <Typography ele="h3">Skills</Typography>
     </CardTitle>
-    <CardDescription> My tools and technologies of choice. </CardDescription>
+    <CardDescription> Tools & technologies </CardDescription>
   </CardHeader>
   <CardContent>
     <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
@@ -45,17 +45,16 @@ const { localizedSkills, locale }: Props = Astro.props;
               percentage={localizedSkill.proficiency}
             >
               <Svg
-                className="block"
-                size="lg"
+                className="block w-[19px]"
                 strapiSvg={localizedSkill.svg}
                 client:load
               >
                 <span>
-                  {`${localizedSkill.proficiency}%`} | {localizedSkill.name}
+                  {`${localizedSkill.proficiency}%`} | {localizedSkill.name}{" "}
+                  {localizedSkill.url && (
+                    <ExternalIconLink href={localizedSkill.url} />
+                  )}
                 </span>
-                {localizedSkill.url && (
-                  <ExternalIconLink href={localizedSkill.url} />
-                )}
               </Svg>
             </Gauge>
           );

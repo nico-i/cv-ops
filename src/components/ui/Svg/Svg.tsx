@@ -1,5 +1,4 @@
 import type { StrapiSvg } from "@/lib/DTOs/StrapiSvg";
-import { cn } from "@/lib/utils";
 import type { LucideProps } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
@@ -9,12 +8,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import clsx from "clsx";
 
 export type SvgProps = {
   className?: string;
   children?: ReactNode;
-  size?: "md" | "lg";
 } & (
   | {
       strapiSvg: StrapiSvg;
@@ -28,26 +25,18 @@ export type SvgProps = {
 
 export const Svg = ({
   strapiSvg,
-  className,
+  className = "w-4 h-max-4",
   Icon,
   children,
-  size = "md",
 }: Readonly<SvgProps>) => {
-  const classesBySize = {
-    md: "w-4 h-max-5",
-    lg: "w-5 h-max-5",
-  };
-
-  const classes = clsx(classesBySize[size]);
-
-  if (Icon) return <Icon className={cn(classes, className)} />;
+  if (Icon) return <Icon className={className} />;
 
   const icon = (
     <span
       dangerouslySetInnerHTML={
         strapiSvg ? { __html: strapiSvg.html || "" } : undefined
       }
-      className={cn(classes, className)}
+      className={className}
     />
   );
 

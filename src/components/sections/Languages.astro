@@ -1,0 +1,42 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import GradedListItem from "@/components/ui/GradedListItem/GradedListItem.astro";
+import { Svg } from "@/components/ui/Svg";
+import { Typography } from "@/components/ui/Typography";
+import type { Lang } from "@/lib/domain/lang";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+
+interface Props {
+  localizedLangs: EntityByLocale<Lang>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedLangs, locale }: Props = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <Typography ele="h3">Languages</Typography>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ul>
+      {
+        localizedLangs?.map((lang) => {
+          const localizedLang = lang[locale];
+
+          return (
+            <GradedListItem grade={localizedLang.level} docUrl={undefined}>
+              <span slot="title" class="inline-flex gap-2 items-center">
+                <Svg strapiSvg={localizedLang.icon} className="w-6" />
+                {localizedLang.name}
+              </span>
+            </GradedListItem>
+          );
+        })
+      }
+    </ul>
+  </CardContent>
+</Card>
