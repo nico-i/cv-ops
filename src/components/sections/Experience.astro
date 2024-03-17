@@ -1,4 +1,11 @@
 ---
+import { BulletList } from "@/components/ui/BulletList";
+import { ExternalIconLink } from "@/components/ui/ExternalIconLink";
+import { IconText } from "@/components/ui/IconText";
+import { Svg } from "@/components/ui/Svg";
+import { TimeWindow } from "@/components/ui/TimeWindow";
+import TimelineDetail from "@/components/ui/TimelineDetail/TimelineDetail.astro";
+import { Typography } from "@/components/ui/Typography";
 import {
   Card,
   CardContent,
@@ -6,11 +13,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Typography } from "@/components/ui/Typography";
-import { XpAccordion } from "@/components/ui/XpAccordion";
 import type { Xp } from "@/lib/domain/xp";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { Building2 } from "lucide-react";
 
 interface Props {
   localizedXps: EntityByLocale<Xp>[] | undefined;
@@ -29,9 +35,40 @@ const { localizedXps, locale }: Props = Astro.props;
   </CardHeader>
   <CardContent>
     {
-      localizedXps && (
-        <XpAccordion localizedXps={localizedXps} locale={locale} client:load />
-      )
+      localizedXps &&
+        localizedXps.map((xp) => {
+          const currentLocaleXp = xp[locale];
+          return (
+            <TimelineDetail isCompleted={currentLocaleXp?.end !== undefined}>
+              <Fragment slot="title"> {currentLocaleXp?.position}</Fragment>
+              <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
+                <IconText ele="muted">
+                  <Svg Icon={Building2} />
+                  <spa>
+                    {currentLocaleXp?.company}{" "}
+                    {currentLocaleXp?.url && (
+                      <ExternalIconLink href={currentLocaleXp?.url} />
+                    )}
+                  </spa>
+                </IconText>
+                <TimeWindow
+                  start={currentLocaleXp?.start!}
+                  end={currentLocaleXp?.end}
+                  locale={locale}
+                />
+              </div>
+              <Fragment slot="summary">
+                {currentLocaleXp?.info?.listItems && (
+                  <BulletList>
+                    {currentLocaleXp?.info?.listItems.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </BulletList>
+                )}
+              </Fragment>
+            </TimelineDetail>
+          );
+        })
     }
   </CardContent>
 </Card>

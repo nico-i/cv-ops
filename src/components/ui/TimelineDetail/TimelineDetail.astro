@@ -1,0 +1,36 @@
+---
+import { Svg } from "@/components/ui/Svg";
+import { TimePin } from "@/components/ui/TimePin";
+import { Typography } from "@/components/ui/Typography";
+import { ChevronDown } from "lucide-react";
+
+export interface Props {
+  isCompleted: boolean;
+}
+
+const { isCompleted }: Props = Astro.props;
+---
+
+<details
+  class="flex flex-col relative pl-6 bg-background [&_svg.open-indicator]:open:rotate-180"
+>
+  <summary class="flex flex-col gap-0.5 pb-3 z-10 bg-background cursor-pointer">
+    <TimePin isCompleted={isCompleted} />
+    <div class="flex justify-between items-center">
+      <div class="flex flex-col">
+        <Typography
+          ele="large"
+          className="self-start flex items-center gap-1.5"
+        >
+          <slot name="title" />
+        </Typography>
+        <slot name="subtitle" />
+      </div>
+      <Svg
+        Icon={ChevronDown}
+        className="rotate-0 transform transition-all duration-300 open-indicator"
+      />
+    </div>
+  </summary>
+  <div class="pb-9"><slot name="summary" /></div>
+</details>

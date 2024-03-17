@@ -1,7 +1,6 @@
-import { IconText } from "@/components/ui/IconText";
-import { Svg } from "@/components/ui/Svg";
+import { DateWithIcon } from "@/components/ui/DateWithIcon";
+import { Typography } from "@/components/ui/Typography";
 import type { Locale } from "@/lib/types/Locale";
-import { CalendarDays } from "lucide-react";
 
 export interface TimeWindowProps {
   locale: Locale;
@@ -15,21 +14,15 @@ export const TimeWindow = ({
   end,
 }: Readonly<TimeWindowProps>) => {
   return (
-    <IconText ele="muted">
-      <Svg Icon={CalendarDays} />
-      <>
-        {start.toLocaleDateString(locale, {
-          year: "numeric",
-          month: "short",
-        })}
-        &nbsp;&ndash;&nbsp;
-        {end
-          ? end.toLocaleDateString(locale, {
-              year: "numeric",
-              month: "short",
-            })
-          : "Present"}
-      </>
-    </IconText>
+    <Typography ele="muted" className="inline-flex gap-1.5 items-center">
+      <DateWithIcon date={start} locale={locale} />
+      <span>&ndash;</span>
+      {end
+        ? end.toLocaleDateString(locale, {
+            year: "numeric",
+            month: "short",
+          })
+        : "Present"}
+    </Typography>
   );
 };
