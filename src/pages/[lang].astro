@@ -72,9 +72,9 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
     >
       <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
         <Profile locale={lang} localizedInfo={localizedInfo} />
-        <Interests locale={lang} localizedInterests={localizedInterests} />
         <Skills locale={lang} localizedSkills={localizedSkills} />
         <Languages locale={lang} localizedLangs={localizedLangs} />
+        <Interests locale={lang} localizedInterests={localizedInterests} />
       </div>
       <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
         <Experience locale={lang} localizedXps={localizedXps} />
