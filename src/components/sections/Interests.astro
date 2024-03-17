@@ -1,8 +1,7 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
-import IconText from "@/components/ui/IconText.astro";
-import Svg from "@/components/ui/Svg.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
 import type { Interest } from "@/lib/domain/interest";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
@@ -19,10 +18,7 @@ const { localizedInterests, locale } = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <IconText variant="h3">
-      <Svg svgHtml={Joystick} />
-      <span>Interests</span>
-    </IconText>
+    <SectionTitle title="Interests" svgHtml={Joystick} />
   </Fragment>
   <Fragment slot="content">
     {

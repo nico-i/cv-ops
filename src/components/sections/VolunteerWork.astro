@@ -1,0 +1,58 @@
+---
+import Card from "@/components/ui/Card.astro";
+import Details from "@/components/ui/Details.astro";
+import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import Svg from "@/components/ui/Svg.astro";
+import TimeWindow from "@/components/ui/TimeWindow.astro";
+import Typography from "@/components/ui/Typography.astro";
+import type { Volunteer } from "@/lib/domain/volunteer";
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import type { Locale } from "@/lib/types/Locale";
+import Building2 from "@/svg/building-2.svg?raw";
+import HeartHandshake from "@/svg/heart-handshake.svg?raw";
+
+interface Props {
+  localizedVolunteers: EntityByLocale<Volunteer>[] | undefined;
+  locale: Locale;
+}
+
+const { localizedVolunteers, locale }: Props = Astro.props;
+---
+
+<Card>
+  <Fragment slot="title">
+    <SectionTitle title="Volunteer Work" svgHtml={HeartHandshake} />
+  </Fragment>
+  <Fragment slot="description"> My communal contributions </Fragment>
+  <Fragment slot="content">
+    {
+      localizedVolunteers &&
+        localizedVolunteers.map((localizedVolunteer) => {
+          const volunteer = localizedVolunteer[locale];
+          return (
+            <Details isCompleted={volunteer?.end !== undefined} asTimeLine>
+              <Typography variant="large" slot="title">
+                {volunteer?.activity}&thinsp;
+                {volunteer?.url && <ExternalIconLink href={volunteer?.url} />}
+              </Typography>
+              <div slot="subtitle" class="flex flex-col">
+                <Typography variant="muted">
+                  <Svg svgHtml={Building2} />
+                  {volunteer?.org}
+                </Typography>
+                <TimeWindow
+                  start={volunteer?.start!}
+                  end={volunteer?.end}
+                  locale={locale}
+                />
+              </div>
+              {volunteer?.summary && (
+                <Fragment slot="content">{volunteer?.summary}</Fragment>
+              )}
+            </Details>
+          );
+        })
+    }
+  </Fragment>
+</Card>

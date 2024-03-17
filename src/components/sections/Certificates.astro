@@ -3,7 +3,7 @@ import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Details from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
-import IconText from "@/components/ui/IconText.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Cert } from "@/lib/domain/cert";
@@ -23,10 +23,7 @@ const { localizedCerts, locale }: Props = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <IconText variant="h3">
-      <Svg svgHtml={ShieldCheck} />
-      <span>Certificates</span>
-    </IconText>
+    <SectionTitle title="Certificates" svgHtml={ShieldCheck} />
   </Fragment>
   <Fragment slot="content">
     <ul class="flex flex-col">
@@ -50,20 +47,19 @@ const { localizedCerts, locale }: Props = Astro.props;
                 class="flex flex-col gap-0 lg:flex-row lg:gap-3"
                 slot="subtitle"
               >
-                <IconText variant="muted">
+                <Typography variant="muted">
                   <Svg svgHtml={Building} />
-                  <span>{localizedCert.issuer}</span>
-                </IconText>
-                <IconText variant="muted">
+                  {localizedCert.issuer}
+                </Typography>
+                <Typography variant="muted">
                   <Svg svgHtml={Calendar} />
-                  <span>
-                    {localizedCert.received.toLocaleDateString(locale, {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </span>
-                </IconText>
+
+                  {localizedCert.received.toLocaleDateString(locale, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </Typography>
               </div>
               <BulletList slot="content">
                 {localizedCert.info.listItems.map((item) => (

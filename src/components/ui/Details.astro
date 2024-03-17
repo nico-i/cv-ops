@@ -26,11 +26,12 @@ const { asTimeLine = false, isCompleted = false }: Props = Astro.props;
       </div>
       <Svg
         svgHtml={ChevronDown}
-        className="w-6 h-max-6 rotate-0 transform transition-all duration-200 open-indicator"
+        size="md"
+        className="rotate-0 transition-transform duration-200 open-indicator"
       />
     </div>
   </summary>
-  <div class="pb-3">
+  <div class="pb-6">
     <slot name="content" />
   </div>
 </details>

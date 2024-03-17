@@ -1,7 +1,6 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
-import IconText from "@/components/ui/IconText.astro";
 import Link from "@/components/ui/Link.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
@@ -34,28 +33,26 @@ const { localizedInfo, locale } = Astro.props;
   </Fragment>
   <Fragment slot="content">
     <div id="info" class="flex flex-col gap-2">
-      <IconText variant="small">
+      <Typography variant="small">
         <Svg svgHtml={Cake} />
-        <span>
-          {
-            localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          }
-        </span>
-      </IconText>
-      <IconText variant="small">
+        {
+          localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        }
+      </Typography>
+      <Typography variant="small">
         <Svg svgHtml={Phone} />
         <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
           {localizedInfo?.[locale]?.phone}
         </a>
-      </IconText>
-      <IconText variant="small">
+      </Typography>
+      <Typography variant="small">
         <Svg svgHtml={MapPin} />
-        <span>{localizedInfo?.[locale]?.address}</span>
-      </IconText>
+        {localizedInfo?.[locale]?.address}
+      </Typography>
     </div>
     <BulletList hideBullets>
       {
@@ -65,8 +62,8 @@ const { localizedInfo, locale } = Astro.props;
           }
 
           return (
-            <li class="flex gap-1.5">
-              <Svg svgHtml={contact.svgHtml} />
+            <li>
+              <Svg svgHtml={contact.svgHtml} className="translate-y-0.5" />
               <Link href={contact.url}>{contact.text}</Link>
             </li>
           );

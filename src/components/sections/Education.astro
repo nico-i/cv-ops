@@ -2,9 +2,10 @@
 import Card from "@/components/ui/Card.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
-import IconText from "@/components/ui/IconText.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
+import Typography from "@/components/ui/Typography.astro";
 import { Ed } from "@/lib/domain/ed";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
@@ -21,10 +22,7 @@ const { localizedEds, locale }: Props = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <IconText variant="h3">
-      <Svg svgHtml={GraduationCap} />
-      <span>Education</span>
-    </IconText>
+    <SectionTitle title="Education" svgHtml={GraduationCap} />
   </Fragment>
   <Fragment slot="content">
     <ul class="flex flex-col gap-3">
@@ -45,10 +43,10 @@ const { localizedEds, locale }: Props = Astro.props;
               </span>
 
               <div class="flex flex-col" slot="subtitle">
-                <IconText variant="muted">
+                <Typography variant="muted">
                   <Svg svgHtml={University} />
-                  <span>{localizedEd?.degree}</span>
-                </IconText>
+                  {localizedEd?.degree}
+                </Typography>
                 <TimeWindow
                   start={localizedEd?.start}
                   end={localizedEd?.end}

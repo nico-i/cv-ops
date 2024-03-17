@@ -13,7 +13,7 @@ import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
 import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
 import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
 // import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
-// import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
+import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
 
 import { Locale } from "@/lib/types/Locale";
 import Education from "@/components/sections/Education.astro";
@@ -22,6 +22,7 @@ import Languages from "@/components/sections/Languages.astro";
 import Certificates from "@/components/sections/Certificates.astro";
 import PrintablePage from "@/components/ui/PrintablePage.astro";
 import type { GetStaticPaths } from "astro";
+import VolunteerWork from "@/components/sections/VolunteerWork.astro";
 
 export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
@@ -40,7 +41,7 @@ const localizedSkills = await SkillStrapiRepo.getAllLocalized();
 const localizedLangs = await LangStrapiRepo.getAllLocalized();
 const localizedCerts = await CertStrapiRepo.getAllLocalized();
 // const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
-// const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
+const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
 
 const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
 ---
@@ -77,6 +78,10 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
         <Experience locale={lang} localizedXps={localizedXps} />
         <Education locale={lang} localizedEds={localizedEds} />
         <Certificates locale={lang} localizedCerts={localizedCerts} />
+        <VolunteerWork
+          locale={lang}
+          localizedVolunteers={localizedVolunteers}
+        />
       </div>
 
       <div class="lg:hidden flex flex-col gap-1.5">
@@ -86,6 +91,10 @@ const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
         <Education locale={lang} localizedEds={localizedEds} />
         <Certificates locale={lang} localizedCerts={localizedCerts} />
         <Languages locale={lang} localizedLangs={localizedLangs} />
+        <VolunteerWork
+          locale={lang}
+          localizedVolunteers={localizedVolunteers}
+        />
         <Interests locale={lang} localizedInterests={localizedInterests} />
       </div>
     </PrintablePage>

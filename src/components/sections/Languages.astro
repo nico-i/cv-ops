@@ -1,7 +1,7 @@
 ---
 import Card from "@/components/ui/Card.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
-import IconText from "@/components/ui/IconText.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import type { Lang } from "@/lib/domain/lang";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
@@ -18,10 +18,7 @@ const { localizedLangs, locale }: Props = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <IconText variant="h3">
-      <Svg svgHtml={LanguagesIcon} />
-      <span>Languages</span>
-    </IconText>
+    <SectionTitle title="Languages" svgHtml={LanguagesIcon} />
   </Fragment>
   <Fragment slot="content">
     <ul class="flex flex-col gap-1.5">

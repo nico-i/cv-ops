@@ -1,5 +1,4 @@
 ---
-import IconText from "@/components/ui/IconText.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Locale } from "@/lib/types/Locale";
@@ -14,17 +13,13 @@ const { locale, start, end }: Props = Astro.props;
 ---
 
 <Typography variant="muted" className="inline-flex gap-1.5 items-center">
-  <IconText>
-    <Svg svgHtml={CalendarDays} />
-    <span>
-      {
-        start.toLocaleDateString(locale, {
-          year: "numeric",
-          month: "short",
-        })
-      }
-    </span>
-  </IconText>
+  <Svg svgHtml={CalendarDays} />
+  {
+    start.toLocaleDateString(locale, {
+      year: "numeric",
+      month: "short",
+    })
+  }
   <span>&ndash;</span>
   {
     end

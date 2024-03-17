@@ -3,7 +3,7 @@ import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Details from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
-import IconText from "@/components/ui/IconText.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
@@ -23,10 +23,7 @@ const { localizedXps, locale }: Props = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <IconText variant="h3">
-      <Svg svgHtml={Telescope} />
-      <span>Experience</span>
-    </IconText>
+    <SectionTitle title="Experience" svgHtml={Telescope} />
   </Fragment>
   <Fragment slot="description"> My professional journey </Fragment>
   <Fragment slot="content">
@@ -43,15 +40,13 @@ const { localizedXps, locale }: Props = Astro.props;
                 {currentLocaleXp?.position}
               </Typography>
               <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
-                <IconText variant="muted">
+                <Typography variant="muted">
                   <Svg svgHtml={Building2} />
-                  <span>
-                    {currentLocaleXp?.company}{" "}
-                    {currentLocaleXp?.url && (
-                      <ExternalIconLink href={currentLocaleXp?.url} />
-                    )}
-                  </span>
-                </IconText>
+                  {currentLocaleXp?.company}&thinsp;
+                  {currentLocaleXp?.url && (
+                    <ExternalIconLink href={currentLocaleXp?.url} />
+                  )}
+                </Typography>
                 <TimeWindow
                   start={currentLocaleXp?.start!}
                   end={currentLocaleXp?.end}

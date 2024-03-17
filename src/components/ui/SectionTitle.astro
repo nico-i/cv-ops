@@ -1,0 +1,16 @@
+---
+import Svg from "@/components/ui/Svg.astro";
+import Typography from "@/components/ui/Typography.astro";
+
+interface Props {
+  svgHtml: string;
+  title: string;
+}
+
+const { svgHtml, title }: Props = Astro.props;
+---
+
+<Typography variant="h3">
+  <Svg svgHtml={svgHtml} size="md" />&thinsp;
+  {title}
+</Typography>

@@ -74,6 +74,6 @@
     @apply bg-background text-foreground;
   }
   svg {
-    @apply inline-block;
+    @apply inline-flex -translate-y-[0.125rem];
   }
 }
