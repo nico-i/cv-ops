@@ -1,6 +1,4 @@
 ---
-import type { ElementType } from "react";
-
 export interface Props {
   variant:
     | "p"
@@ -34,7 +32,7 @@ const classesByVariant: Record<Props["variant"], string> = {
   muted: "text-sm text-muted-foreground",
 };
 
-let Ele: ElementType;
+let Ele;
 
 if (
   variant === "p" ||
