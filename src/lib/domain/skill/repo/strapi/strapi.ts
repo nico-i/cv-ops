@@ -1,12 +1,16 @@
+import type { getSdk } from "@/__generated__/gql";
 import { Skill } from "@/lib/domain/skill";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 import { fetchSvgHtml } from "@/lib/utils";
 
-class StrapiRepo extends LocalizedStrapiRepo<Skill> {
+export class SkillStrapiRepo extends LocalizedStrapiRepo<Skill> {
+  constructor(client: ReturnType<typeof getSdk>) {
+    super(client);
+  }
+
   override async getAll(locale: Locale): Promise<Skill[]> {
-    const res = await StrapiClient.GetSkills({ locale });
+    const res = await this.sdk.GetSkills({ locale });
 
     const skills = Promise.all(
       res.skills?.data.map(async (rawSkill) => {
@@ -30,5 +34,3 @@ class StrapiRepo extends LocalizedStrapiRepo<Skill> {
     return skills;
   }
 }
-
-export const SkillStrapiRepo = new StrapiRepo();

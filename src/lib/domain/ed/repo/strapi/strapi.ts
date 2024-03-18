@@ -1,12 +1,16 @@
+import type { getSdk } from "@/__generated__/gql";
 import { Ed } from "@/lib/domain/ed";
 import type { EdRepo } from "@/lib/domain/ed/repo/repo";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 
-class StrapiRepo extends LocalizedStrapiRepo<Ed> implements EdRepo {
+export class EdStrapiRepo extends LocalizedStrapiRepo<Ed> implements EdRepo {
+  constructor(client: ReturnType<typeof getSdk>) {
+    super(client);
+  }
+
   override async getAll(locale: Locale): Promise<Ed[]> {
-    const res = await StrapiClient.GetEds({ locale });
+    const res = await this.sdk.GetEds({ locale });
 
     const eds =
       res.eds?.data.map((rawEd) => {
@@ -29,5 +33,3 @@ class StrapiRepo extends LocalizedStrapiRepo<Ed> implements EdRepo {
     return eds;
   }
 }
-
-export const EdStrapiRepo = new StrapiRepo();

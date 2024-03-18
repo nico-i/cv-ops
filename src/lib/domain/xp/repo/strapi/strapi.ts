@@ -1,12 +1,16 @@
+import type { getSdk } from "@/__generated__/gql";
 import { Xp } from "@/lib/domain/xp";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 import { parseMdBulletListToHtml } from "@/lib/utils";
 
-class StrapiRepo extends LocalizedStrapiRepo<Xp> {
+export class XpStrapiRepo extends LocalizedStrapiRepo<Xp> {
+  constructor(client: ReturnType<typeof getSdk>) {
+    super(client);
+  }
+
   override async getAll(locale: Locale): Promise<Xp[]> {
-    const res = await StrapiClient.GetXps({ locale });
+    const res = await this.sdk.GetXps({ locale });
 
     const xps = await Promise.all(
       res.xps?.data.map(async (resXp) => {
@@ -43,5 +47,3 @@ class StrapiRepo extends LocalizedStrapiRepo<Xp> {
     return xps;
   }
 }
-
-export const XpStrapiRepo = new StrapiRepo();

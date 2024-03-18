@@ -1,14 +1,18 @@
+import type { getSdk } from "@/__generated__/gql";
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
 import { Info } from "@/lib/domain/info";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 import { fetchSvgHtml } from "@/lib/utils";
 
-class StrapiRepository extends LocalizedStrapiRepo<Info> {
+export class InfoStrapiRepo extends LocalizedStrapiRepo<Info> {
+  constructor(client: ReturnType<typeof getSdk>) {
+    super(client);
+  }
+
   override async getAll(locale: Locale): Promise<Info[]> {
-    const res = await StrapiClient.GetInfo({ locale });
+    const res = await this.sdk.GetInfo({ locale });
 
     const {
       locale: resLocale,
@@ -62,5 +66,3 @@ class StrapiRepository extends LocalizedStrapiRepo<Info> {
     ];
   }
 }
-
-export const InfoStrapiRepo = new StrapiRepository();

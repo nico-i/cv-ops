@@ -1,12 +1,16 @@
+import { getSdk } from "@/__generated__/gql";
 import { Lang } from "@/lib/domain/lang";
-import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
 import { fetchSvgHtml } from "@/lib/utils";
 
-class StrapiRepo extends LocalizedStrapiRepo<Lang> {
+export class LangStrapiRepo extends LocalizedStrapiRepo<Lang> {
+  constructor(client: ReturnType<typeof getSdk>) {
+    super(client);
+  }
+
   override async getAll(locale: Locale): Promise<Lang[]> {
-    const res = await StrapiClient.GetLangs({ locale });
+    const res = await this.sdk.GetLangs({ locale });
 
     const langs = Promise.all(
       res.langs?.data.map(async (rawLang) => {
@@ -27,5 +31,3 @@ class StrapiRepo extends LocalizedStrapiRepo<Lang> {
     return langs;
   }
 }
-
-export const LangStrapiRepo = new StrapiRepo();

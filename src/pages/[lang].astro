@@ -34,16 +34,39 @@ export const getStaticPaths = (async () => {
 
 const { lang } = Astro.params;
 
-const localizedXps = await XpStrapiRepo.getAllLocalized();
-const localizedInterests = await InterestStrapiRepo.getAllLocalized();
-const localizedEds = await EdStrapiRepo.getAllLocalized();
-const localizedSkills = await SkillStrapiRepo.getAllLocalized();
-const localizedLangs = await LangStrapiRepo.getAllLocalized();
-const localizedCerts = await CertStrapiRepo.getAllLocalized();
-const localizedProjects = await ProjectStrapiRepo.getAllLocalized();
-const localizedVolunteers = await VolunteerStrapiRepo.getAllLocalized();
+import { GraphQLClient } from "graphql-request";
+import { getSdk } from "src/__generated__/gql";
 
-const localizedInfo = (await InfoStrapiRepo.getAllLocalized())[0];
+if (!import.meta.env.STRAPI_URL) {
+  throw new Error("STRAPI_URL is not defined");
+}
+
+if (!import.meta.env.STRAPI_API_TOKEN) {
+  throw new Error("STRAPI_API_TOKEN is not defined");
+}
+
+const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL + "/graphql", {
+  headers: {
+    Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
+  },
+});
+
+const client = getSdk(gqlClient);
+
+const localizedXps = await new XpStrapiRepo(client).getAllLocalized();
+const localizedInterests = await new InterestStrapiRepo(
+  client
+).getAllLocalized();
+const localizedEds = await new EdStrapiRepo(client).getAllLocalized();
+const localizedSkills = await new SkillStrapiRepo(client).getAllLocalized();
+const localizedLangs = await new LangStrapiRepo(client).getAllLocalized();
+const localizedCerts = await new CertStrapiRepo(client).getAllLocalized();
+const localizedProjects = await new ProjectStrapiRepo(client).getAllLocalized();
+const localizedVolunteers = await new VolunteerStrapiRepo(
+  client
+).getAllLocalized();
+
+const localizedInfo = (await new InfoStrapiRepo(client).getAllLocalized())[0];
 ---
 
 <html lang={lang}>

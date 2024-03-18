@@ -1,8 +1,11 @@
+import type { getSdk } from "@/__generated__/gql";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import { Locale } from "@/lib/types/Locale";
 import type { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export abstract class LocalizedStrapiRepo<T extends LocalizedStrapiEntity> {
+  constructor(protected sdk: ReturnType<typeof getSdk>) {}
+
   abstract getAll(locale: Locale): Promise<T[]>;
 
   async getAllLocalized(): Promise<EntityByLocale<T>[]> {
