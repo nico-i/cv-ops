@@ -1,1 +1,0 @@
-export { EdStrapiRepo } from "./strapi";

@@ -1,3 +1,6 @@
+import type { EntityByLocale } from "@/lib/types/EntityByLocale";
+import { Locale } from "@/lib/types/Locale";
+import type { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { markdown } from "@astropub/md";
 
 export async function fetchSvgHtml(url: string): Promise<string> {
@@ -17,4 +20,19 @@ export async function parseMdBulletListToHtml(
       return mdStr.toString();
     })
   );
+}
+
+export async function parseAllLocalized<T extends LocalizedStrapiEntity>(
+  allItemsByLocale: Record<Locale, T[]>
+): Promise<EntityByLocale<T>[]> {
+  return allItemsByLocale.en.map((_, i) => {
+    const itemsByLocale: Record<Locale, T> = Object.values(Locale).reduce(
+      (acc, locale) => {
+        acc[locale] = allItemsByLocale[locale][i]!;
+        return acc;
+      },
+      {} as Record<Locale, T>
+    );
+    return itemsByLocale;
+  });
 }

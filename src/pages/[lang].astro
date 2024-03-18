@@ -5,24 +5,14 @@ import Profile from "@/components/sections/Profile.astro";
 import Experience from "@/components/sections/Experience.astro";
 import Interests from "@/components/sections/Interests.astro";
 
-import { InterestStrapiRepo } from "@/lib/domain/interest/repo/strapi";
-import { XpStrapiRepo } from "@/lib/domain/xp/repo/strapi";
-import { InfoStrapiRepo } from "@/lib/domain/info/repo/strapi";
-import { EdStrapiRepo } from "@/lib/domain/ed/repo/strapi";
-import { SkillStrapiRepo } from "@/lib/domain/skill/repo/strapi";
-import { LangStrapiRepo } from "@/lib/domain/lang/repo/strapi";
-import { CertStrapiRepo } from "@/lib/domain/cert/repo/strapi";
-import { ProjectStrapiRepo } from "@/lib/domain/project/repo/strapi";
-import { VolunteerStrapiRepo } from "@/lib/domain/volunteer/repo/strapi";
-
 import { Locale } from "@/lib/types/Locale";
 import Education from "@/components/sections/Education.astro";
 import Skills from "@/components/sections/Skills.astro";
 import Languages from "@/components/sections/Languages.astro";
 import Certificates from "@/components/sections/Certificates.astro";
-import type { GetStaticPaths } from "astro";
 import VolunteerWork from "@/components/sections/VolunteerWork.astro";
 import Projects from "@/components/sections/Projects.astro";
+import { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
@@ -33,40 +23,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { lang } = Astro.params;
-
-import { GraphQLClient } from "graphql-request";
-import { getSdk } from "src/__generated__/gql";
-
-if (!import.meta.env.STRAPI_URL) {
-  throw new Error("STRAPI_URL is not defined");
-}
-
-if (!import.meta.env.STRAPI_API_TOKEN) {
-  throw new Error("STRAPI_API_TOKEN is not defined");
-}
-
-const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL, {
-  headers: {
-    Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
-  },
-});
-
-const client = getSdk(gqlClient);
-
-const localizedXps = await new XpStrapiRepo(client).getAllLocalized();
-const localizedInterests = await new InterestStrapiRepo(
-  client
-).getAllLocalized();
-const localizedEds = await new EdStrapiRepo(client).getAllLocalized();
-const localizedSkills = await new SkillStrapiRepo(client).getAllLocalized();
-const localizedLangs = await new LangStrapiRepo(client).getAllLocalized();
-const localizedCerts = await new CertStrapiRepo(client).getAllLocalized();
-const localizedProjects = await new ProjectStrapiRepo(client).getAllLocalized();
-const localizedVolunteers = await new VolunteerStrapiRepo(
-  client
-).getAllLocalized();
-
-const localizedInfo = (await new InfoStrapiRepo(client).getAllLocalized())[0];
 ---
 
 <html lang={lang}>
@@ -94,29 +50,29 @@ const localizedInfo = (await new InfoStrapiRepo(client).getAllLocalized())[0];
     grid gap-1.5 grid-cols-1 lg:grid-cols-[34%,auto] auto-cols-min"
   >
     <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-      <Profile locale={lang} localizedInfo={localizedInfo} />
-      <Skills locale={lang} localizedSkills={localizedSkills} />
-      <Languages locale={lang} localizedLangs={localizedLangs} />
-      <Interests locale={lang} localizedInterests={localizedInterests} />
+      <!-- <Profile locale={lang}  />
+      <Skills locale={lang} />
+      <Languages locale={lang}  />
+      <Interests locale={lang}  /> -->
     </div>
     <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-      <Experience locale={lang} localizedXps={localizedXps} />
-      <Education locale={lang} localizedEds={localizedEds} />
-      <Projects locale={lang} localizedProjects={localizedProjects} />
-      <Certificates locale={lang} localizedCerts={localizedCerts} />
-      <VolunteerWork locale={lang} localizedVolunteers={localizedVolunteers} />
+      <!-- <Experience locale={lang}  />
+      <Education locale={lang} />
+      <Projects locale={lang}  /> -->
+      <Certificates locale={lang}  />
+      <!-- <VolunteerWork locale={lang} /> -->
     </div>
 
     <div class="lg:hidden flex flex-col gap-1.5">
-      <Profile locale={lang} localizedInfo={localizedInfo} />
-      <Experience locale={lang} localizedXps={localizedXps} />
-      <Skills locale={lang} localizedSkills={localizedSkills} />
-      <Education locale={lang} localizedEds={localizedEds} />
-      <Projects locale={lang} localizedProjects={localizedProjects} />
-      <Certificates locale={lang} localizedCerts={localizedCerts} />
-      <Languages locale={lang} localizedLangs={localizedLangs} />
-      <VolunteerWork locale={lang} localizedVolunteers={localizedVolunteers} />
-      <Interests locale={lang} localizedInterests={localizedInterests} />
+      <!-- <Profile locale={lang} />
+      <Experience locale={lang}  />
+      <Skills locale={lang}  />
+      <Education locale={lang}  />
+      <Projects locale={lang}  />
+      <Certificates locale={lang} />
+      <Languages locale={lang}  />
+      <VolunteerWork locale={lang}  />
+      <Interests locale={lang} /> -->
     </div>
   </body>
 

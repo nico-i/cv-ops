@@ -1,1 +1,0 @@
-export { InterestStrapiRepo } from "./strapi";

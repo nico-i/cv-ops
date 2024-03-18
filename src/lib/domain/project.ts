@@ -1,20 +1,99 @@
-import type { getSdk } from "@/__generated__/gql";
+import type { GetProjectsQuery } from "@/__generated__/gql";
+import { Skill } from "@/lib/domain/skill";
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
-import { Project } from "@/lib/domain/project";
-import { Skill } from "@/lib/domain/skill";
 import type { Locale } from "@/lib/types/Locale";
-import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
+import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { fetchSvgHtml, parseMdBulletListToHtml } from "@/lib/utils";
 
-export class ProjectStrapiRepo extends LocalizedStrapiRepo<Project> {
-  constructor(client: ReturnType<typeof getSdk>) {
-    super(client);
+export class Project extends LocalizedStrapiEntity {
+  static readonly QUERY = `
+    query GetProjects($locale: I18NLocaleCode!) {
+      projects(locale: $locale, sort: "start:desc") {
+        data {
+          id
+          attributes {
+            locale
+            title
+            slug
+            start
+            end
+            tldr
+            summary
+            work_hours
+            demo_url
+            header_image {
+              data {
+                id
+                attributes {
+                  url
+                  alternativeText
+                  width
+                  height
+                  formats
+                }
+              }
+            }
+            links {
+              text
+              url
+              icon {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+            technologies {
+              data {
+                id
+                attributes {
+                  locale
+                  name
+                  proficiency
+                  url
+                  summary
+                  svg {
+                    data {
+                      attributes {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  start: Date;
+  end?: Date;
+
+  constructor(
+    id: string,
+    locale: Locale,
+    public title: string,
+    public slug: string,
+    start: string,
+    public tldr: string,
+    end?: string,
+    public headerImage?: StrapiImage,
+    public workHours?: number,
+    public summaryListItems?: string[],
+    public demoUrl?: string,
+    public links?: StrapiLink[],
+    public technologies?: Skill[]
+  ) {
+    super(id, locale);
+    this.start = new Date(start);
+    if (end) this.end = new Date(end);
   }
 
-  override async getAll(locale: Locale): Promise<Project[]> {
-    const res = await this.sdk.GetProjects({ locale });
-
+  static async fromQuery(res: GetProjectsQuery): Promise<Project[]> {
     const projects = Promise.all(
       res.projects?.data.map(async (rawProject) => {
         const {

@@ -1,17 +1,47 @@
-import type { getSdk } from "@/__generated__/gql";
-import { Xp } from "@/lib/domain/xp";
+import type { GetXpsQuery as GetXpsQueryType } from "@/__generated__/gql";
 import type { Locale } from "@/lib/types/Locale";
-import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
+import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { parseMdBulletListToHtml } from "@/lib/utils";
 
-export class XpStrapiRepo extends LocalizedStrapiRepo<Xp> {
-  constructor(client: ReturnType<typeof getSdk>) {
-    super(client);
+export class Xp extends LocalizedStrapiEntity {
+  static readonly QUERY = `
+    query getXps($locale: I18NLocaleCode!) {
+      xps(locale: $locale) {
+        data {
+          id
+          attributes {
+            locale
+            position
+            company
+            info
+            start
+            end
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  public start: Date;
+  public end?: Date;
+
+  constructor(
+    id: string,
+    locale: Locale,
+    public position: string,
+    public company: string,
+    start: string,
+    public infoListItems: string[],
+    end?: string,
+    public url?: string
+  ) {
+    super(id, locale);
+    this.start = new Date(start);
+    if (end) this.end = new Date(end);
   }
 
-  override async getAll(locale: Locale): Promise<Xp[]> {
-    const res = await this.sdk.GetXps({ locale });
-
+  static async fromQuery(res: GetXpsQueryType): Promise<Xp[]> {
     const xps = await Promise.all(
       res.xps?.data.map(async (resXp) => {
         const { locale, position, company, info, start, end, url } =

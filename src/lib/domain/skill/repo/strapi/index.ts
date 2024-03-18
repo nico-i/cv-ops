@@ -1,1 +1,0 @@
-export { SkillStrapiRepo } from "./strapi";

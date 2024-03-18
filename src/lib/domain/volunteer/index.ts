@@ -1,1 +1,0 @@
-export { Volunteer } from "./volunteer";

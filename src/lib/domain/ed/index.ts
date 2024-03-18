@@ -1,1 +1,0 @@
-export { Ed } from "./ed";
