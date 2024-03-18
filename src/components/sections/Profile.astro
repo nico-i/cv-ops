@@ -25,6 +25,7 @@ const info = (await fetchCollectionQuery(Info, locale))[0];
     {
       info?.portrait && (
         <Image
+          loading={"eager"}
           src={info.portrait.url}
           width={info.portrait.width}
           height={info.portrait.height}
