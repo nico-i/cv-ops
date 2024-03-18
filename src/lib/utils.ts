@@ -20,7 +20,6 @@ export async function parseMdBulletListToHtml(
   return await Promise.all(
     resStringNoPrefix.split("\n").map(async (liStr) => {
       const mdStr = await markdown(liStr);
-      console.log(mdStr);
       return mdStr.toString();
     })
   );
