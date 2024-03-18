@@ -33,7 +33,12 @@ const { t } = useTranslation(locale);
             <Typography variant="large" slot="title">
               {project?.title}
               &thinsp;
-              {project?.demoUrl && <ExternalIconLink href={project?.demoUrl} />}
+              {project?.demoUrl && (
+                <ExternalIconLink
+                  href={project.demoUrl}
+                  label={`${t("demo-site")} ${project.demoUrl}`}
+                />
+              )}
             </Typography>
             <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
               <TimeWindow

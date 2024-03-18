@@ -33,7 +33,13 @@ const { t } = useTranslation(locale);
           return (
             <GradedListItem grade={ed?.grade} docUrl={ed?.docUrl}>
               <span slot="title">
-                {ed?.institute} {ed?.url && <ExternalIconLink href={ed?.url} />}
+                {ed?.institute}{" "}
+                {ed?.url && (
+                  <ExternalIconLink
+                    href={ed?.url}
+                    label={`${t("document")}: ${ed.degree}`}
+                  />
+                )}
               </span>
 
               <div class="flex flex-col gap-0.5" slot="subtitle">

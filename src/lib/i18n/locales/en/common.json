@@ -1,10 +1,14 @@
 {
+  "meta-description": "Nico Ismaili's resume",
+  "company-site": "Company site",
+  "demo-site": "Demo site",
   "experience": "Experience",
   "education": "Education",
   "projects": "Projects",
   "skills": "Technologies",
   "volunteerWork": "Volunteer Work",
   "certs": "Certificates",
+  "document": "document",
   "langs": "Languages",
   "interests": "Interests",
   "dato": "Present"

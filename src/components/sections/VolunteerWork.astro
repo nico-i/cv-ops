@@ -33,7 +33,12 @@ const { t } = useTranslation(locale);
           <Details isCompleted={volunteer?.end !== undefined} asTimeLine>
             <Typography variant="large" slot="title">
               {volunteer?.activity}&thinsp;
-              {volunteer?.url && <ExternalIconLink href={volunteer?.url} />}
+              {volunteer?.url && (
+                <ExternalIconLink
+                  href={volunteer?.url}
+                  label={`${t("document")}: ${volunteer.activity}`}
+                />
+              )}
             </Typography>
             <div slot="subtitle" class="flex flex-col gap-0.5">
               <Typography variant="muted">

@@ -14,6 +14,7 @@ import Certificates from "@/components/sections/Certificates.astro";
 import { type GetStaticPaths } from "astro";
 
 import { Locale } from "@/lib/types/Locale";
+import { useTranslation } from "@/lib/i18n/utils";
 
 export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
@@ -24,6 +25,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { lang } = Astro.params;
+const { t } = useTranslation(lang);
 ---
 
 <html lang={lang}>
@@ -31,6 +33,7 @@ const { lang } = Astro.params;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={t("meta-description")} />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

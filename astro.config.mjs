@@ -5,6 +5,9 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://cv.nico.ismaili.de",
   devToolbar: { enabled: false },
+  image: {
+    domains: ["res.cloudinary.com"],
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,

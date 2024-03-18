@@ -17,13 +17,19 @@ const { grade, docUrl }: Props = Astro.props;
       </Typography>
       <slot name="subtitle" />
     </div>
-    <a
-      href={docUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="whitespace-nowrap"
-    >
-      <Typography variant="code">{grade}</Typography>
-    </a>
+    {
+      docUrl ? (
+        <a
+          href={docUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="whitespace-nowrap"
+        >
+          <Typography variant="code">{grade}</Typography>
+        </a>
+      ) : (
+        <Typography variant="code">{grade}</Typography>
+      )
+    }
   </div>
 </li>

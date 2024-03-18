@@ -4,13 +4,15 @@ import ExternalLink from "@/svg/external-link.svg?raw";
 
 interface Props {
   href: string;
+  label: string;
 }
 
-const { href }: Props = Astro.props;
+const { href, label }: Props = Astro.props;
 ---
 
 <a
   href={href}
+  aria-label={label}
   target="_blank"
   rel="noreferrer"
   class="text-muted-foreground hover:text-primary"

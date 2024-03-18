@@ -41,8 +41,13 @@ const { t } = useTranslation(locale);
             >
               <Typography variant="muted">
                 <Svg svgHtml={Building2} />
-                {xp?.company}
-                {xp?.url && <ExternalIconLink href={xp?.url} />}
+                {xp.company}
+                {xp?.url && (
+                  <ExternalIconLink
+                    href={xp.url}
+                    label={`${xp.company} ${t("company-site")}`}
+                  />
+                )}
               </Typography>
               <TimeWindow start={xp?.start!} end={xp?.end} locale={locale} />
             </div>

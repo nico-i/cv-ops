@@ -1,10 +1,14 @@
 {
-  "experience":  "Erfahrung",
+  "meta-description": "Lebenslauf von Nico Ismaili",
+  "company-site": "Firmenwebseite",
+  "demo-site": "Demo Webseite",
+  "experience": "Erfahrung",
   "education": "Ausbildung",
   "projects": "Projekte",
   "skills": "Technologien",
   "volunteerWork": "Gemeinnützige Arbeit",
   "certs": "Zertifikate",
+  "document": "Dokument",
   "langs": "Sprachen",
   "interests": "Interessen",
   "dato": "Heute"
