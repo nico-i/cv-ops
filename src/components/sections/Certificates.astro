@@ -7,6 +7,7 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Cert } from "@/lib/domain/cert";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
 import Building from "@/svg/building.svg?raw";
@@ -19,11 +20,13 @@ interface Props {
 }
 
 const { localizedCerts, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Certificates" svgHtml={ShieldCheck} />
+    <SectionTitle title={t("certs")} svgHtml={ShieldCheck} />
   </Fragment>
   <Fragment slot="content">
     <ul class="flex flex-col">

@@ -28,13 +28,14 @@ const { localizedInfo, locale } = Astro.props;
     />
     <Typography variant="h2">{localizedInfo?.[locale]?.name}</Typography>
   </Fragment>
-  <Fragment slot="description">
+  <Fragment slot="subtitle">
     {localizedInfo?.[locale]?.occupation}
   </Fragment>
   <Fragment slot="content">
     <div id="info" class="flex flex-col gap-2">
       <Typography variant="small">
         <Svg svgHtml={Cake} />
+        &hairsp;
         {
           localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
             year: "numeric",
@@ -45,12 +46,14 @@ const { localizedInfo, locale } = Astro.props;
       </Typography>
       <Typography variant="small">
         <Svg svgHtml={Phone} />
+        &hairsp;
         <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
           {localizedInfo?.[locale]?.phone}
         </a>
       </Typography>
       <Typography variant="small">
         <Svg svgHtml={MapPin} />
+        &hairsp;
         {localizedInfo?.[locale]?.address}
       </Typography>
     </div>
@@ -64,6 +67,7 @@ const { localizedInfo, locale } = Astro.props;
           return (
             <li>
               <Svg svgHtml={contact.svgHtml} className="translate-y-0.5" />
+              &hairsp;
               <Link href={contact.url}>{contact.text}</Link>
             </li>
           );

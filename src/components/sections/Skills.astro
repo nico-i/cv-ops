@@ -4,9 +4,10 @@ import Gauge from "@/components/ui/Gauge.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import type { Skill } from "@/lib/domain/skill";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import PencilRuler from "@/svg/pencil-ruler.svg?raw";
+import CPU from "@/svg/cpu.svg?raw";
 
 interface Props {
   localizedSkills: EntityByLocale<Skill>[] | undefined;
@@ -14,13 +15,14 @@ interface Props {
 }
 
 const { localizedSkills, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Skills" svgHtml={PencilRuler} />
+    <SectionTitle title={t("skills")} svgHtml={CPU} />
   </Fragment>
-  <Fragment slot="description"> Tools & technologies </Fragment>
   <Fragment slot="content">
     <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
       {

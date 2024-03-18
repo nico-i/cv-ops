@@ -8,6 +8,7 @@ import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Xp } from "@/lib/domain/xp";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
 import Building2 from "@/svg/building-2.svg?raw";
@@ -19,13 +20,14 @@ interface Props {
 }
 
 const { localizedXps, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Experience" svgHtml={Telescope} />
+    <SectionTitle title={t("experience")} svgHtml={Telescope} />
   </Fragment>
-  <Fragment slot="description"> My professional journey </Fragment>
   <Fragment slot="content">
     {
       localizedXps &&
@@ -39,10 +41,13 @@ const { localizedXps, locale }: Props = Astro.props;
               <Typography variant="large" slot="title">
                 {currentLocaleXp?.position}
               </Typography>
-              <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
+              <div
+                slot="subtitle"
+                class="flex flex-col lg:flex-row lg:gap-3 gap-0.5"
+              >
                 <Typography variant="muted">
                   <Svg svgHtml={Building2} />
-                  {currentLocaleXp?.company}&thinsp;
+                  {currentLocaleXp?.company}
                   {currentLocaleXp?.url && (
                     <ExternalIconLink href={currentLocaleXp?.url} />
                   )}

@@ -7,9 +7,10 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Project } from "@/lib/domain/project";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import CPU from "@/svg/cpu.svg?raw";
+import PencilRuler from "@/svg/pencil-ruler.svg?raw";
 
 interface Props {
   localizedProjects: EntityByLocale<Project>[] | undefined;
@@ -17,11 +18,13 @@ interface Props {
 }
 
 const { localizedProjects, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Projects" svgHtml={CPU} />
+    <SectionTitle title={t("projects")} svgHtml={PencilRuler} />
   </Fragment>
   <Fragment slot="content">
     {

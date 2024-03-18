@@ -1,6 +1,7 @@
 ---
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import CalendarDays from "@/svg/calendar-days.svg?raw";
 
@@ -10,9 +11,10 @@ export interface Props {
   end: Date | undefined;
 }
 const { locale, start, end }: Props = Astro.props;
+const { t } = useTranslation(locale);
 ---
 
-<Typography variant="muted" className="inline-flex gap-1.5 items-center">
+<Typography variant="muted">
   <Svg svgHtml={CalendarDays} />
   {
     start.toLocaleDateString(locale, {
@@ -20,13 +22,13 @@ const { locale, start, end }: Props = Astro.props;
       month: "short",
     })
   }
-  <span>&ndash;</span>
+  &thinsp;&ndash;&thinsp;
   {
     end
       ? end.toLocaleDateString(locale, {
           year: "numeric",
           month: "short",
         })
-      : "Present"
+      : t("dato")
   }
 </Typography>

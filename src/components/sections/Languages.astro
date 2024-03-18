@@ -4,6 +4,7 @@ import GradedListItem from "@/components/ui/GradedListItem.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import type { Lang } from "@/lib/domain/lang";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
 import LanguagesIcon from "@/svg/languages.svg?raw";
@@ -14,11 +15,13 @@ interface Props {
 }
 
 const { localizedLangs, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Languages" svgHtml={LanguagesIcon} />
+    <SectionTitle title={t("langs")} svgHtml={LanguagesIcon} />
   </Fragment>
   <Fragment slot="content">
     <ul class="flex flex-col gap-1.5">
@@ -28,8 +31,9 @@ const { localizedLangs, locale }: Props = Astro.props;
 
           return (
             <GradedListItem grade={localizedLang.level} docUrl={undefined}>
-              <span slot="title" class="inline-flex gap-2 items-center">
+              <span slot="title">
                 <Svg svgHtml={localizedLang.svgHtml} className="w-6" />
+                &hairsp;
                 {localizedLang.name}
               </span>
             </GradedListItem>

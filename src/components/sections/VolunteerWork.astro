@@ -7,6 +7,7 @@ import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import type { Volunteer } from "@/lib/domain/volunteer";
+import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
 import Building2 from "@/svg/building-2.svg?raw";
@@ -18,13 +19,14 @@ interface Props {
 }
 
 const { localizedVolunteers, locale }: Props = Astro.props;
+
+const { t } = useTranslation(locale);
 ---
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Volunteer Work" svgHtml={HeartHandshake} />
+    <SectionTitle title={t("volunteerWork")} svgHtml={HeartHandshake} />
   </Fragment>
-  <Fragment slot="description"> My communal contributions </Fragment>
   <Fragment slot="content">
     {
       localizedVolunteers &&
@@ -36,7 +38,7 @@ const { localizedVolunteers, locale }: Props = Astro.props;
                 {volunteer?.activity}&thinsp;
                 {volunteer?.url && <ExternalIconLink href={volunteer?.url} />}
               </Typography>
-              <div slot="subtitle" class="flex flex-col">
+              <div slot="subtitle" class="flex flex-col gap-0.5">
                 <Typography variant="muted">
                   <Svg svgHtml={Building2} />
                   {volunteer?.org}
