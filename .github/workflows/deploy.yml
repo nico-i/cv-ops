@@ -17,6 +17,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      STRAPI_URL: ${{ secrets.STRAPI_URL }}
+      STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
