@@ -1,4 +1,3 @@
-import type { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
@@ -12,7 +11,7 @@ export class Xp extends LocalizedStrapiEntity {
     public position: string,
     public company: string,
     start: string,
-    public info: StrapiBulletList,
+    public infoListItems: string[],
     end?: string,
     public url?: string
   ) {

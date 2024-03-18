@@ -1,5 +1,4 @@
 import type { Skill } from "@/lib/domain/skill";
-import type { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
 import type { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import type { StrapiLink } from "@/lib/DTOs/StrapiLink";
 import type { Locale } from "@/lib/types/Locale";
@@ -19,7 +18,7 @@ export class Project extends LocalizedStrapiEntity {
     end?: string,
     public headerImage?: StrapiImage,
     public workHours?: number,
-    public summary?: StrapiBulletList,
+    public summaryListItems?: string[],
     public demoUrl?: string,
     public links?: StrapiLink[],
     public technologies?: Skill[]

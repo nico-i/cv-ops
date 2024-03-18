@@ -65,8 +65,8 @@ const { t } = useTranslation(locale);
                 </Typography>
               </div>
               <BulletList slot="content">
-                {localizedCert.info.listItems.map((item) => (
-                  <li>{item}</li>
+                {localizedCert.infoListItems.map((item) => (
+                  <li set:html={item} />
                 ))}
               </BulletList>
             </Details>

@@ -7,7 +7,6 @@ import { useTranslation } from "@/lib/i18n/utils";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
 import Joystick from "@/svg/joystick.svg?raw";
-import type { ReactElement } from "react";
 
 interface Props {
   localizedInterests: EntityByLocale<Interest>[] | undefined;
@@ -26,11 +25,9 @@ const { t } = useTranslation(locale);
     {
       localizedInterests && (
         <BulletList>
-          {localizedInterests?.map(
-            (interest): ReactElement => (
-              <li>{interest[locale]?.name}</li>
-            )
-          )}
+          {localizedInterests?.map((interest) => (
+            <li>{interest[locale]?.name}</li>
+          ))}
         </BulletList>
       )
     }

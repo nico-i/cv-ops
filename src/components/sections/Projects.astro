@@ -47,11 +47,11 @@ const { t } = useTranslation(locale);
                   locale={locale}
                 />
               </div>
-              {project?.summary?.listItems ? (
+              {project?.summaryListItems ? (
                 <Fragment slot="content">
                   <BulletList>
-                    {project?.summary?.listItems.map((bullet) => (
-                      <li>{bullet}</li>
+                    {project?.summaryListItems?.map((bullet) => (
+                     <li set:html={bullet} />
                     ))}
                   </BulletList>
                 </Fragment>

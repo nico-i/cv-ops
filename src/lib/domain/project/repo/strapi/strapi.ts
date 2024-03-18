@@ -1,4 +1,3 @@
-import { StrapiBulletList } from "@/lib/DTOs/StrapiBulletList";
 import { StrapiImage } from "@/lib/DTOs/StrapiImage";
 import { StrapiLink } from "@/lib/DTOs/StrapiLink";
 import { Project } from "@/lib/domain/project";
@@ -6,7 +5,7 @@ import { Skill } from "@/lib/domain/skill";
 import { StrapiClient } from "@/lib/infra/strapi/StrapiClient";
 import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiRepo } from "@/lib/types/LocalizedStrapiRepo";
-import { fetchSvgHtml } from "@/lib/utils";
+import { fetchSvgHtml, parseMdBulletListToHtml } from "@/lib/utils";
 
 class StrapiRepository extends LocalizedStrapiRepo<Project> {
   override async getAll(locale: Locale): Promise<Project[]> {
@@ -47,7 +46,7 @@ class StrapiRepository extends LocalizedStrapiRepo<Project> {
               )
             : undefined,
           work_hours ?? undefined,
-          !!summary ? new StrapiBulletList(summary) : undefined,
+          !!summary ? await parseMdBulletListToHtml(summary) : undefined,
           demo_url ?? undefined,
           await Promise.all(
             links?.map(async (resLink) => {

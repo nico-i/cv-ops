@@ -59,10 +59,10 @@ const { t } = useTranslation(locale);
                 />
               </div>
               <Fragment slot="content">
-                {currentLocaleXp?.info?.listItems && (
+                {currentLocaleXp?.infoListItems && (
                   <BulletList>
-                    {currentLocaleXp?.info?.listItems.map((bullet) => (
-                      <li>{bullet}</li>
+                    {currentLocaleXp?.infoListItems?.map((bullet) => (
+                      <li set:html={bullet} />
                     ))}
                   </BulletList>
                 )}
