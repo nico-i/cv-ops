@@ -45,7 +45,7 @@ if (!import.meta.env.STRAPI_API_TOKEN) {
   throw new Error("STRAPI_API_TOKEN is not defined");
 }
 
-const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL + "/graphql", {
+const gqlClient = new GraphQLClient(import.meta.env.STRAPI_URL, {
   headers: {
     Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
   },
