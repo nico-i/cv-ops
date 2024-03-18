@@ -9,7 +9,7 @@ import Typography from "@/components/ui/Typography.astro";
 import type { Project } from "@/lib/domain/project";
 import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
-import Telescope from "@/svg/telescope.svg?raw";
+import CPU from "@/svg/cpu.svg?raw";
 
 interface Props {
   localizedProjects: EntityByLocale<Project>[] | undefined;
@@ -21,7 +21,7 @@ const { localizedProjects, locale }: Props = Astro.props;
 
 <Card>
   <Fragment slot="title">
-    <SectionTitle title="Projects" svgHtml={Telescope} />
+    <SectionTitle title="Projects" svgHtml={CPU} />
   </Fragment>
   <Fragment slot="content">
     {
