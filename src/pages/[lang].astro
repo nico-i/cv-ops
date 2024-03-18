@@ -1,18 +1,19 @@
 ---
 import "@/styles/globals.css";
 
-import Profile from "@/components/sections/Profile.astro";
-import Experience from "@/components/sections/Experience.astro";
-import Interests from "@/components/sections/Interests.astro";
+// import Profile from "@/components/sections/Profile.astro";
+// import Experience from "@/components/sections/Experience.astro";
+// import Interests from "@/components/sections/Interests.astro";
+// import Education from "@/components/sections/Education.astro";
+// import Skills from "@/components/sections/Skills.astro";
+// import Languages from "@/components/sections/Languages.astro";
+// import VolunteerWork from "@/components/sections/VolunteerWork.astro";
+// import Projects from "@/components/sections/Projects.astro";
+import Certificates from "@/components/sections/Certificates.astro";
+
+import { GetStaticPaths } from "astro";
 
 import { Locale } from "@/lib/types/Locale";
-import Education from "@/components/sections/Education.astro";
-import Skills from "@/components/sections/Skills.astro";
-import Languages from "@/components/sections/Languages.astro";
-import Certificates from "@/components/sections/Certificates.astro";
-import VolunteerWork from "@/components/sections/VolunteerWork.astro";
-import Projects from "@/components/sections/Projects.astro";
-import { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {
   const paths = Object.values(Locale).map((locale) => {
@@ -59,7 +60,7 @@ const { lang } = Astro.params;
       <!-- <Experience locale={lang}  />
       <Education locale={lang} />
       <Projects locale={lang}  /> -->
-      <Certificates locale={lang}  />
+      <Certificates locale={lang} />
       <!-- <VolunteerWork locale={lang} /> -->
     </div>
 
