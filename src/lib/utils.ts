@@ -1,49 +1,22 @@
 import type { Query } from "@/__generated__/gql";
 import { Locale } from "@/lib/types/Locale";
 import type { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
-import { markdown } from "@astropub/md";
-
-const fetchedSvgByName: Record<string, string> = {};
+import { NodeHtmlMarkdown } from "node-html-markdown";
 
 export async function fetchSvgHtml(url: string): Promise<string> {
-  // last part of url is the name of the svg
-  const svgName = url.split("/").pop()!;
-  const cachedSvg = fetchedSvgByName[svgName];
-  if (!cachedSvg) {
-    // refetch svg if not in cache or if it's been more than an hour
-    const fetchedHtml = await fetch(url)
-      .then((res) => res.text())
-      .catch(() => {
-        console.error(`Failed to fetch ${url}`);
-        return "";
-      });
+  const fetchedHtml = await fetch(url).then((res) => res.text());
+  const svgWithRemovedTitle = fetchedHtml.replace(/<title>.*<\/title>/, "");
 
-    if (fetchedHtml === "") {
-      return "";
-    }
-
-    // TODO: Remove <title> in CMS instead of here
-    const svgWithRemovedTitle = fetchedHtml.replace(/<title>.*<\/title>/, "");
-
-    fetchedSvgByName[svgName] = svgWithRemovedTitle;
-
-    return svgWithRemovedTitle;
-  }
-
-  return cachedSvg;
+  return svgWithRemovedTitle;
 }
 
-export async function parseMdBulletListToHtml(
-  resString: string
-): Promise<string[]> {
+export function parseMdBulletListToHtml(resString: string): string[] {
   let resStringNoPrefix = resString.replaceAll("- ", "");
 
-  return await Promise.all(
-    resStringNoPrefix.split("\n").map(async (liStr) => {
-      const mdStr = await markdown(liStr);
-      return mdStr.toString();
-    })
-  );
+  return resStringNoPrefix.split("\n").map((liStr) => {
+    const mdStr = NodeHtmlMarkdown.translate(liStr);
+    return mdStr.toString();
+  });
 }
 
 export async function fetchCollectionQuery<
