@@ -129,7 +129,7 @@ export class Project extends LocalizedStrapiEntity {
               )
             : undefined,
           work_hours ?? undefined,
-          !!summary ? await parseMdBulletListToHtml(summary) : undefined,
+          !!summary ? parseMdBulletListToHtml(summary) : undefined,
           demo_url ?? undefined,
           await Promise.all(
             links?.map(async (resLink) => {

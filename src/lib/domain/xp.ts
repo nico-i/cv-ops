@@ -42,8 +42,8 @@ export class Xp extends LocalizedStrapiEntity {
   }
 
   static async fromQuery(res: GetXpsQueryType): Promise<Xp[]> {
-    const xps = await Promise.all(
-      res.xps?.data.map(async (resXp) => {
+    const xps =
+      res.xps?.data.map((resXp) => {
         const { locale, position, company, info, start, end, url } =
           resXp.attributes!;
 
@@ -53,12 +53,11 @@ export class Xp extends LocalizedStrapiEntity {
           position,
           company,
           start,
-          await parseMdBulletListToHtml(info),
+          parseMdBulletListToHtml(info),
           end,
           url ?? undefined
         );
-      }) ?? []
-    );
+      }) ?? [];
 
     xps?.sort((a, b) => {
       // if end date is not given put it to the top and sort by start date descending

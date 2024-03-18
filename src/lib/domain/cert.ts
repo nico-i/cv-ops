@@ -46,8 +46,8 @@ export class Cert extends LocalizedStrapiEntity {
   }
 
   static async fromQuery(res: GetCertsQuery): Promise<Cert[]> {
-    const certs = await Promise.all(
-      res.certs?.data.map(async (rawCert) => {
+    const certs =
+      res.certs?.data.map((rawCert) => {
         const attr = rawCert.attributes!;
         const { title, issuer, received, info, doc, url, locale } = attr;
 
@@ -57,12 +57,11 @@ export class Cert extends LocalizedStrapiEntity {
           locale as Locale,
           issuer,
           received,
-          await parseMdBulletListToHtml(info),
+          parseMdBulletListToHtml(info),
           doc?.data?.attributes?.url,
           url ?? undefined
         );
-      }) ?? []
-    );
+      }) ?? [];
 
     return certs;
   }
