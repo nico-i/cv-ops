@@ -4,7 +4,7 @@ import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { fetchSvgHtml } from "@/lib/utils";
 
 export class Skill extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetSkills($locale: I18NLocaleCode!) {
       skills(locale: $locale, sort: ["priority:desc", "proficiency:desc"]) {
         data {

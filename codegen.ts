@@ -3,14 +3,14 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
   schema: [
     {
-      [`${process.env.STRAPI_URL}`]: {
+      [`${import.meta.env.STRAPI_URL}/graphql`]: {
         headers: {
-          Authorization: `bearer ${process.env.STRAPI_API_TOKEN}`,
+          Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
         },
       },
     },
   ],
-  documents: "src/**/*.ts",
+  documents: "src/lib/domain/*.ts",
   generates: {
     "src/__generated__/gql.ts": {
       plugins: ["typescript", "typescript-operations"],

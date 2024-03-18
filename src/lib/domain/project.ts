@@ -7,7 +7,7 @@ import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { fetchSvgHtml, parseMdBulletListToHtml } from "@/lib/utils";
 
 export class Project extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetProjects($locale: I18NLocaleCode!) {
       projects(locale: $locale, sort: "start:desc") {
         data {

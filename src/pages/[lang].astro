@@ -1,14 +1,14 @@
 ---
 import "@/styles/globals.css";
 
-// import Profile from "@/components/sections/Profile.astro";
-// import Experience from "@/components/sections/Experience.astro";
-// import Interests from "@/components/sections/Interests.astro";
-// import Education from "@/components/sections/Education.astro";
-// import Skills from "@/components/sections/Skills.astro";
-// import Languages from "@/components/sections/Languages.astro";
-// import VolunteerWork from "@/components/sections/VolunteerWork.astro";
-// import Projects from "@/components/sections/Projects.astro";
+import Profile from "@/components/sections/Profile.astro";
+import Experience from "@/components/sections/Experience.astro";
+import Interests from "@/components/sections/Interests.astro";
+import Education from "@/components/sections/Education.astro";
+import Skills from "@/components/sections/Skills.astro";
+import Languages from "@/components/sections/Languages.astro";
+import VolunteerWork from "@/components/sections/VolunteerWork.astro";
+import Projects from "@/components/sections/Projects.astro";
 import Certificates from "@/components/sections/Certificates.astro";
 
 import { type GetStaticPaths } from "astro";
@@ -51,29 +51,29 @@ const { lang } = Astro.params;
     grid gap-1.5 grid-cols-1 lg:grid-cols-[34%,auto] auto-cols-min"
   >
     <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-      <!-- <Profile locale={lang}  />
+      <Profile locale={lang} />
       <Skills locale={lang} />
-      <Languages locale={lang}  />
-      <Interests locale={lang}  /> -->
+      <Languages locale={lang} />
+      <Interests locale={lang} />
     </div>
     <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-      <!-- <Experience locale={lang}  />
+      <Experience locale={lang} />
       <Education locale={lang} />
-      <Projects locale={lang}  /> -->
+      <Projects locale={lang} />
       <Certificates locale={lang} />
-      <!-- <VolunteerWork locale={lang} /> -->
+      <VolunteerWork locale={lang} />
     </div>
 
     <div class="lg:hidden flex flex-col gap-1.5">
-      <!-- <Profile locale={lang} />
-      <Experience locale={lang}  />
-      <Skills locale={lang}  />
-      <Education locale={lang}  />
-      <Projects locale={lang}  />
+      <Profile locale={lang} />
+      <Experience locale={lang} />
+      <Skills locale={lang} />
+      <Education locale={lang} />
+      <Projects locale={lang} />
       <Certificates locale={lang} />
-      <Languages locale={lang}  />
-      <VolunteerWork locale={lang}  />
-      <Interests locale={lang} /> -->
+      <Languages locale={lang} />
+      <VolunteerWork locale={lang} />
+      <Interests locale={lang} />
     </div>
   </body>
 

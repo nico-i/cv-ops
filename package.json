@@ -7,7 +7,6 @@
     "@astropub/md": "^0.4.0",
     "astro": "^4.4.11",
     "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
   },

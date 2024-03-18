@@ -3,7 +3,7 @@ import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export class Interest extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetInterests($locale: I18NLocaleCode!) {
       interests(locale: $locale, sort: "name") {
         data {
@@ -21,7 +21,7 @@ export class Interest extends LocalizedStrapiEntity {
     super(id, locale);
   }
 
-  static async fromQuery(res: GetInterestsQuery): Promise<Interest[]> {
+  static fromQuery(res: GetInterestsQuery): Interest[] {
     const interests = res.interests?.data.map((resInterest) => {
       const { locale, name } = resInterest.attributes!;
 

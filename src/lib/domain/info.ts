@@ -6,7 +6,7 @@ import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { fetchSvgHtml } from "@/lib/utils";
 
 export class Info extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetInfo($locale: I18NLocaleCode!) {
       info(locale: $locale) {
         data {

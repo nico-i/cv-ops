@@ -3,19 +3,18 @@ import Card from "@/components/ui/Card.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
-import type { Lang } from "@/lib/domain/lang";
+import { Lang } from "@/lib/domain/lang";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import LanguagesIcon from "@/svg/languages.svg?raw";
 
 interface Props {
-  localizedLangs: EntityByLocale<Lang>[] | undefined;
   locale: Locale;
 }
 
-const { localizedLangs, locale }: Props = Astro.props;
-
+const { locale }: Props = Astro.props;
+const langs = await fetchCollectionQuery(Lang, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -26,15 +25,13 @@ const { t } = useTranslation(locale);
   <Fragment slot="content">
     <ul class="flex flex-col gap-1.5">
       {
-        localizedLangs?.map((lang) => {
-          const localizedLang = lang[locale];
-
+        langs?.map((lang) => {
           return (
-            <GradedListItem grade={localizedLang.level} docUrl={undefined}>
+            <GradedListItem grade={lang.level} docUrl={undefined}>
               <span slot="title">
-                <Svg svgHtml={localizedLang.svgHtml} className="w-6" />
+                <Svg svgHtml={lang.svgHtml} className="w-6" />
                 &hairsp;
-                {localizedLang.name}
+                {lang.name}
               </span>
             </GradedListItem>
           );

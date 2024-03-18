@@ -3,19 +3,18 @@ import Card from "@/components/ui/Card.astro";
 import Gauge from "@/components/ui/Gauge.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
-import type { Skill } from "@/lib/domain/skill";
+import { Skill } from "@/lib/domain/skill";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import CPU from "@/svg/cpu.svg?raw";
 
 interface Props {
-  localizedSkills: EntityByLocale<Skill>[] | undefined;
   locale: Locale;
 }
 
-const { localizedSkills, locale }: Props = Astro.props;
-
+const { locale }: Props = Astro.props;
+const skills = await fetchCollectionQuery(Skill, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -26,24 +25,19 @@ const { t } = useTranslation(locale);
   <Fragment slot="content">
     <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
       {
-        localizedSkills?.map((skill) => {
-          const localizedSkill = skill[locale];
-          if (!localizedSkill.svgHtml) {
+        skills?.map((skill) => {
+          if (!skill.svgHtml) {
             return null;
           }
           return (
-            <Gauge
-              radius={21}
-              strokeWidth={3}
-              percentage={localizedSkill.proficiency}
-            >
+            <Gauge radius={21} strokeWidth={3} percentage={skill.proficiency}>
               <a
-                href={localizedSkill.url}
+                href={skill.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                title={`${localizedSkill.proficiency}% | ${localizedSkill.name}`}
+                title={`${skill.proficiency}% | ${skill.name}`}
               >
-                <Svg size="md" svgHtml={localizedSkill.svgHtml} />
+                <Svg size="md" svgHtml={skill.svgHtml} />
               </a>
             </Gauge>
           );

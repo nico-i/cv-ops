@@ -5,31 +5,31 @@ import Link from "@/components/ui/Link.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Info } from "@/lib/domain/info";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import Cake from "@/svg/cake.svg?raw";
 import MapPin from "@/svg/map-pin.svg?raw";
 import Phone from "@/svg/phone.svg?raw";
 
 interface Props {
-  localizedInfo: EntityByLocale<Info> | undefined;
   locale: Locale;
 }
 
-const { localizedInfo, locale } = Astro.props;
+const { locale }: Props = Astro.props;
+const info = (await fetchCollectionQuery(Info, locale))[0];
 ---
 
 <Card contentClassName="flex flex-col gap-6">
   <Fragment slot="title">
     <img
-      src={localizedInfo?.[locale]?.portrait.url}
+      src={info?.portrait.url}
       alt="Portrait Nico Ismaili"
       class="rounded-full mb-3 aspect-square w-40 mx-auto"
     />
-    <Typography variant="h2">{localizedInfo?.[locale]?.name}</Typography>
+    <Typography variant="h2">{info?.name}</Typography>
   </Fragment>
   <Fragment slot="subtitle">
-    {localizedInfo?.[locale]?.occupation}
+    {info?.occupation}
   </Fragment>
   <Fragment slot="content">
     <div id="info" class="flex flex-col gap-2">
@@ -37,7 +37,7 @@ const { localizedInfo, locale } = Astro.props;
         <Svg svgHtml={Cake} />
         &hairsp;
         {
-          localizedInfo?.[locale]?.dob.toLocaleDateString(locale, {
+          info?.dob.toLocaleDateString(locale, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -47,19 +47,19 @@ const { localizedInfo, locale } = Astro.props;
       <Typography variant="small">
         <Svg svgHtml={Phone} />
         &hairsp;
-        <a href={`phone:${localizedInfo?.[locale]?.phone}`}>
-          {localizedInfo?.[locale]?.phone}
+        <a href={`phone:${info?.phone}`}>
+          {info?.phone}
         </a>
       </Typography>
       <Typography variant="small">
         <Svg svgHtml={MapPin} />
         &hairsp;
-        {localizedInfo?.[locale]?.address}
+        {info?.address}
       </Typography>
     </div>
     <BulletList hideBullets>
       {
-        localizedInfo?.[locale]?.contacts?.map((contact) => {
+        info?.contacts?.map((contact) => {
           if (!contact.svgHtml) {
             return null;
           }

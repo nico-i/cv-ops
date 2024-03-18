@@ -9,6 +9,7 @@ import Typography from "@/components/ui/Typography.astro";
 import { Cert } from "@/lib/domain/cert";
 import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import Building from "@/svg/building.svg?raw";
 import Calendar from "@/svg/calendar-days.svg?raw";
 import ShieldCheck from "@/svg/shield-check.svg?raw";
@@ -18,25 +19,7 @@ interface Props {
 }
 
 const { locale }: Props = Astro.props;
-
-const res = await fetch(import.meta.env.STRAPI_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `bearer ${import.meta.env.STRAPI_API_TOKEN}`,
-  },
-  body: JSON.stringify({
-    query: Cert.QUERY,
-    variables: {
-      locale,
-    },
-  }),
-});
-
-const { data } = await res.json();
-
-const localizedCerts = await Cert.fromQuery(data);
-console.log(localizedCerts);
+const certs = await fetchCollectionQuery(Cert, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -47,7 +30,7 @@ const { t } = useTranslation(locale);
   <Fragment slot="content">
     <ul class="flex flex-col">
       {
-        localizedCerts?.map((cert) => {
+        certs?.map((cert) => {
           return (
             <Details>
               <Typography

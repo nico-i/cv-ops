@@ -4,7 +4,7 @@ import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { parseMdBulletListToHtml } from "@/lib/utils";
 
 export class Cert extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetCerts($locale: I18NLocaleCode!) {
       certs(locale: $locale, sort: "received:desc") {
         data {

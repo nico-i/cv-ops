@@ -6,20 +6,19 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import type { Volunteer } from "@/lib/domain/volunteer";
+import { Volunteer } from "@/lib/domain/volunteer";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import Building2 from "@/svg/building-2.svg?raw";
 import HeartHandshake from "@/svg/heart-handshake.svg?raw";
 
 interface Props {
-  localizedVolunteers: EntityByLocale<Volunteer>[] | undefined;
   locale: Locale;
 }
 
-const { localizedVolunteers, locale }: Props = Astro.props;
-
+const { locale }: Props = Astro.props;
+const volunteers = await fetchCollectionQuery(Volunteer, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -29,32 +28,30 @@ const { t } = useTranslation(locale);
   </Fragment>
   <Fragment slot="content">
     {
-      localizedVolunteers &&
-        localizedVolunteers.map((localizedVolunteer) => {
-          const volunteer = localizedVolunteer[locale];
-          return (
-            <Details isCompleted={volunteer?.end !== undefined} asTimeLine>
-              <Typography variant="large" slot="title">
-                {volunteer?.activity}&thinsp;
-                {volunteer?.url && <ExternalIconLink href={volunteer?.url} />}
+      volunteers.map((volunteer) => {
+        return (
+          <Details isCompleted={volunteer?.end !== undefined} asTimeLine>
+            <Typography variant="large" slot="title">
+              {volunteer?.activity}&thinsp;
+              {volunteer?.url && <ExternalIconLink href={volunteer?.url} />}
+            </Typography>
+            <div slot="subtitle" class="flex flex-col gap-0.5">
+              <Typography variant="muted">
+                <Svg svgHtml={Building2} />
+                {volunteer?.org}
               </Typography>
-              <div slot="subtitle" class="flex flex-col gap-0.5">
-                <Typography variant="muted">
-                  <Svg svgHtml={Building2} />
-                  {volunteer?.org}
-                </Typography>
-                <TimeWindow
-                  start={volunteer?.start!}
-                  end={volunteer?.end}
-                  locale={locale}
-                />
-              </div>
-              {volunteer?.summary && (
-                <Fragment slot="content">{volunteer?.summary}</Fragment>
-              )}
-            </Details>
-          );
-        })
+              <TimeWindow
+                start={volunteer?.start!}
+                end={volunteer?.end}
+                locale={locale}
+              />
+            </div>
+            {volunteer?.summary && (
+              <Fragment slot="content">{volunteer?.summary}</Fragment>
+            )}
+          </Details>
+        );
+      })
     }
   </Fragment>
 </Card>

@@ -8,17 +8,17 @@ import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Ed } from "@/lib/domain/ed";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import GraduationCap from "@/svg/graduation-cap.svg?raw";
 import University from "@/svg/university.svg?raw";
 
 interface Props {
-  localizedEds: EntityByLocale<Ed>[] | undefined;
   locale: Locale;
 }
 
-const { localizedEds, locale }: Props = Astro.props;
+const { locale }: Props = Astro.props;
+const eds = await fetchCollectionQuery(Ed, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -29,31 +29,19 @@ const { t } = useTranslation(locale);
   <Fragment slot="content">
     <ul class="flex flex-col gap-5">
       {
-        localizedEds?.map((ed) => {
-          const localizedEd = ed[locale];
-
+        eds?.map((ed) => {
           return (
-            <GradedListItem
-              grade={localizedEd?.grade}
-              docUrl={localizedEd?.docUrl}
-            >
+            <GradedListItem grade={ed?.grade} docUrl={ed?.docUrl}>
               <span slot="title">
-                {localizedEd?.institute}{" "}
-                {localizedEd?.url && (
-                  <ExternalIconLink href={localizedEd?.url} />
-                )}
+                {ed?.institute} {ed?.url && <ExternalIconLink href={ed?.url} />}
               </span>
 
               <div class="flex flex-col gap-0.5" slot="subtitle">
                 <Typography variant="muted">
                   <Svg svgHtml={University} />
-                  {localizedEd?.degree}
+                  {ed?.degree}
                 </Typography>
-                <TimeWindow
-                  start={localizedEd?.start}
-                  end={localizedEd?.end}
-                  locale={locale}
-                />
+                <TimeWindow start={ed?.start} end={ed?.end} locale={locale} />
               </div>
             </GradedListItem>
           );

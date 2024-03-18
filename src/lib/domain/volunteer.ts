@@ -3,7 +3,7 @@ import type { Locale } from "@/lib/types/Locale";
 import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 
 export class Volunteer extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query GetVolunteers($locale: I18NLocaleCode!) {
       volunteers(locale: $locale, sort: "start:desc") {
         data {

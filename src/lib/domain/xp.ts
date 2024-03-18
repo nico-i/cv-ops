@@ -4,7 +4,7 @@ import { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
 import { parseMdBulletListToHtml } from "@/lib/utils";
 
 export class Xp extends LocalizedStrapiEntity {
-  static readonly QUERY = `
+  static readonly QUERY = /* GraphQL */ `
     query getXps($locale: I18NLocaleCode!) {
       xps(locale: $locale) {
         data {

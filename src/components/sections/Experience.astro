@@ -7,20 +7,19 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import type { Xp } from "@/lib/domain/xp";
+import { Xp } from "@/lib/domain/xp";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import Building2 from "@/svg/building-2.svg?raw";
 import Telescope from "@/svg/telescope.svg?raw";
 
 interface Props {
-  localizedXps: EntityByLocale<Xp>[] | undefined;
   locale: Locale;
 }
 
-const { localizedXps, locale }: Props = Astro.props;
-
+const { locale }: Props = Astro.props;
+const xps = await fetchCollectionQuery(Xp, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -30,46 +29,35 @@ const { t } = useTranslation(locale);
   </Fragment>
   <Fragment slot="content">
     {
-      localizedXps &&
-        localizedXps.map((xp) => {
-          const currentLocaleXp = xp[locale];
-          return (
-            <Details
-              isCompleted={currentLocaleXp?.end !== undefined}
-              asTimeLine
+      xps.map((xp) => {
+        return (
+          <Details isCompleted={xp?.end !== undefined} asTimeLine>
+            <Typography variant="large" slot="title">
+              {xp?.position}
+            </Typography>
+            <div
+              slot="subtitle"
+              class="flex flex-col lg:flex-row lg:gap-3 gap-0.5"
             >
-              <Typography variant="large" slot="title">
-                {currentLocaleXp?.position}
+              <Typography variant="muted">
+                <Svg svgHtml={Building2} />
+                {xp?.company}
+                {xp?.url && <ExternalIconLink href={xp?.url} />}
               </Typography>
-              <div
-                slot="subtitle"
-                class="flex flex-col lg:flex-row lg:gap-3 gap-0.5"
-              >
-                <Typography variant="muted">
-                  <Svg svgHtml={Building2} />
-                  {currentLocaleXp?.company}
-                  {currentLocaleXp?.url && (
-                    <ExternalIconLink href={currentLocaleXp?.url} />
-                  )}
-                </Typography>
-                <TimeWindow
-                  start={currentLocaleXp?.start!}
-                  end={currentLocaleXp?.end}
-                  locale={locale}
-                />
-              </div>
-              <Fragment slot="content">
-                {currentLocaleXp?.infoListItems && (
-                  <BulletList>
-                    {currentLocaleXp?.infoListItems?.map((bullet) => (
-                      <li set:html={bullet} />
-                    ))}
-                  </BulletList>
-                )}
-              </Fragment>
-            </Details>
-          );
-        })
+              <TimeWindow start={xp?.start!} end={xp?.end} locale={locale} />
+            </div>
+            <Fragment slot="content">
+              {xp?.infoListItems && (
+                <BulletList>
+                  {xp?.infoListItems?.map((bullet) => (
+                    <li set:html={bullet} />
+                  ))}
+                </BulletList>
+              )}
+            </Fragment>
+          </Details>
+        );
+      })
     }
   </Fragment>
 </Card>

@@ -2,18 +2,18 @@
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
-import type { Interest } from "@/lib/domain/interest";
+import { Interest } from "@/lib/domain/interest";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import Joystick from "@/svg/joystick.svg?raw";
 
 interface Props {
-  localizedInterests: EntityByLocale<Interest>[] | undefined;
   locale: Locale;
 }
 
-const { localizedInterests, locale } = Astro.props;
+const { locale }: Props = Astro.props;
+const interests = await fetchCollectionQuery(Interest, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -22,14 +22,8 @@ const { t } = useTranslation(locale);
     <SectionTitle title={t("interests")} svgHtml={Joystick} />
   </Fragment>
   <Fragment slot="content">
-    {
-      localizedInterests && (
-        <BulletList>
-          {localizedInterests?.map((interest) => (
-            <li>{interest[locale]?.name}</li>
-          ))}
-        </BulletList>
-      )
-    }
+    <BulletList>
+      {interests?.map((interest) => <li>{interest.name}</li>)}
+    </BulletList>
   </Fragment>
 </Card>

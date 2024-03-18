@@ -6,19 +6,18 @@ import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import type { Project } from "@/lib/domain/project";
+import { Project } from "@/lib/domain/project";
 import { useTranslation } from "@/lib/i18n/utils";
-import type { EntityByLocale } from "@/lib/types/EntityByLocale";
 import type { Locale } from "@/lib/types/Locale";
+import { fetchCollectionQuery } from "@/lib/utils";
 import PencilRuler from "@/svg/pencil-ruler.svg?raw";
 
 interface Props {
-  localizedProjects: EntityByLocale<Project>[] | undefined;
   locale: Locale;
 }
 
-const { localizedProjects, locale }: Props = Astro.props;
-
+const { locale }: Props = Astro.props;
+const projects = await fetchCollectionQuery(Project, locale);
 const { t } = useTranslation(locale);
 ---
 
@@ -28,39 +27,35 @@ const { t } = useTranslation(locale);
   </Fragment>
   <Fragment slot="content">
     {
-      localizedProjects &&
-        localizedProjects.map((localizedProject) => {
-          const project = localizedProject[locale];
-          return (
-            <Details isCompleted={project?.end !== undefined} asTimeLine>
-              <Typography variant="large" slot="title">
-                {project?.title}
-                &thinsp;
-                {project?.demoUrl && (
-                  <ExternalIconLink href={project?.demoUrl} />
-                )}
-              </Typography>
-              <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
-                <TimeWindow
-                  start={project?.start!}
-                  end={project?.end}
-                  locale={locale}
-                />
-              </div>
-              {project?.summaryListItems ? (
-                <Fragment slot="content">
-                  <BulletList>
-                    {project?.summaryListItems?.map((bullet) => (
-                     <li set:html={bullet} />
-                    ))}
-                  </BulletList>
-                </Fragment>
-              ) : (
-                project.tldr
-              )}
-            </Details>
-          );
-        })
+      projects.map((project) => {
+        return (
+          <Details isCompleted={project?.end !== undefined} asTimeLine>
+            <Typography variant="large" slot="title">
+              {project?.title}
+              &thinsp;
+              {project?.demoUrl && <ExternalIconLink href={project?.demoUrl} />}
+            </Typography>
+            <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
+              <TimeWindow
+                start={project?.start!}
+                end={project?.end}
+                locale={locale}
+              />
+            </div>
+            {project?.summaryListItems ? (
+              <Fragment slot="content">
+                <BulletList>
+                  {project?.summaryListItems?.map((bullet) => (
+                    <li set:html={bullet} />
+                  ))}
+                </BulletList>
+              </Fragment>
+            ) : (
+              project.tldr
+            )}
+          </Details>
+        );
+      })
     }
   </Fragment>
 </Card>
