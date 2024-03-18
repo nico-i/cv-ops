@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && STRAPI_URL=$STRAPI_URL STRAPI_API_TOKEN=$STRAPI_API_TOKEN astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "gen:gql": "bunx graphql-codegen",
