@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      STRAPI_URL: ${{ vars.STRAPI_URL }}
+      STRAPI_URL: ${{ secrets.STRAPI_URL }}
       STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
     steps:
       - name: Checkout your repository using git
