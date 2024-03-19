@@ -49,32 +49,39 @@ const lang = i18next.language as Locale;
   <body
     class:list={[
       `w-full
-        lg:w-[215.9mm]
-        grid gap-1.5
-        grid-cols-1
-        lg:grid-cols-[34%,auto]
+        grid
+        gap-1.5
         auto-cols-min
-        h-full
+        h-min
         p-1.5`,
       isPrintPage
-        ? ""
-        : `
-        mx-auto
-        lg:py-16
-       `,
+        ? "grid-cols-[34%,auto] w-[215.9mm]"
+        : "grid-cols-1 lg:grid-cols-[34%,auto] lg:py-16 lg:w-[215.9mm] mx-auto",
     ]}
   >
-    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
+    <div
+      class:list={[
+        isPrintPage
+          ? "flex flex-col gap-1.5"
+          : "lg:flex lg:flex-col lg:gap-1.5 hidden",
+      ]}
+    >
       <Profile />
-      <Skills />
+      <Skills isPrint={isPrintPage} />
       <Languages />
       <Interests />
     </div>
-    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
-      <Experience {...detailsProps} />
+    <div
+      class:list={[
+        isPrintPage
+          ? "flex flex-col gap-1.5"
+          : "lg:flex lg:flex-col lg:gap-1.5 hidden",
+      ]}
+    >
+      <Experience {...detailsProps} isPrint={isPrintPage} />
       <Education />
-      <Projects {...detailsProps} />
-      <Certificates {...detailsProps} />
+      <Projects {...detailsProps} isPrint={isPrintPage} />
+      <Certificates {...detailsProps} isPrint={isPrintPage} />
       <VolunteerWork {...detailsProps} />
     </div>
 

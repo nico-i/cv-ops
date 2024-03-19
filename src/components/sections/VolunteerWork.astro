@@ -22,7 +22,7 @@ const locale = i18next.language as Locale;
 const volunteers = await fetchCollectionQuery(Volunteer, locale);
 ---
 
-<Card>
+<Card id="volunteer-work">
   <Fragment slot="title">
     <SectionTitle title={t("volunteerWork")} svgHtml={HeartHandshake} />
   </Fragment>

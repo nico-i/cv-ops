@@ -14,8 +14,10 @@ import { fetchCollectionQuery } from "@/lib/utils";
 import PencilRuler from "@/svg/pencil-ruler.svg?raw";
 import i18next, { t } from "i18next";
 
-interface Props extends DetailsProps {}
-const detailsProps: Props = Astro.props;
+interface Props extends DetailsProps {
+  isPrint?: boolean;
+}
+const { isPrint = false, ...detailsProps }: Props = Astro.props;
 
 const locale = i18next.language as Locale;
 const projects = await fetchCollectionQuery(Project, locale);
@@ -43,7 +45,14 @@ const projects = await fetchCollectionQuery(Project, locale);
                 />
               )}
             </Typography>
-            <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
+            <div
+              slot="subtitle"
+              class:list={[
+                isPrint
+                  ? "flex flex-row gap-3"
+                  : "flex flex-col lg:flex-row lg:gap-3",
+              ]}
+            >
               <TimeWindow start={project?.start!} end={project?.end} />
             </div>
             {project?.summaryListItems ? (

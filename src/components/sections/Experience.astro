@@ -16,8 +16,10 @@ import Building2 from "@/svg/building-2.svg?raw";
 import Telescope from "@/svg/telescope.svg?raw";
 import i18next, { t } from "i18next";
 
-interface Props extends DetailsProps {}
-const detailsProps: Props = Astro.props;
+interface Props extends DetailsProps {
+  isPrint?: boolean;
+}
+const { isPrint = false, ...detailsProps }: Props = Astro.props;
 
 const locale = i18next.language as Locale;
 const xps = await fetchCollectionQuery(Xp, locale);
@@ -41,7 +43,11 @@ const xps = await fetchCollectionQuery(Xp, locale);
             </Typography>
             <div
               slot="subtitle"
-              class="flex flex-col lg:flex-row lg:gap-3 gap-0.5"
+              class:list={[
+                isPrint
+                  ? "flex flex-row gap-3"
+                  : "flex flex-col lg:flex-row lg:gap-3 gap-0.5",
+              ]}
             >
               <Typography variant="muted">
                 <Svg svgHtml={Building2} />

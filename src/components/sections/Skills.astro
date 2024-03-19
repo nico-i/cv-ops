@@ -9,6 +9,11 @@ import { fetchCollectionQuery } from "@/lib/utils";
 import CPU from "@/svg/cpu.svg?raw";
 import i18next, { t } from "i18next";
 
+interface Props {
+  isPrint?: boolean;
+}
+const { isPrint = false }: Props = Astro.props;
+
 const locale = i18next.language as Locale;
 const skills = await fetchCollectionQuery(Skill, locale);
 ---
@@ -18,7 +23,13 @@ const skills = await fetchCollectionQuery(Skill, locale);
     <SectionTitle title={t("skills")} svgHtml={CPU} />
   </Fragment>
   <Fragment slot="content">
-    <div class="grid grid-cols-6 lg:grid-cols-4 gap-3">
+    <div
+      class:list={[
+        isPrint
+          ? "grid grid-cols-4 gap-3"
+          : "grid grid-cols-6 lg:grid-cols-4 gap-3",
+      ]}
+    >
       {
         skills?.map((skill) => {
           if (!skill.svgHtml) {
