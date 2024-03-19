@@ -34,13 +34,8 @@ const classesByVariant: Record<Props["variant"], string> = {
 
 let Ele;
 
-if (
-  variant === "p" ||
-  variant === "lead" ||
-  variant === "large" ||
-  variant === "muted"
-) {
-  Ele = "p";
+if (variant === "lead" || variant === "large" || variant === "muted") {
+  Ele = "span";
 } else {
   Ele = variant;
 }

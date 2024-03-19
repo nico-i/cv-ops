@@ -1,26 +1,25 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
-import Details from "@/components/ui/Details.astro";
+import Details, {
+  type Props as DetailsProps,
+} from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Cert } from "@/lib/domain/cert";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import Building from "@/svg/building.svg?raw";
 import Calendar from "@/svg/calendar-days.svg?raw";
 import ShieldCheck from "@/svg/shield-check.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale }: Props = Astro.props;
+interface Props extends DetailsProps {}
+const detailsProps: Props = Astro.props;
+const locale = i18next.language as Locale;
 const certs = await fetchCollectionQuery(Cert, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>
@@ -31,7 +30,7 @@ const { t } = useTranslation(locale);
     {
       certs?.map((cert) => {
         return (
-          <Details>
+          <Details {...detailsProps}>
             <Typography
               variant="large"
               className="inline-flex gap-1.5 items-center"

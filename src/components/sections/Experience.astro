@@ -1,26 +1,26 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
-import Details from "@/components/ui/Details.astro";
+import Details, {
+  type Props as DetailsProps,
+} from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Xp } from "@/lib/domain/xp";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import Building2 from "@/svg/building-2.svg?raw";
 import Telescope from "@/svg/telescope.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
+interface Props extends DetailsProps {}
+const detailsProps: Props = Astro.props;
 
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const xps = await fetchCollectionQuery(Xp, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>
@@ -31,7 +31,11 @@ const { t } = useTranslation(locale);
     {
       xps.map((xp) => {
         return (
-          <Details isCompleted={xp?.end !== undefined} asTimeLine>
+          <Details
+            isCompleted={xp?.end !== undefined}
+            asTimeLine
+            {...detailsProps}
+          >
             <Typography variant="large" slot="title">
               {xp?.position}
             </Typography>
@@ -41,7 +45,7 @@ const { t } = useTranslation(locale);
             >
               <Typography variant="muted">
                 <Svg svgHtml={Building2} />
-                {xp.company}
+                {xp.company}&hairsp;
                 {xp?.url && (
                   <ExternalIconLink
                     href={xp.url}
@@ -49,7 +53,7 @@ const { t } = useTranslation(locale);
                   />
                 )}
               </Typography>
-              <TimeWindow start={xp?.start!} end={xp?.end} locale={locale} />
+              <TimeWindow start={xp?.start!} end={xp?.end} />
             </div>
             <Fragment slot="content">
               {xp?.infoListItems && (

@@ -11,12 +11,9 @@ import Cake from "@/svg/cake.svg?raw";
 import MapPin from "@/svg/map-pin.svg?raw";
 import Phone from "@/svg/phone.svg?raw";
 import { Image } from "astro:assets";
+import i18next from "i18next";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const info = (await fetchCollectionQuery(Info, locale))[0];
 ---
 

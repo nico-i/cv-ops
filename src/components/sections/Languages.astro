@@ -4,18 +4,13 @@ import GradedListItem from "@/components/ui/GradedListItem.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import { Lang } from "@/lib/domain/lang";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import LanguagesIcon from "@/svg/languages.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const langs = await fetchCollectionQuery(Lang, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>

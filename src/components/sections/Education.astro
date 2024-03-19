@@ -7,19 +7,14 @@ import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Ed } from "@/lib/domain/ed";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import GraduationCap from "@/svg/graduation-cap.svg?raw";
 import University from "@/svg/university.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const eds = await fetchCollectionQuery(Ed, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>
@@ -33,7 +28,7 @@ const { t } = useTranslation(locale);
           return (
             <GradedListItem grade={ed?.grade} docUrl={ed?.docUrl}>
               <span slot="title">
-                {ed?.institute}{" "}
+                {ed?.institute}&hairsp;
                 {ed?.url && (
                   <ExternalIconLink
                     href={ed?.url}
@@ -47,7 +42,7 @@ const { t } = useTranslation(locale);
                   <Svg svgHtml={University} />
                   {ed?.degree}
                 </Typography>
-                <TimeWindow start={ed?.start} end={ed?.end} locale={locale} />
+                <TimeWindow start={ed?.start} end={ed?.end} />
               </div>
             </GradedListItem>
           );

@@ -3,18 +3,13 @@ import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import { Interest } from "@/lib/domain/interest";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import Joystick from "@/svg/joystick.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const interests = await fetchCollectionQuery(Interest, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>

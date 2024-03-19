@@ -1,24 +1,24 @@
 ---
 import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
-import Details from "@/components/ui/Details.astro";
+import Details, {
+  type Props as DetailsProps,
+} from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Project } from "@/lib/domain/project";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import PencilRuler from "@/svg/pencil-ruler.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
+interface Props extends DetailsProps {}
+const detailsProps: Props = Astro.props;
 
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const projects = await fetchCollectionQuery(Project, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>
@@ -29,10 +29,13 @@ const { t } = useTranslation(locale);
     {
       projects.map((project) => {
         return (
-          <Details isCompleted={project?.end !== undefined} asTimeLine>
+          <Details
+            {...detailsProps}
+            isCompleted={project?.end !== undefined}
+            asTimeLine
+          >
             <Typography variant="large" slot="title">
-              {project?.title}
-              &thinsp;
+              {project?.title}&hairsp;
               {project?.demoUrl && (
                 <ExternalIconLink
                   href={project.demoUrl}
@@ -41,11 +44,7 @@ const { t } = useTranslation(locale);
               )}
             </Typography>
             <div slot="subtitle" class="flex flex-col lg:flex-row lg:gap-3">
-              <TimeWindow
-                start={project?.start!}
-                end={project?.end}
-                locale={locale}
-              />
+              <TimeWindow start={project?.start!} end={project?.end} />
             </div>
             {project?.summaryListItems ? (
               <Fragment slot="content">

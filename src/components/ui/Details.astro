@@ -3,17 +3,25 @@ import Svg from "@/components/ui/Svg.astro";
 import TimePin from "@/components/ui/TimePin.astro";
 import ChevronDown from "@/svg/chevron-down.svg?raw";
 
-interface Props {
+export interface Props {
   asTimeLine?: boolean;
   isCompleted?: boolean;
+  startOpen?: boolean;
+  hideChevron?: boolean;
 }
 
-const { asTimeLine = false, isCompleted = false }: Props = Astro.props;
+const {
+  asTimeLine = false,
+  isCompleted = false,
+  startOpen = false,
+  hideChevron = false,
+}: Props = Astro.props;
 ---
 
 {
   Astro.slots.has("content") ? (
     <details
+      open={startOpen}
       class:list={[
         "flex flex-col [&_span.open-indicator]:open:rotate-180",
         asTimeLine && "relative pl-6",
@@ -26,11 +34,13 @@ const { asTimeLine = false, isCompleted = false }: Props = Astro.props;
             <slot name="title" />
             <slot name="subtitle" />
           </div>
-          <Svg
-            svgHtml={ChevronDown}
-            size="md"
-            className="rotate-0 transition-transform duration-200 open-indicator"
-          />
+          {!hideChevron && (
+            <Svg
+              svgHtml={ChevronDown}
+              size="md"
+              className="rotate-0 transition-transform duration-200 open-indicator"
+            />
+          )}
         </div>
       </summary>
       <div class="pb-6">

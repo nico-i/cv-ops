@@ -1,0 +1,95 @@
+---
+import "@/styles/globals.css";
+
+import Certificates from "@/components/sections/Certificates.astro";
+import Education from "@/components/sections/Education.astro";
+import Experience from "@/components/sections/Experience.astro";
+import Interests from "@/components/sections/Interests.astro";
+import Languages from "@/components/sections/Languages.astro";
+import Profile from "@/components/sections/Profile.astro";
+import Projects from "@/components/sections/Projects.astro";
+import Skills from "@/components/sections/Skills.astro";
+import VolunteerWork from "@/components/sections/VolunteerWork.astro";
+
+import AutoThemeSwitcher from "@/components/ui/AutoThemeSwitcher.astro";
+import type { Props as DetailsProps } from "@/components/ui/Details.astro";
+import { Locale } from "@/lib/types/Locale";
+import i18next, { t } from "i18next";
+
+const isPrintPage = Astro.url.pathname.endsWith("/pdf");
+
+const detailsProps: DetailsProps = {
+  startOpen: isPrintPage,
+  hideChevron: isPrintPage,
+};
+
+const lang = i18next.language as Locale;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={t("meta-description")} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <title>CV | Nico Ismaili</title>
+  </head>
+  <body
+    class:list={[
+      `w-full
+        lg:w-[215.9mm]
+        grid gap-1.5
+        grid-cols-1
+        lg:grid-cols-[34%,auto]
+        auto-cols-min
+        h-full
+        p-1.5`,
+      isPrintPage
+        ? ""
+        : `
+        mx-auto
+        lg:py-16
+       `,
+    ]}
+  >
+    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
+      <Profile />
+      <Skills />
+      <Languages />
+      <Interests />
+    </div>
+    <div class="hidden lg:flex lg:flex-col lg:gap-1.5">
+      <Experience {...detailsProps} />
+      <Education />
+      <Projects {...detailsProps} />
+      <Certificates {...detailsProps} />
+      <VolunteerWork {...detailsProps} />
+    </div>
+
+    {
+      !isPrintPage && (
+        <div class="lg:hidden flex flex-col gap-1.5">
+          <Profile />
+          <Experience />
+          <Skills />
+          <Education />
+          <Projects />
+          <Certificates />
+          <Languages />
+          <VolunteerWork />
+          <Interests />
+        </div>
+      )
+    }
+    <AutoThemeSwitcher />
+  </body>
+</html>

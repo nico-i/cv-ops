@@ -1,17 +1,16 @@
 ---
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import CalendarDays from "@/svg/calendar-days.svg?raw";
+import i18next, { t } from "i18next";
 
 export interface Props {
-  locale: Locale;
   start: Date;
   end: Date | undefined;
 }
-const { locale, start, end }: Props = Astro.props;
-const { t } = useTranslation(locale);
+const { start, end }: Props = Astro.props;
+const locale = i18next.language as Locale;
 ---
 
 <Typography variant="muted">

@@ -1,25 +1,25 @@
 ---
 import Card from "@/components/ui/Card.astro";
-import Details from "@/components/ui/Details.astro";
+import Details, {
+  type Props as DetailsProps,
+} from "@/components/ui/Details.astro";
 import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
 import { Volunteer } from "@/lib/domain/volunteer";
-import { useTranslation } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/types/Locale";
 import { fetchCollectionQuery } from "@/lib/utils";
 import Building2 from "@/svg/building-2.svg?raw";
 import HeartHandshake from "@/svg/heart-handshake.svg?raw";
+import i18next, { t } from "i18next";
 
-interface Props {
-  locale: Locale;
-}
+interface Props extends DetailsProps {}
+const detailsProps: Props = Astro.props;
 
-const { locale }: Props = Astro.props;
+const locale = i18next.language as Locale;
 const volunteers = await fetchCollectionQuery(Volunteer, locale);
-const { t } = useTranslation(locale);
 ---
 
 <Card>
@@ -30,7 +30,11 @@ const { t } = useTranslation(locale);
     {
       volunteers.map((volunteer) => {
         return (
-          <Details isCompleted={volunteer?.end !== undefined} asTimeLine>
+          <Details
+            {...detailsProps}
+            isCompleted={volunteer?.end !== undefined}
+            asTimeLine
+          >
             <Typography variant="large" slot="title">
               {volunteer?.activity}&thinsp;
               {volunteer?.url && (
@@ -45,11 +49,7 @@ const { t } = useTranslation(locale);
                 <Svg svgHtml={Building2} />
                 {volunteer?.org}
               </Typography>
-              <TimeWindow
-                start={volunteer?.start!}
-                end={volunteer?.end}
-                locale={locale}
-              />
+              <TimeWindow start={volunteer?.start!} end={volunteer?.end} />
             </div>
             {volunteer?.summary && (
               <Fragment slot="content">{volunteer?.summary}</Fragment>
