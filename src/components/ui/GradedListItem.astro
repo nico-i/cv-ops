@@ -28,7 +28,9 @@ const { grade, docUrl }: Props = Astro.props;
           <Typography variant="code">{grade}</Typography>
         </a>
       ) : (
-        <Typography variant="code">{grade}</Typography>
+        <Typography variant="code" className="whitespace-nowrap">
+          {grade}
+        </Typography>
       )
     }
   </div>
