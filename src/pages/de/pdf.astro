@@ -1,8 +1,8 @@
 ---
-import { changeLanguage } from "i18next";
 import DefaultLayout from "@/components/layouts/DefaultLayout.astro";
+import { changeLanguage } from "i18next";
 
 changeLanguage("de");
 ---
 
-<DefaultLayout />
+<DefaultLayout isPrintPage={true} />
