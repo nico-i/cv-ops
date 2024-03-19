@@ -1,6 +1,8 @@
 const puppeteer = require("puppeteer");
 
 (async () => {
+  const baseUrl = new URL(process.argv[2]);
+
   // start the browser with at least 1024x768
   const browser = await puppeteer.launch({
     headless: true,
@@ -37,7 +39,8 @@ const puppeteer = require("puppeteer");
       ]);
 
       // Navigate to the webpage you want to print
-      await page.goto(`http://localhost:4321/${path}`);
+      const targetUrl = new URL(path, baseUrl);
+      await page.goto(targetUrl);
 
       const totalPage = await page.$("body");
       const boundingBox = await totalPage.boundingBox();
@@ -47,6 +50,8 @@ const puppeteer = require("puppeteer");
         printBackground: true,
         height: `${boundingBox.height}px`,
       });
+
+      console.log(`Generated ${language}-${theme}.pdf from ${targetUrl}`);
     }
   }
 
