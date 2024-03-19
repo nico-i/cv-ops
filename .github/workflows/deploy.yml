@@ -9,8 +9,6 @@ on:
   workflow_dispatch:
   # Allows external webhook trigger
   repository_dispatch:
-    types:
-      - webhook
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
