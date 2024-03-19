@@ -33,12 +33,8 @@ const certs = await fetchCollectionQuery(Cert, locale);
       certs?.map((cert) => {
         return (
           <Details {...detailsProps}>
-            <Typography
-              variant="large"
-              className="inline-flex gap-1.5 items-center"
-              slot="title"
-            >
-              {cert.title}
+            <Typography variant="large" slot="title">
+              {cert.title}&hairsp;
               {cert.docUrl && (
                 <ExternalIconLink
                   href={cert.docUrl}

@@ -29,8 +29,8 @@ const {
     >
       <summary class:list={["flex flex-col cursor-pointer pb-3"]}>
         {asTimeLine && <TimePin isCompleted={isCompleted} />}
-        <div class="flex justify-between items-center">
-          <div class="flex flex-col">
+        <div class="flex justify-between items-center w-full">
+          <div class="flex flex-col w-10/12 md:w-full">
             <slot name="title" />
             <slot name="subtitle" />
           </div>
