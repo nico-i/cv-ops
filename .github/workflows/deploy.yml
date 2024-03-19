@@ -10,7 +10,7 @@ on:
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -40,3 +40,30 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  generate:
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+      - name: Install puppeteer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm1
+      - name: Run print-pdf from scripts dir
+        run: |
+          node scripts/print-pdf.js
+      - name: Commit updated CV PDFs
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am "chore(docs): update CV PDFs [skip ci]"
+          git push
