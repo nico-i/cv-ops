@@ -1,7 +1,8 @@
 import type { Query } from "@/__generated__/gql";
 import { Locale } from "@/lib/types/Locale";
 import type { LocalizedStrapiEntity } from "@/lib/types/LocalizedStrapiEntity";
-import { NodeHtmlMarkdown } from "node-html-markdown";
+import { remark } from "remark";
+import remarkHTML from "remark-html";
 
 export async function fetchSvgHtml(url: string): Promise<string> {
   const fetchedHtml = await fetch(url).then((res) => res.text());
@@ -14,7 +15,7 @@ export function parseMdBulletListToHtml(resString: string): string[] {
   let resStringNoPrefix = resString.replaceAll("- ", "");
 
   return resStringNoPrefix.split("\n").map((liStr) => {
-    const mdStr = NodeHtmlMarkdown.translate(liStr);
+    const mdStr = remark().use(remarkHTML).processSync(liStr);
     return mdStr.toString();
   });
 }
