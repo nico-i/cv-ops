@@ -16,7 +16,10 @@ import type { Props as DetailsProps } from "@/components/ui/Details.astro";
 import { Locale } from "@/lib/types/Locale";
 import i18next, { t } from "i18next";
 
-const isPrintPage = Astro.url.pathname.endsWith("/pdf");
+interface Props {
+  isPrintPage?: boolean;
+}
+const { isPrintPage = false }: Props = Astro.props;
 
 const detailsProps: DetailsProps = {
   startOpen: isPrintPage,
