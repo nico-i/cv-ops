@@ -60,7 +60,7 @@ jobs:
           sudo apt-get install -y libgbm1
       - name: Run print-pdf from scripts dir
         run: |
-          node scripts/print-pdf.js
+          node scripts/print-pdf.cjs
       - name: Commit updated CV PDFs
         run: |
           git config --local user.email "actions@github.com"
