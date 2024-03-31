@@ -8,18 +8,18 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Volunteer } from "@/lib/domain/volunteer";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import Building2 from "@/svg/building-2.svg?raw";
 import HeartHandshake from "@/svg/heart-handshake.svg?raw";
+import { Locale, StrapiVolunteerRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props extends DetailsProps {}
 const detailsProps: Props = Astro.props;
 
-const locale = i18next.language as Locale;
-const volunteers = await fetchCollectionQuery(Volunteer, locale);
+const locale = new Locale(i18next.language);
+const volunteersRepo = new StrapiVolunteerRepo(strapiClient);
+const volunteers = await volunteersRepo.getAllVolunteers(locale);
 ---
 
 <Card id="volunteer-work">
@@ -39,7 +39,7 @@ const volunteers = await fetchCollectionQuery(Volunteer, locale);
               {volunteer?.activity}&thinsp;
               {volunteer?.url && (
                 <ExternalIconLink
-                  href={volunteer?.url}
+                  href={volunteer.url.href}
                   label={`${t("document")}: ${volunteer.activity}`}
                 />
               )}
@@ -51,8 +51,11 @@ const volunteers = await fetchCollectionQuery(Volunteer, locale);
               </Typography>
               <TimeWindow start={volunteer?.start!} end={volunteer?.end} />
             </div>
-            {volunteer?.summary && (
-              <Fragment slot="content">{volunteer?.summary}</Fragment>
+            {volunteer?.mdSummary && (
+              <Fragment
+                slot="content"
+                set:html={volunteer?.mdSummary.toHtml()}
+              />
             )}
           </Details>
         );

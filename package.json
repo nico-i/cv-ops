@@ -4,6 +4,7 @@
   "dependencies": {
     "@astrojs/check": "^0.5.6",
     "@astrojs/tailwind": "^5.1.0",
+    "@nico-i/cv-data": "1.10.0",
     "astro": "^4.4.11",
     "astro-i18next": "^1.0.0-beta.21",
     "graphql": "^16.8.1",
@@ -14,7 +15,7 @@
     "typescript": "^5.4.2"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "dotenvx run -- astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",

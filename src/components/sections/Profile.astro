@@ -1,20 +1,19 @@
 ---
-import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Link from "@/components/ui/Link.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Info } from "@/lib/domain/info";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import Cake from "@/svg/cake.svg?raw";
 import MapPin from "@/svg/map-pin.svg?raw";
 import Phone from "@/svg/phone.svg?raw";
+import { Locale, StrapiInfoRepo } from "@nico-i/cv-data";
 import { Image } from "astro:assets";
 import i18next from "i18next";
 
-const locale = i18next.language as Locale;
-const info = (await fetchCollectionQuery(Info, locale))[0];
+const locale = new Locale(i18next.language);
+const infoRepo = new StrapiInfoRepo(strapiClient);
+const info = await infoRepo.getInfo(locale);
 ---
 
 <Card contentClassName="flex flex-col gap-6">
@@ -23,7 +22,7 @@ const info = (await fetchCollectionQuery(Info, locale))[0];
       info?.portrait && (
         <Image
           loading={"eager"}
-          src={info.portrait.url}
+          src={info.portrait.url.href}
           width={info.portrait.width}
           height={info.portrait.height}
           alt="Portrait Nico Ismaili"
@@ -42,7 +41,7 @@ const info = (await fetchCollectionQuery(Info, locale))[0];
         <Svg svgHtml={Cake} />
         &hairsp;
         {
-          info?.dob.toLocaleDateString(locale, {
+          info?.dob.toLocaleDateString(locale.value, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -62,22 +61,25 @@ const info = (await fetchCollectionQuery(Info, locale))[0];
         {info?.address}
       </Typography>
     </div>
-    <BulletList hideBullets>
+    <ul class="hide-bullets">
       {
-        info?.contacts?.map((contact) => {
-          if (!contact.svgHtml) {
+        info?.contacts?.map((contactLink) => {
+          if (!contactLink.icon) {
             return null;
           }
 
           return (
             <li>
-              <Svg svgHtml={contact.svgHtml} className="translate-y-0.5" />
+              <Svg
+                svgHtml={contactLink.icon.fetchHtml()}
+                className="translate-y-0.5"
+              />
               &hairsp;
-              <Link href={contact.url}>{contact.text}</Link>
+              <Link href={contactLink.url.href}>{contactLink.text}</Link>
             </li>
           );
         })
       }
-    </BulletList>
+    </ul>
   </Fragment>
 </Card>

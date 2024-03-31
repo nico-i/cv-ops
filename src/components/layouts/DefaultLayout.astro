@@ -13,7 +13,7 @@ import VolunteerWork from "@/components/sections/VolunteerWork.astro";
 
 import AutoThemeSwitcher from "@/components/ui/AutoThemeSwitcher.astro";
 import type { Props as DetailsProps } from "@/components/ui/Details.astro";
-import { Locale } from "@/lib/types/Locale";
+import { Locale } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props {
@@ -26,10 +26,10 @@ const detailsProps: DetailsProps = {
   hideChevron: isPrintPage,
 };
 
-const lang = i18next.language as Locale;
+const lang = new Locale(i18next.language);
 ---
 
-<html lang={lang}>
+<html lang={lang.value}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

@@ -1,15 +1,14 @@
 ---
-import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
-import { Interest } from "@/lib/domain/interest";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import Joystick from "@/svg/joystick.svg?raw";
+import { Locale, StrapiInterestRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
-const locale = i18next.language as Locale;
-const interests = await fetchCollectionQuery(Interest, locale);
+const locale = new Locale(i18next.language);
+const interestRepo = new StrapiInterestRepo(strapiClient);
+const interests = await interestRepo.getAllInterests(locale);
 ---
 
 <Card>
@@ -17,8 +16,8 @@ const interests = await fetchCollectionQuery(Interest, locale);
     <SectionTitle title={t("interests")} svgHtml={Joystick} />
   </Fragment>
   <Fragment slot="content">
-    <BulletList>
+    <ul>
       {interests?.map((interest) => <li>{interest.name}</li>)}
-    </BulletList>
+    </ul>
   </Fragment>
 </Card>

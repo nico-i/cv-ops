@@ -1,5 +1,4 @@
 ---
-import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Details, {
   type Props as DetailsProps,
@@ -8,20 +7,20 @@ import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Cert } from "@/lib/domain/cert";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import Building from "@/svg/building.svg?raw";
 import Calendar from "@/svg/calendar-days.svg?raw";
 import ShieldCheck from "@/svg/shield-check.svg?raw";
+import { Locale, StrapiCertRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props extends DetailsProps {
   isPrint?: boolean;
 }
 const { isPrint = false, ...detailsProps }: Props = Astro.props;
-const locale = i18next.language as Locale;
-const certs = await fetchCollectionQuery(Cert, locale);
+const locale = new Locale(i18next.language);
+const repo = new StrapiCertRepo(strapiClient);
+const certs = await repo.getAllCerts(locale);
 ---
 
 <Card>
@@ -35,9 +34,9 @@ const certs = await fetchCollectionQuery(Cert, locale);
           <Details {...detailsProps}>
             <Typography variant="large" slot="title">
               {cert.title}&hairsp;
-              {cert.docUrl && (
+              {cert.doc?.url && (
                 <ExternalIconLink
-                  href={cert.docUrl}
+                  href={cert.doc.url.href}
                   label={`${t("document")}: ${cert.title}`}
                 />
               )}
@@ -57,18 +56,14 @@ const certs = await fetchCollectionQuery(Cert, locale);
               <Typography variant="muted">
                 <Svg svgHtml={Calendar} />
 
-                {cert.received.toLocaleDateString(locale, {
+                {cert.received.toLocaleDateString(locale.value, {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })}
               </Typography>
             </div>
-            <BulletList slot="content">
-              {cert.infoListItems.map((item) => (
-                <li set:html={item} />
-              ))}
-            </BulletList>
+            <Fragment set:html={cert.mdInfo.toHtml()} slot="content" />
           </Details>
         );
       })

@@ -159,6 +159,15 @@
   .link {
     @apply font-medium text-primary underline underline-offset-4;
   }
+  ul > a {
+    @apply link;
+  }
+  .hide-bullets {
+    @apply list-none ml-0;
+  }
+  ul {
+    @apply flex flex-col gap-2 ml-6 list-disc;
+  }
   p > a {
     @apply link;
   }

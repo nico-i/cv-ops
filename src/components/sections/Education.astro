@@ -6,15 +6,15 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Ed } from "@/lib/domain/ed";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import GraduationCap from "@/svg/graduation-cap.svg?raw";
 import University from "@/svg/university.svg?raw";
+import { Locale, StrapiEdRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
-const locale = i18next.language as Locale;
-const eds = await fetchCollectionQuery(Ed, locale);
+const locale = new Locale(i18next.language);
+const edRepo = new StrapiEdRepo(strapiClient);
+const eds = await edRepo.getAllEds(locale);
 ---
 
 <Card>
@@ -26,12 +26,12 @@ const eds = await fetchCollectionQuery(Ed, locale);
       {
         eds?.map((ed) => {
           return (
-            <GradedListItem grade={ed?.grade} docUrl={ed?.docUrl}>
+            <GradedListItem grade={ed?.grade} docUrl={ed?.doc?.url.href}>
               <span slot="title">
                 {ed?.institute}&hairsp;
                 {ed?.url && (
                   <ExternalIconLink
-                    href={ed?.url}
+                    href={ed?.url.href}
                     label={`${t("document")}: ${ed.degree}`}
                   />
                 )}

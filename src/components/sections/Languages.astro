@@ -3,14 +3,14 @@ import Card from "@/components/ui/Card.astro";
 import GradedListItem from "@/components/ui/GradedListItem.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
-import { Lang } from "@/lib/domain/lang";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import LanguagesIcon from "@/svg/languages.svg?raw";
+import { Locale, StrapiLangRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
-const locale = i18next.language as Locale;
-const langs = await fetchCollectionQuery(Lang, locale);
+const locale = new Locale(i18next.language);
+const langRepo = new StrapiLangRepo(strapiClient);
+const langs = await langRepo.getAllLangs(locale);
 ---
 
 <Card>
@@ -18,13 +18,13 @@ const langs = await fetchCollectionQuery(Lang, locale);
     <SectionTitle title={t("langs")} svgHtml={LanguagesIcon} />
   </Fragment>
   <Fragment slot="content">
-    <ul class="flex flex-col gap-1.5">
+    <ul class="flex flex-col gap-1.5 hide-bullets">
       {
         langs?.map((lang) => {
           return (
             <GradedListItem grade={lang.level} docUrl={undefined}>
               <span slot="title">
-                <Svg svgHtml={lang.svgHtml} className="w-6" />
+                <Svg svgHtml={lang.icon.fetchHtml()} className="w-6" />
                 &hairsp;
                 {lang.name}
               </span>

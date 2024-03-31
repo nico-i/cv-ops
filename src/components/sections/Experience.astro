@@ -1,5 +1,4 @@
 ---
-import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Details, {
   type Props as DetailsProps,
@@ -9,11 +8,10 @@ import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Xp } from "@/lib/domain/xp";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import Building2 from "@/svg/building-2.svg?raw";
 import Telescope from "@/svg/telescope.svg?raw";
+import { Locale, StrapiXpRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props extends DetailsProps {
@@ -21,8 +19,9 @@ interface Props extends DetailsProps {
 }
 const { isPrint = false, ...detailsProps }: Props = Astro.props;
 
-const locale = i18next.language as Locale;
-const xps = await fetchCollectionQuery(Xp, locale);
+const locale = new Locale(i18next.language);
+const xpRepo = new StrapiXpRepo(strapiClient);
+const xps = await xpRepo.getAllXps(locale);
 ---
 
 <Card>
@@ -54,22 +53,14 @@ const xps = await fetchCollectionQuery(Xp, locale);
                 {xp.company}&hairsp;
                 {xp?.url && (
                   <ExternalIconLink
-                    href={xp.url}
+                    href={xp.url.href}
                     label={`${xp.company} ${t("company-site")}`}
                   />
                 )}
               </Typography>
               <TimeWindow start={xp?.start!} end={xp?.end} />
             </div>
-            <Fragment slot="content">
-              {xp?.infoListItems && (
-                <BulletList>
-                  {xp?.infoListItems?.map((bullet) => (
-                    <li set:html={bullet} />
-                  ))}
-                </BulletList>
-              )}
-            </Fragment>
+            <Fragment slot="content" set:html={xp.info.toHtml()} />
           </Details>
         );
       })

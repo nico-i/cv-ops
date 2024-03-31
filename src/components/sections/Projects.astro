@@ -1,5 +1,4 @@
 ---
-import BulletList from "@/components/ui/BulletList.astro";
 import Card from "@/components/ui/Card.astro";
 import Details, {
   type Props as DetailsProps,
@@ -8,10 +7,9 @@ import ExternalIconLink from "@/components/ui/ExternalIconLink.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import TimeWindow from "@/components/ui/TimeWindow.astro";
 import Typography from "@/components/ui/Typography.astro";
-import { Project } from "@/lib/domain/project";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import PencilRuler from "@/svg/pencil-ruler.svg?raw";
+import { Locale, StrapiProjectRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props extends DetailsProps {
@@ -19,8 +17,9 @@ interface Props extends DetailsProps {
 }
 const { isPrint = false, ...detailsProps }: Props = Astro.props;
 
-const locale = i18next.language as Locale;
-const projects = await fetchCollectionQuery(Project, locale);
+const locale = new Locale(i18next.language);
+const projectRepo = new StrapiProjectRepo(strapiClient);
+const projects = await projectRepo.getAllProjects(locale);
 ---
 
 <Card>
@@ -40,7 +39,7 @@ const projects = await fetchCollectionQuery(Project, locale);
               {project?.title}&hairsp;
               {project?.demoUrl && (
                 <ExternalIconLink
-                  href={project.demoUrl}
+                  href={project.demoUrl.href}
                   label={`${t("demo-site")} ${project.demoUrl}`}
                 />
               )}
@@ -55,14 +54,8 @@ const projects = await fetchCollectionQuery(Project, locale);
             >
               <TimeWindow start={project?.start!} end={project?.end} />
             </div>
-            {project?.summaryListItems ? (
-              <Fragment slot="content">
-                <BulletList>
-                  {project?.summaryListItems?.map((bullet) => (
-                    <li set:html={bullet} />
-                  ))}
-                </BulletList>
-              </Fragment>
+            {project.mdSummary ? (
+              <Fragment slot="content" set:html={project.mdSummary?.toHtml()} />
             ) : (
               project.tldr
             )}

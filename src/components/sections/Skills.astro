@@ -3,10 +3,9 @@ import Card from "@/components/ui/Card.astro";
 import Gauge from "@/components/ui/Gauge.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import Svg from "@/components/ui/Svg.astro";
-import { Skill } from "@/lib/domain/skill";
-import type { Locale } from "@/lib/types/Locale";
-import { fetchCollectionQuery } from "@/lib/utils";
+import { strapiClient } from "@/helper/strapi-client";
 import CPU from "@/svg/cpu.svg?raw";
+import { Locale, StrapiSkillRepo } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props {
@@ -14,8 +13,9 @@ interface Props {
 }
 const { isPrint = false }: Props = Astro.props;
 
-const locale = i18next.language as Locale;
-const skills = await fetchCollectionQuery(Skill, locale);
+const locale = new Locale(i18next.language);
+const skillRepo = new StrapiSkillRepo(strapiClient);
+const skills = await skillRepo.getAllSkills(locale);
 ---
 
 <Card>
@@ -32,7 +32,7 @@ const skills = await fetchCollectionQuery(Skill, locale);
     >
       {
         skills?.map((skill) => {
-          if (!skill.svgHtml) {
+          if (!skill.icon) {
             return null;
           }
           return (
@@ -43,7 +43,7 @@ const skills = await fetchCollectionQuery(Skill, locale);
                 rel="noopener noreferrer"
                 title={`${skill.proficiency}% | ${skill.name}`}
               >
-                <Svg size="md" svgHtml={skill.svgHtml} />
+                <Svg size="md" svgHtml={skill.icon.fetchHtml()} />
               </a>
             </Gauge>
           );
