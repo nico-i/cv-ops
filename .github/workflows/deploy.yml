@@ -45,7 +45,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  generate:
+  gen-pdf:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
@@ -68,6 +68,7 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions[bot]"
           git commit -am "chore(docs): update CV PDFs [skip ci]"
+          git pull --rebase
           git push
 
   psi-insights:
@@ -91,4 +92,5 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions[bot]"
           git diff --quiet && git diff --staged --quiet || git commit -am "chore(docs): update PageSpeed Insights SVGs [skip ci]"
+          git pull --rebase
           git push
