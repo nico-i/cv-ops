@@ -83,8 +83,8 @@ jobs:
       - name: Run psi-svg
         run: | # Have to be sure a folder is present if not, make it
           mkdir -p ${RESULTS_DIR}
-          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/desktop.svg -s=desktop -c=performance,accessibility,best-practices,seo
-          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/mobile.svg -s=mobile -c=performance,accessibility,best-practices,seo
+          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/desktop.svg -s=desktop --categories=performance,accessibility,best-practices,seo
+          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/mobile.svg -s=mobile --categories=performance,accessibility,best-practices,seo
       - name: Commit updated PageSpeed Insights SVGs
         run: |
           git add .
