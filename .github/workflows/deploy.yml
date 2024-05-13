@@ -69,3 +69,26 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit -am "chore(docs): update CV PDFs [skip ci]"
           git push
+
+  psi-insights:
+    env:
+      RESULTS_DIR: docs/img
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+      - name: Run psi-svg
+        run: | # Have to be sure a folder is present if not, make it
+          mkdir -p ${RESULTS_DIR}
+          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/desktop.svg --strategy=desktop
+          bunx psi-svg ${{needs.deploy.outputs.page_url}} $RESULTS_DIR/mobile.svg --strategy=mobile
+      - name: Commit updated PageSpeed Insights SVGs
+        run: |
+          git add .
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions[bot]"
+          git diff --quiet && git diff --staged --quiet || git commit -am "chore(docs): update PageSpeed Insights SVGs [skip ci]"
+          git push
