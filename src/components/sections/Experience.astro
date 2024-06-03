@@ -11,7 +11,7 @@ import Typography from "@/components/ui/Typography.astro";
 import { strapiClient } from "@/helper/strapi-client";
 import Building2 from "@/svg/building-2.svg?raw";
 import Telescope from "@/svg/telescope.svg?raw";
-import { Locale, StrapiXpRepo } from "@nico-i/cv-data";
+import { Locale, StrapiXpRepo, Xp } from "@nico-i/cv-data";
 import i18next, { t } from "i18next";
 
 interface Props extends DetailsProps {
@@ -21,7 +21,27 @@ const { isPrint = false, ...detailsProps }: Props = Astro.props;
 
 const locale = new Locale(i18next.language);
 const xpRepo = new StrapiXpRepo(strapiClient);
-const xps = await xpRepo.getAllXps(locale);
+const xps = (await xpRepo.getAllXps(locale)).sort((a: Xp, b: Xp) => {
+  const aEnd = a.end?.valueOf();
+  const bEnd = b.end?.valueOf();
+  const aStart = a.start.valueOf();
+  const bStart = b.start.valueOf();
+
+  if (aEnd === undefined && bEnd === undefined) {
+    // If both are ongoing, sort by start date
+    return bStart - aStart;
+  }
+  if (aEnd === undefined) {
+    // If a is ongoing, put it first
+    return -1;
+  }
+  if (bEnd === undefined) {
+    // If b is ongoing, put it first
+    return 1;
+  }
+  // If both are not ongoing, sort by start date
+  return bStart - aStart;
+});
 ---
 
 <Card>
