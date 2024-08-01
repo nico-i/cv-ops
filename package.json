@@ -7,6 +7,7 @@
     "@nico-i/cv-data": "1.10.0",
     "astro": "^4.4.11",
     "astro-i18next": "^1.0.0-beta.21",
+    "graphql-tag": "^2.12.6",
     "puppeteer": "^22.5.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
