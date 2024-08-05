@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require(`puppeteer`);
 
 (async () => {
   const baseUrl = new URL(process.argv[2]);
@@ -9,14 +9,14 @@ const puppeteer = require("puppeteer");
   });
 
   const languages = [
-    ["en", "pdf"],
-    ["de", "de/pdf"],
+    [`en`, `pdf`],
+    [`de`, `de/pdf`],
   ];
-  const themes = ["light", "dark"];
+  const themes = [`light`, `dark`];
 
   // create directory
-  const fs = require("fs");
-  const dir = "docs/cv";
+  const fs = require(`fs`);
+  const dir = `docs/cv`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -33,7 +33,7 @@ const puppeteer = require("puppeteer");
 
       await page.emulateMediaFeatures([
         {
-          name: "prefers-color-scheme",
+          name: `prefers-color-scheme`,
           value: theme,
         },
       ]);
@@ -42,7 +42,7 @@ const puppeteer = require("puppeteer");
       const targetUrl = new URL(path, baseUrl);
       await page.goto(targetUrl);
 
-      const totalPage = await page.$("body");
+      const totalPage = await page.$(`body`);
       const boundingBox = await totalPage.boundingBox();
 
       await page.pdf({

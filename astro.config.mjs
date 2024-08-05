@@ -4,10 +4,10 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://cv.nico.ismaili.de",
+  site: `https://cv.nico.ismaili.de`,
   devToolbar: { enabled: false },
   image: {
-    domains: ["res.cloudinary.com"],
+    domains: [`res.cloudinary.com`],
   },
   integrations: [
     astroI18next(),
